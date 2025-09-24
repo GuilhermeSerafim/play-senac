@@ -1,0 +1,13 @@
+<h2 >Escolha a quadra</h2>
+<div class="courts__container">
+  <!-- @for (item of courts; track $index) { -->
+  @for (item of courts; track $index) {
+  <div class="courts__container__card">
+    <img [src]="item.pathImg" />
+    <div class="courts__container__card__info">
+      <h3>{{item.title}}</h3>
+      <p>Veja mais <mat-icon>chevron_right</mat-icon></p>
+    </div>
+  </div>
+  }
+</div>
