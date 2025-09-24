@@ -1,4 +1,4 @@
-# 🏀 Play Senac
+# <img src="public/images/logo.png" alt="Play Senac Logo" width="120">
 
 **Play Senac** é um sistema web em **Angular** para **agendamento e gerenciamento de quadras esportivas** no campus do Senac.  
 O objetivo é substituir processos manuais por operações digitais de reservas (CRUD), tudo com uma interface moderna e responsiva.
