@@ -10,3 +10,12 @@
 
 // → O Angular entende que todo @use ou @forward sem caminho relativo (../) vai procurar dentro de src/styles/.
 @use "variables" as *; // necessário se usar $primary aqui
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+html,
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-base-gray-dark, #1E2127); // fallback
+  background-color: var(--color-base-white, #ffffff); // fallback
+}

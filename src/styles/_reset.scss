@@ -1,0 +1,72 @@
+/* ============================
+   🔄 Reset CSS
+   ============================ */
+
+/* Remove margin e padding padrão */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Garante altura 100% */
+html,
+body {
+  height: 100%;
+}
+
+/* Tipografia padrão */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: sans-serif;
+  background-color: #fff;
+  color: #000;
+}
+
+/* Remove estilo padrão de listas */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove estilo padrão de links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Reset de botões e inputs */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+/* Garante imagens fluidas */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove aspas automáticas em blockquote/quotes */
+blockquote,
+q {
+  quotes: none;
+}
+
+/* Reset para tabelas */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

@@ -1,0 +1,52 @@
+@use '../../../styles/index' as *;
+
+.header {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    flex-shrink: 0;
+    font-size: $font-text-md-size;
+    align-items: center;
+  }
+
+  &__item {
+    margin: auto 25px;
+    position: relative;
+    font-weight: 500;
+    color: $color-base-gray-dark;
+    transition: color 0.3s ease;
+
+    &.active {
+      color: $color-primary-blue;
+    }
+
+    &:hover {
+      color: $color-primary-blue;
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $color-primary-blue;
+      transition: width 0.3s ease;
+    }
+  }
+
+  &__img {
+    width: 80px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+}
