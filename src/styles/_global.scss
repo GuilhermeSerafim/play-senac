@@ -1,0 +1,12 @@
+// ⚙️ Configuração no angular.json
+
+// Já que você adicionou:
+
+// "stylePreprocessorOptions": {
+//   "includePaths": [
+//     "src/styles"
+//   ]
+// }
+
+// → O Angular entende que todo @use ou @forward sem caminho relativo (../) vai procurar dentro de src/styles/.
+@use "variables" as *; // necessário se usar $primary aqui
