@@ -27,7 +27,7 @@
   &__top {
     display: flex;
     justify-content: space-between;
-    margin: auto 15px;
+    margin: 50px 15px 0 15px;
     color: white;
     align-items: center;
   }
@@ -79,5 +79,14 @@
         cursor: pointer;
       }
     }
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color: white;
+    font-size: $font-text-sm-size;
+    margin-bottom: 20px;
   }
 }
