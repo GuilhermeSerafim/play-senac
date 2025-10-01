@@ -17,9 +17,6 @@
     color: $color-base-gray-dark;
     transition: color 0.3s ease;
 
-    &.active {
-      color: $color-primary-blue;
-    }
 
     &:hover {
       color: $color-primary-blue;
