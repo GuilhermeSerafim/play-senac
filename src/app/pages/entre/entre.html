@@ -2,29 +2,80 @@
 <div class="container__entre">
   <form class="entre-form" #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
     <h1>Entre na sua conta</h1>
+
+    <!-- Campo de E-mail com Validação -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
-      <input matInput type="email" name="email" ngModel required />
+      <input
+        matInput=""
+        type="email"
+        name="email"
+        ngModel
+        #email="ngModel"
+        required
+        email
+        pattern="^[a-zA-Z0-9._%+-]+@senacsp\.edu\.br$"
+      />
       <mat-icon matPrefix>email</mat-icon>
+
+      <!-- Dica para o usuário -->
+      @if (!email.invalid) {
       <mat-hint>aluno@senacsp.edu.br</mat-hint>
+      }
+
+      <!-- Mensagens de Erro com Control Flow -->
+      @if (email.invalid && (email.dirty || email.touched)) {
+      <mat-error>
+        @if (email.errors?.['required']) {
+        <span>O e-mail é obrigatório.</span>
+        } @if (email.errors?.['email']) {
+        <span>Por favor, insira um e-mail válido.</span>
+        } @if (!email.errors?.['email'] && email.errors?.['pattern']) {
+        <span>O e-mail deve ser do domínio @senacsp.edu.br.</span>
+        }
+      </mat-error>
+      }
     </mat-form-field>
+
+    <!-- Campo de Senha com Validação -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Senha</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" name="senha" ngModel required />
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        name="senha"
+        ngModel
+        #senha="ngModel"
+        required
+      />
       <mat-icon matPrefix>lock</mat-icon>
       <mat-hint align="end">
         <a (click)="aoEsquecerASenha()" class="esqueceu-sua-senha">Esqueceu sua senha?</a>
       </mat-hint>
-
       <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
+
+      <!-- Mensagem de Erro com Control Flow -->
+      @if (senha.invalid && (senha.dirty || senha.touched)) {
+      <mat-error>
+        @if (senha.errors?.['required']) {
+        <span>A senha é obrigatória.</span>
+        }
+      </mat-error>
+      }
     </mat-form-field>
+
+    <!-- Botão de Submit (desabilitado se o formulário for inválido) -->
     <button matButton="elevated" class="login-button" type="submit">
       Aperte o <span [style.color]="'#FFCE00'">Play</span>!
     </button>
 
-    <p align="center">Não tem Uma Conta?<span (click)="aoClicarEmCriarUmaConta()" class="crie-uma-conta">Crie Uma!</span></p>
+    <p align="center">
+      Não tem Uma Conta?<span (click)="aoClicarEmCriarUmaConta()" class="crie-uma-conta"
+        >Crie Uma!</span
+      >
+    </p>
   </form>
 </div>
 <app-footer />
