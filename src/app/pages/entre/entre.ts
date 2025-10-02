@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -26,16 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './entre.scss',
 })
 export class Entre {
+  constructor(private readonly _el: ElementRef) {}
   // Adicione a propriedade para controlar a visibilidade da senha
   hidePassword = true;
-
-  onSubmit(form: NgForm) {
-    if (form.valid) {
-      console.log('Formulário válido:', form.value);
-    } else {
-      console.log('Formulário inválido.');
-    }
-  }
 
   aoClicarEmCriarUmaConta() {
     // Sua lógica aqui
@@ -45,5 +38,25 @@ export class Entre {
   aoEsquecerASenha() {
     // Sua lógica aqui
     console.log('Clicou em Esqueceu a Senha');
+  }
+
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      console.log('Formulário válido:', form.value);
+    } else {
+      console.log('Formulário inválido.');
+    }
+    if (form.invalid) {
+      this.focusOnInvalidControl(form);
+      return;
+    }
+  }
+
+  focusOnInvalidControl(form: NgForm) {
+    for (const control in form.controls) {
+      const invalidControl: HTMLElement = this._el.nativeElement.querySelector(`[name=${control}]`);
+      invalidControl.focus();
+      break;
+    }
   }
 }
