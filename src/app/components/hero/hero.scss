@@ -11,6 +11,20 @@
   text-align: left;
   margin-bottom: 155px;
 
+  &__title {
+    font-size: $font-title-lg-size;
+    font-weight: $font-title-lg-weight;
+    color: $color-base-white;
+  }
+
+  // Adicione esta nova classe
+  &__typing-wrapper {
+    display: inline-block; // Permite definir largura/altura mas mantendo o fluxo do texto
+    min-width: 28.5ch; // Reserva espaço para ~28.5 caracteres. Ajuste fino se necessário.
+    white-space: nowrap; // Garante que o texto não quebre a linha durante a digitação
+    text-align: left; // Mantém o alinhamento do texto à esquerda dentro do wrapper
+  }
+
   &__overlay {
     padding: 2rem;
     border-radius: 8px;
@@ -35,7 +49,7 @@
     background: $color-primary-yellow;
     margin-left: 2px;
     animation: blink 0.8s infinite;
-    vertical-align: bottom;
+    vertical-align: text-bottom;
   }
 
   @keyframes blink {
