@@ -1,3 +1,30 @@
 <app-header />
+<div class="container__entre">
+  <form class="entre-form" #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+    <h1>Entre na sua conta</h1>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" ngModel required />
+      <mat-icon matPrefix>email</mat-icon>
+      <mat-hint>aluno@senacsp.edu.br</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" name="senha" ngModel required />
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-hint align="end">
+        <a (click)="aoEsquecerASenha()" class="esqueceu-sua-senha">Esqueceu sua senha?</a>
+      </mat-hint>
 
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button matButton="elevated" class="login-button" type="submit">
+      Aperte o <span [style.color]="'#FFCE00'">Play</span>!
+    </button>
+
+    <p align="center">Não tem Uma Conta?<span (click)="aoClicarEmCriarUmaConta()" class="crie-uma-conta">Crie Uma!</span></p>
+  </form>
+</div>
 <app-footer />
