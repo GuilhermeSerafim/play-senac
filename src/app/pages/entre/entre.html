@@ -18,10 +18,7 @@
       />
       <mat-icon matPrefix>email</mat-icon>
 
-      <!-- Dica para o usuário -->
-      @if (!email.invalid) {
       <mat-hint>aluno@senacsp.edu.br</mat-hint>
-      }
 
       <!-- Mensagens de Erro com Control Flow -->
       @if (email.invalid && (email.dirty || email.touched)) {

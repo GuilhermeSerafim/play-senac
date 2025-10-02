@@ -1,5 +1,104 @@
 <app-header />
 <div class="container-cadastro">
-    <form class="entre-form" #cadastroForm="ngForm"></form>
+  <form class="cadastro-form" #cadastroForm="ngForm" (ngSubmit)="onSubmit(cadastroForm)">
+    <h1>Criar uma conta</h1>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Digite seu nome</mat-label>
+      <input matInput type="text" name="nome" ngModel #nome="ngModel" required minlength="3" />
+      <mat-icon matPrefix>person</mat-icon>
+      @if (nome.invalid && (nome.dirty || nome.touched)) {
+      <mat-error>
+        @if (nome.errors?.['required']) {
+        <span>O nome é obrigatório.</span>
+        } @if (nome.errors?.['minlength']) {
+        <span>O nome deve ter no mínimo 3 caracteres.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Telefone</mat-label>
+      <input
+        matInput
+        type="tel"
+        name="telefone"
+        ngModel
+        #telefone="ngModel"
+        required
+        pattern="^\\(\\d{2}\\) \\d{4,5}-\\d{4}$"
+      />
+      <mat-icon matPrefix>phone</mat-icon>
+      @if (telefone.invalid && (telefone.dirty || telefone.touched)) {
+      <mat-error>
+        @if (telefone.errors?.['required']) {
+        <span>O telefone é obrigatório.</span>
+        } @if (telefone.errors?.['pattern']) {
+        <span>O telefone deve estar no formato (XX) XXXXX-XXXX.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        matInput=""
+        type="email"
+        name="email"
+        ngModel
+        #email="ngModel"
+        required
+        email
+        pattern="^[a-zA-Z0-9._%+-]+@senacsp\.edu\.br$"
+      />
+      <mat-icon matPrefix>email</mat-icon>
+
+      <mat-hint>aluno@senacsp.edu.br</mat-hint>
+
+      @if (email.invalid && (email.dirty || email.touched)) {
+      <mat-error>
+        @if (email.errors?.['required']) {
+        <span>O e-mail é obrigatório.</span>
+        } @if (email.errors?.['email']) {
+        <span>Por favor, insira um e-mail válido.</span>
+        } @if (!email.errors?.['email'] && email.errors?.['pattern']) {
+        <span>O e-mail deve ser do domínio @senacsp.edu.br.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        name="senha"
+        ngModel
+        #senha="ngModel"
+        required
+        minlength="6"
+      />
+      <mat-icon matPrefix>lock</mat-icon>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      @if (senha.invalid && (senha.dirty || senha.touched)) {
+      <mat-error>
+        @if (senha.errors?.['required']) {
+        <span>A senha é obrigatória.</span>
+        } @if (senha.errors?.['minlength']) {
+        <span>A senha deve ter no mínimo 6 caracteres.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+    <button matButton="elevated" class="cadastro-button" type="submit">
+      Se torne um <span [style.color]="'#FFCE00'">Player</span>!
+    </button>
+
+    <p align="center">
+      Não tem Uma Conta?<span (click)="temConta()" class="tem-conta">Crie Uma!</span>
+    </p>    
+  </form>
 </div>
-<app-footer/>
+<app-footer />

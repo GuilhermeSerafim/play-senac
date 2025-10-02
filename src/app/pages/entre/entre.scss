@@ -51,6 +51,7 @@ input:selecionadoeescrevendo {
   display: flex;
   justify-content: center;
   font-size: $font-title-md-size;
+  font-weight: $font-title-sm-weight;
   align-items: center;
   height: 52px;
   padding: 16px;
@@ -75,7 +76,5 @@ input:selecionadoeescrevendo {
 .crie-uma-conta {
   margin-left: 8px;
   cursor: pointer;
-  &:hover {
     color: $color-primary-blue;
-  }
 }
