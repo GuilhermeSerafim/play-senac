@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entre',
@@ -26,13 +27,12 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './entre.scss',
 })
 export class Entre {
-  constructor(private readonly _el: ElementRef) {}
+  constructor(private readonly _el: ElementRef, private readonly _router: Router) {}
   // Adicione a propriedade para controlar a visibilidade da senha
   hidePassword = true;
 
   aoClicarEmCriarUmaConta() {
-    // Sua lógica aqui
-    console.log('Clicou em Criar Conta');
+    this._router.navigate(['/cadastro']);
   }
 
   aoEsquecerASenha() {

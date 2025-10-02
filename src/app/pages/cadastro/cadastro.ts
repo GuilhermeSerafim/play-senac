@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -26,11 +27,12 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './cadastro.scss',
 })
 export class Cadastro {
-temConta() {
-throw new Error('Method not implemented.');
-}
-hidePassword: boolean = true;
+  constructor(private readonly _router: Router) {}
+  hidePassword: boolean = true;
   onSubmit(_t8: NgForm) {
     throw new Error('Method not implemented.');
+  }
+  temConta() {
+    this._router.navigate(['/entre']);
   }
 }
