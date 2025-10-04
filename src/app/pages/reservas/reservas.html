@@ -2,15 +2,25 @@
 <div class="container-reservas">
   <h1>Reservas</h1>
   <div class="container-reservas__menu-reservas">
-    <p class="active">Próximas reservas</p>
-    <p>Faça sua reserva</p>
+    <p
+      [ngClass]="abaAtiva === 'proximasReservas' ? 'active' : ''"
+      (click)="ativarAba('proximasReservas')"
+    >
+      Próximas reservas
+    </p>
+    <p
+      [ngClass]="abaAtiva === 'facaSuaReserva' ? 'active' : ''"
+      (click)="ativarAba('facaSuaReserva')"
+    >
+      Faça sua reserva
+    </p>
   </div>
 
   @for (item of courts; track $index) {
   <div class="container-reservas__card">
     <div class="container-reservas__card__left">
       <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
-      
+
       <div class="info-wrapper">
         <h2>{{ item.title }}</h2>
         <p>Horário: {{ item.horario }}</p>

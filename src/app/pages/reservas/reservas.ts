@@ -3,23 +3,27 @@ import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 import { ICourtCard } from '../../types/icourt-card';
 import { CourtService } from '../../services/court.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-reservas',
-  imports: [Header, Footer, DatePipe, MatIcon],
+  imports: [Header, Footer, DatePipe, MatIcon, NgClass],
   templateUrl: './reservas.html',
   styleUrl: './reservas.scss',
 })
 export class Reservas implements OnInit {
   courts: ICourtCard[] = [];
-
+  abaAtiva: string = 'proximasReservas';
   constructor(private courtService: CourtService) {
     this.courts = this.courtService.getCourts();
   }
 
   ngOnInit(): void {
     this.courts = this.courtService.getCourts();
+  }
+  
+  ativarAba(str: string) {
+    this.abaAtiva = str;
   }
 }
