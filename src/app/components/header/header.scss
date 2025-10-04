@@ -17,7 +17,6 @@
     color: $color-base-gray-dark;
     transition: color 0.3s ease;
 
-
     &:hover {
       color: $color-primary-blue;
 
@@ -27,13 +26,13 @@
     }
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: -4px;
       left: 0;
       width: 0;
       height: 2px;
-      background-color: $color-primary-blue;
+      background-color: $color-primary-yellow;
       transition: width 0.3s ease;
     }
   }
