@@ -25,7 +25,6 @@
       cursor: pointer;
       position: relative;
       padding-bottom: 12px; // Espaçamento para a linha inferior
-      color: #888; // Cor padrão para abas inativas
       transition: color 0.3s ease;
 
       &::after {
