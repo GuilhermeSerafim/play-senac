@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICourtCard } from '../../types/icourt-card';
 import { CourtService } from '../../services/court.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-proximas-reservas',
-  imports: [DatePipe, MatIcon],
+  imports: [DatePipe, MatIcon, TitleCasePipe],
   templateUrl: './proximas-reservas.html',
   styleUrl: './proximas-reservas.scss',
 })

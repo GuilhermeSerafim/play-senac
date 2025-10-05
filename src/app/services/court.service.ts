@@ -26,7 +26,7 @@ export class CourtService {
         title: 'Poliesportiva externa',
         horario: '10h30 - 11h30',
         capacidade: 10,
-        data: new Date(2025, 8, 29), // Mês 8 = Setembro
+        data: new Date(), // Agora
       },
     ];
   }

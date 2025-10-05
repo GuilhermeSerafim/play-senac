@@ -7,10 +7,10 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
-import { registerLocaleData } from '@angular/common';
-import { parseTemplate } from '@angular/compiler';
+import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
-registerLocaleData(parseTemplate, 'pt-BR');
+registerLocaleData(localePt, 'pt-BR');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,5 +22,6 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'top',
       })
     ),
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd/MM/yyyy' } },
   ],
 };
