@@ -15,24 +15,10 @@
       Faça sua reserva
     </p>
   </div>
-
-  @for (item of courts; track $index) {
-  <div class="container-reservas__card">
-    <div class="container-reservas__card__left">
-      <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
-
-      <div class="info-wrapper">
-        <h2>{{ item.title }}</h2>
-        <p>Horário: {{ item.horario }}</p>
-        <p>Capacidade: {{ item.capacidade }} pessoas</p>
-        <p>Data: {{ item.data | date : 'EEEE, dd/MM' }}</p>
-      </div>
-    </div>
-
-    <div class="container-reservas__card__right">
-      <mat-icon class="cancel-icon">cancel</mat-icon>
-    </div>
-  </div>
+  @if(abaAtiva === 'proximasReservas') {
+  <app-proximas-reservas />
+  } @else {
+  <app-faca-sua-reserva/>
   }
 </div>
 <app-footer></app-footer>
