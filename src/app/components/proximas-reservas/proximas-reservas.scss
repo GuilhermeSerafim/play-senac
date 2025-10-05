@@ -1,3 +1,5 @@
+@use '../../../styles/index' as *;
+
 .card {
   display: flex; // ✨ Coloca left e right lado a lado
   justify-content: space-between; // ✨ Empurra para as extremidades
@@ -42,7 +44,7 @@
     }
   }
   &__right__cancel-icon {
-    color: red;
+    color: $color-support-orange-warn;
     font-size: 32px;
     width: 100%;
     height: 100%;
@@ -52,6 +54,6 @@
     &:hover {
       transform: scale(1.1);
       opacity: 0.8;
-    } /*  */
+    }
   }
 }

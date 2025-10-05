@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICourtCard } from '../../types/icourt-card';
+import { ICourtCard } from '../../interfaces/icourt-card';
 import { CourtService } from '../../services/court.service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';

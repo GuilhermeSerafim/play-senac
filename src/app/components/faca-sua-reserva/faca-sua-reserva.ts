@@ -1,11 +1,60 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatOption, MatSelect } from '@angular/material/select';
+
+// Imports necessários para o Datepicker
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon'; // <-- IMPORTAR MÓDULO DE ÍCONE
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { MatButton } from '@angular/material/button';
+
+interface Comida {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-faca-sua-reserva',
-  imports: [],
+  standalone: true, // <-- É uma boa prática declarar explicitamente
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatInput,
+    MatOption,
+    MatDatepickerModule,
+    MatIconModule,
+    MatDatepickerToggle,
+    MatFormFieldModule,
+    MatTimepickerModule,
+    MatButton
+  ],
   templateUrl: './faca-sua-reserva.html',
-  styleUrl: './faca-sua-reserva.scss'
+  styleUrl: './faca-sua-reserva.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush, // <-- Boa prática para performance
 })
 export class FacaSuaReserva {
+  foods: Comida[] = [
+    { value: 'bife-0', viewValue: 'Bife' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
+  ];
+  quadraSelecionada: any;
+  dataSelecionada: Date | null = null;
+  horarioSelecionado: any;
+  onSubmit(_t6: NgForm) {
+    throw new Error('Method not implemented.');
+  }
 
+  teste() {
+    console.log(this.dataSelecionada);
+    console.log(this.horarioSelecionado);
+  }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICourtCard } from '../types/icourt-card';
+import { ICourtCard } from '../interfaces/icourt-card';
 
 @Injectable({
   providedIn: 'root',

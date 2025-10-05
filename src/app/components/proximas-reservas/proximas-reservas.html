@@ -8,7 +8,7 @@
       <p>Horário: {{ item.horario }}</p>
       <p>Capacidade: {{ item.capacidade }} pessoas</p>
       <p>
-        Data: {{ (item.data | date : 'EEEE' : '' : 'pt-BR')?.replace('-feira', '') | titlecase }},
+        Data: {{ (item.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
         {{ item.data | date : 'dd/MM' }}
       </p>
     </div>

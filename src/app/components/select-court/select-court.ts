@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ICourtCard } from '../../types/icourt-card';
+import { ICourtCard } from '../../interfaces/icourt-card';
 import { CourtService } from '../../services/court.service';
 
 @Component({

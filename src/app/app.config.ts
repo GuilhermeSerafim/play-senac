@@ -23,5 +23,6 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd/MM/yyyy' } },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
 };
