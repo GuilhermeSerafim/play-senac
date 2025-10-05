@@ -23,5 +23,5 @@ O objetivo é substituir processos manuais por operações digitais de reservas 
 - **Figma**  
 
 
-## 🎨 Protótipo / Design  
+## 🎨 Protótipo
 [🔗 Visualizar no Figma](https://www.figma.com/proto/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?page-id=74%3A66&node-id=126-1295&viewport=131%2C56%2C0.33&t=e0yD6WmMJGD6Dzqe-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=126%3A1295).
