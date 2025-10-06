@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Informações do convidado</h1>
+
+<mat-dialog-content class="mat-typography">
+  <mat-form-field appearance="outline" [style.marginTop.px]="30">
+    <mat-label>Nome do convidado</mat-label>
+    <input matInput placeholder="Ex: João Silva" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Telefone do convidado</mat-label>
+    <input matInput placeholder="Ex: (99) 99999-9999" type="tel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>E-mail do convidado</mat-label>
+    <input
+      pattern="^\\(\\d{2}\\) \\d{4,5}-\\d{4}$"
+      matInput
+      placeholder="Ex: email@exemplo.com"
+      type="email"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+
+  <button mat-button color="primary" (click)="onConfirm()">Confirmar</button>
+</mat-dialog-actions>

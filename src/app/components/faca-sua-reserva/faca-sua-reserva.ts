@@ -3,14 +3,16 @@ import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/fo
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 
-// Imports necessários para o Datepicker
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon'; // <-- IMPORTAR MÓDULO DE ÍCONE
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatButton } from '@angular/material/button';
+
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
 
 interface Comida {
   value: string;
@@ -34,7 +36,8 @@ interface Comida {
     MatDatepickerToggle,
     MatFormFieldModule,
     MatTimepickerModule,
-    MatButton
+    MatButton,
+    MatDialogModule,
   ],
   templateUrl: './faca-sua-reserva.html',
   styleUrl: './faca-sua-reserva.scss',
@@ -49,6 +52,9 @@ export class FacaSuaReserva {
   quadraSelecionada: any;
   dataSelecionada: Date | null = null;
   horarioSelecionado: any;
+
+  constructor(private dialog: MatDialog) {}
+
   onSubmit(_t6: NgForm) {
     throw new Error('Method not implemented.');
   }
@@ -57,4 +63,9 @@ export class FacaSuaReserva {
     console.log(this.dataSelecionada);
     console.log(this.horarioSelecionado);
   }
+  abreDialogConvidado() {
+    this.dialog.open(ConvidadosDialog, {
+      width: '540px',
+    });
+}
 }
