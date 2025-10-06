@@ -1,15 +1,19 @@
 @use '../../../styles/index' as *;
 
-.faca-sua-reserva__form__left {
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &__item {
-    width: 40%;
+    margin: 0 auto;
+    width: 50%;
   }
 
   &__bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 40%;
+    width: 50%;
   }
 
   .person_add {

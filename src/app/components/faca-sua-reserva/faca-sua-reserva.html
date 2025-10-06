@@ -1,61 +1,50 @@
 <form
-  class="faca-sua-reserva__form"
+  class="form-container"
   #facaSuaReservaFormControl="ngForm"
   (ngSubmit)="onSubmit(facaSuaReservaFormControl)"
 >
-  <div class="faca-sua-reserva__form__left">
-    <mat-form-field
-      appearance="outline"
-      class="full-width faca-sua-reserva__form__left__item"
+  <mat-form-field appearance="outline" class="full-width form-container__item">
+    <mat-label>Selecione a quadra</mat-label>
+    <mat-select
+      name="quadraSelecionada"
+      [(ngModel)]="quadraSelecionada"
+      #quadraSelecionadaControl="ngModel"
     >
-      <mat-label>Selecione a quadra</mat-label>
-      <mat-select
-        name="quadraSelecionada"
-        [(ngModel)]="quadraSelecionada"
-        #quadraSelecionadaControl="ngModel"
-      >
-        @for (food of foods; track food) {
-        <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <br />
-    <mat-form-field
-      appearance="outline"
-      class="full-width faca-sua-reserva__form__left__item"
-    >
-      <mat-label>Selecione a data</mat-label>
-      <input
-        name="dataSelecionada"
-        [(ngModel)]="dataSelecionada"
-        #dataSelecionadaControl="ngModel"
-        matInput
-        [matDatepicker]="picker"
-      />
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <br />
-    <mat-form-field
-      appearance="outline"
-      class="full-width faca-sua-reserva__form__left__item"
-    >
-      <mat-label>Selecione o horário</mat-label>
-      <input
-        matInput
-        [matTimepicker]="timepicker"
-        [(ngModel)]="horarioSelecionado"
-        name="horarioSelecionado"
-        #horarioSelecionadoControl="ngModel"
-      />
-      <mat-timepicker #timepicker />
-      <mat-timepicker-toggle [for]="timepicker" matSuffix />
-    </mat-form-field>
-    <br />
-    <div class="faca-sua-reserva__form__left__bottom">
-      <mat-icon class="person_add">person_add</mat-icon>
-      <button matButton="elevated" class="enviar-button" type="submit">Confirmar</button>
-    </div>
+      @for (food of foods; track food) {
+      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <br />
+  <mat-form-field appearance="outline" class="full-width form-container__item">
+    <mat-label>Selecione a data</mat-label>
+    <input
+      name="dataSelecionada"
+      [(ngModel)]="dataSelecionada"
+      #dataSelecionadaControl="ngModel"
+      matInput
+      [matDatepicker]="picker"
+    />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <br />
+  <mat-form-field appearance="outline" class="full-width form-container__item">
+    <mat-label>Selecione o horário</mat-label>
+    <input
+      matInput
+      [matTimepicker]="timepicker"
+      [(ngModel)]="horarioSelecionado"
+      name="horarioSelecionado"
+      #horarioSelecionadoControl="ngModel"
+    />
+    <mat-timepicker #timepicker />
+    <mat-timepicker-toggle [for]="timepicker" matSuffix />
+  </mat-form-field>
+  <br />
+  <div class="form-container__bottom">
+    <mat-icon class="person_add">person_add</mat-icon>
+    <button matButton="elevated" class="enviar-button" type="submit">Confirmar</button>
   </div>
-  <div class="faca-sua-reserva__form__right"></div>
+  <div class="form-container__right"></div>
 </form>
