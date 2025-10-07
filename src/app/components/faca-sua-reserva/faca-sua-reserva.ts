@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -15,6 +15,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
 import { IConvidado } from '../../interfaces/iconvidado';
 import { MatChipsModule } from '@angular/material/chips';
+import { CourtService } from '../../services/court.service';
+import { ICourtCard } from '../../interfaces/icourt-card';
 
 interface Comida {
   value: string;
@@ -45,7 +47,7 @@ interface Comida {
   templateUrl: './faca-sua-reserva.html',
   styleUrl: './faca-sua-reserva.scss',
 })
-export class FacaSuaReserva {
+export class FacaSuaReserva implements OnInit {
   foods: Comida[] = [
     { value: 'bife-0', viewValue: 'Bife' },
     { value: 'pizza-1', viewValue: 'Pizza' },
@@ -55,8 +57,13 @@ export class FacaSuaReserva {
   dataSelecionada: Date | null = null;
   horarioSelecionado: any;
   convidados: IConvidado[] = [];
+  quadras: ICourtCard[] = [];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private readonly _quadraService: CourtService) {}
+  
+  ngOnInit(): void {
+    this.quadras = this._quadraService.getCourts();
+  }
 
   onSubmit(_t6: NgForm) {
     throw new Error('Method not implemented.');

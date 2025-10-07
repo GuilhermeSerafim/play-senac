@@ -21,7 +21,6 @@ export class ProximasReservas implements OnInit {
     private readonly _courtService: CourtService,
     private readonly _reservaService: ReservaService
   ) {}
-  
   ngOnInit(): void {
     this.courts = this._courtService.getCourts();
     this.reservas = this._reservaService.getReservas();

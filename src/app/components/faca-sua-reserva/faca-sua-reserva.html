@@ -10,8 +10,8 @@
       [(ngModel)]="quadraSelecionada"
       #quadraSelecionadaControl="ngModel"
     >
-      @for (food of foods; track food) {
-      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+      @for (quadra of quadras; track quadra) {
+      <mat-option [value]="quadra.title">{{ quadra.title }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
@@ -66,3 +66,6 @@
   </div>
   <div class="form-container__right"></div>
 </form>
+
+
+<button (click)="teste()" matButton="">CLICK HERE (test)</button>
