@@ -44,7 +44,6 @@ interface Comida {
   ],
   templateUrl: './faca-sua-reserva.html',
   styleUrl: './faca-sua-reserva.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush, // <-- Boa prática para performance
 })
 export class FacaSuaReserva {
   foods: Comida[] = [
