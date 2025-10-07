@@ -38,6 +38,10 @@
       [(ngModel)]="horarioSelecionado"
       name="horarioSelecionado"
       #horarioSelecionadoControl="ngModel"
+      [disabled]="!dataSelecionada"
+      type="time"
+      matTimepickerMin="09:00"
+      matTimepickerMax="20:00"
     />
     <mat-timepicker #timepicker />
     <mat-timepicker-toggle [for]="timepicker" matSuffix />
