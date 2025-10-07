@@ -1,3 +1,4 @@
+# Em desenvolvimento
 **Play Senac** é um sistema web em **Angular** para **agendamento e gerenciamento de quadras esportivas** no campus do Senac.  
 O objetivo é substituir processos manuais por operações digitais de reservas (CRUD), tudo com uma interface moderna e responsiva.
 
@@ -23,5 +24,6 @@ O objetivo é substituir processos manuais por operações digitais de reservas 
 - **Figma**  
 
 
-## 🎨 Protótipo / Design  
-[🔗 Visualizar no Figma](https://www.figma.com/proto/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?page-id=74%3A66&node-id=126-1295&viewport=131%2C56%2C0.33&t=e0yD6WmMJGD6Dzqe-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=126%3A1295).
+## 🎨 Design
+- [Protótipo](https://www.figma.com/proto/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?page-id=74%3A66&node-id=126-1295&viewport=131%2C56%2C0.33&t=e0yD6WmMJGD6Dzqe-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=126%3A1295)
+- [Figma](https://www.figma.com/design/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?node-id=258-798&t=FZqCDBkWWdEpp5ab-1)
