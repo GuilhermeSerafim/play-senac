@@ -64,8 +64,15 @@ export class FacaSuaReserva {
     console.log(this.horarioSelecionado);
   }
   abreDialogConvidado() {
-    this.dialog.open(ConvidadosDialog, {
+    const dialogRef = this.dialog.open(ConvidadosDialog, {
       width: '540px',
     });
-}
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Dados do convidado:', result);
+      } else {
+        console.log('O diálogo foi cancelado.');
+      }
+    });
+  }
 }

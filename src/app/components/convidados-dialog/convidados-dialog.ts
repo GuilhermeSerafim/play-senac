@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -9,12 +10,14 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-convidados-dialog',
   imports: [
     CommonModule,
+    FormsModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
@@ -22,24 +25,27 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatIconModule,
   ],
   templateUrl: './convidados-dialog.html',
   styleUrl: './convidados-dialog.scss',
 })
 export class ConvidadosDialog {
+  emailConvidado: string = '';
+  telefoneConvidado: string = '';
+  nomeConvidado: string = '';
+
   constructor(public dialogRef: MatDialogRef<ConvidadosDialog>) {}
 
-  // ℹ️ Lógica de Confirmação (será chamada pelo clique do botão "Confirmar")
-  onConfirm(): void {
-    // Aqui você coletaria os dados do formulário
-    const dados = { nome: '', telefone: '', email: '' };
-
-    // Fecha o diálogo e passa os dados como resultado
-    this.dialogRef.close(dados);
+  onCancel(): void {
+    this.dialogRef.close(false);
   }
 
-  // Lógica de Cancelamento (pode ser opcional se você usar mat-dialog-close no template)
-  onCancel(): void {
-    this.dialogRef.close(false); // Retorna 'false' ou 'undefined' para indicar cancelamento
+  onSubmit(_t5: NgForm) {
+    this.dialogRef.close({
+      nome: this.nomeConvidado,
+      telefone: this.telefoneConvidado,
+      email: this.emailConvidado,
+    });
   }
 }

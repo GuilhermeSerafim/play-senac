@@ -1,5 +1,4 @@
-
-@use "./styles/index" as *;
+@use './styles/index' as *;
 
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
@@ -9,14 +8,16 @@
 @use '@angular/material' as mat;
 
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Montserrat,
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Montserrat,
+      density: 0,
+    )
+  );
 }
 
 body {
@@ -35,4 +36,13 @@ body {
   margin: 0;
 }
 
-html, body { height: 100%; scroll-behavior: smooth;}
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+}

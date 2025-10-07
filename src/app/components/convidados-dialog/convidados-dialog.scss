@@ -7,3 +7,23 @@ mat-dialog-content {
     width: 100%;
   }
 }
+.mat-mdc-raised-button.btn-cancelar {
+  color: #fff;
+  background-color: #d32f2f;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #b71c1c; // tom mais escuro no hover
+  }
+}
+
+.mat-mdc-raised-button.btn-confirmar {
+  color: white;
+  background-color: #2967f4; /* Cor do Figma */
+  font-size: 1em;
+
+  &:hover {
+    background-color: #1e52c7; // tom mais escuro e consistente no hover
+  }
+}

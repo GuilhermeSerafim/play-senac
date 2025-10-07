@@ -1,29 +1,101 @@
-<h1 mat-dialog-title>Informações do convidado</h1>
+<form #cadastroForm="ngForm" (ngSubmit)="onSubmit(cadastroForm)">
+  <h1 mat-dialog-title>Informações do convidado</h1>
 
-<mat-dialog-content class="mat-typography">
-  <mat-form-field appearance="outline" [style.marginTop.px]="30">
-    <mat-label>Nome do convidado</mat-label>
-    <input matInput placeholder="Ex: João Silva" />
-  </mat-form-field>
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field appearance="outline" [style.marginTop.px]="30">
+      <mat-label>Nome do convidado</mat-label>
+      <input
+        name="nomeConvidado"
+        #nomeConvidadoControl="ngModel"
+        ngModel
+        [(ngModel)]="nomeConvidado"
+        required
+        minLength="3"
+        matInput
+      />
+      <mat-icon matPrefix>person</mat-icon>
+      @if (nomeConvidadoControl.invalid && (nomeConvidadoControl.dirty ||
+      nomeConvidadoControl.touched)) {
+      <mat-error>
+        @if (nomeConvidadoControl.errors?.['required']) {
+        <span>O nome é obrigatório.</span>
+        } @if (nomeConvidadoControl.errors?.['minlength']) {
+        <span>O nome deve ter no mínimo 3 caracteres.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Telefone do convidado</mat-label>
-    <input matInput placeholder="Ex: (99) 99999-9999" type="tel" />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Telefone do convidado</mat-label>
+      <input
+        matInput
+        type="tel"
+        name="telefoneConvidado"
+        ngModel
+        [(ngModel)]="telefoneConvidado"
+        #telefoneConvidadoControl="ngModel"
+        required
+        pattern="^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$"
+      />
+      <mat-icon matPrefix>phone</mat-icon>
+      @if (telefoneConvidadoControl.invalid && (telefoneConvidadoControl.dirty ||
+      telefoneConvidadoControl.touched)) {
+      <mat-error>
+        @if (telefoneConvidadoControl.errors?.['required']) {
+        <span>O telefone é obrigatório.</span>
+        } @if (telefoneConvidadoControl.errors?.['pattern']) {
+        <span>O telefone deve estar no formato (XX) XXXXX-XXXX.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>E-mail do convidado</mat-label>
-    <input
-      pattern="^\\(\\d{2}\\) \\d{4,5}-\\d{4}$"
-      matInput
-      placeholder="Ex: email@exemplo.com"
-      type="email"
-    />
-  </mat-form-field>
-</mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail do convidado</mat-label>
+      <input
+        matInput
+        type="email"
+        name="emailConvidado"
+        ngModel
+        #emailConvidadoControl="ngModel"
+        [(ngModel)]="emailConvidado"
+        required
+        email
+        pattern="^[a-zA-Z0-9._%+-]+@senacsp\.edu\.br$"
+      />
+      <mat-icon matPrefix>email</mat-icon>
+      @if (emailConvidadoControl.invalid && (emailConvidadoControl.dirty ||
+      emailConvidadoControl.touched)) {
+      <mat-error>
+        @if (emailConvidadoControl.errors?.['required']) {
+        <span>O e-mail é obrigatório.</span>
+        } @if (emailConvidadoControl.errors?.['email']) {
+        <span>Por favor, insira um e-mail válido.</span>
+        } @if (!emailConvidadoControl.errors?.['email'] &&
+        emailConvidadoControl.errors?.['pattern']) {
+        <span>O e-mail deve ser do domínio @senacsp.edu.br.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancelar</button>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button class="btn-cancelar" mat-dialog-close color="warn">Cancelar</button>
 
-  <button mat-button color="primary" (click)="onConfirm()">Confirmar</button>
-</mat-dialog-actions>
+    <button
+      mat-raised-button
+      class="btn-confirmar"
+      color="primary"
+      [disabled]="cadastroForm.invalid"
+      [ngStyle]="
+        cadastroForm.invalid
+          ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
+          : { }
+      "
+    >
+      Confirmar
+    </button>
+  </mat-dialog-actions>
+</form>
