@@ -12,6 +12,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { IConvidado } from '../../interfaces/iconvidado';
 
 @Component({
   selector: 'app-convidados-dialog',
@@ -42,10 +43,11 @@ export class ConvidadosDialog {
   }
 
   onSubmit(_t5: NgForm) {
-    this.dialogRef.close({
+    const convidado: IConvidado = {
       nome: this.nomeConvidado,
       telefone: this.telefoneConvidado,
       email: this.emailConvidado,
-    });
+    };
+    this.dialogRef.close(convidado);
   }
 }

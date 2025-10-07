@@ -24,6 +24,7 @@
       #dataSelecionadaControl="ngModel"
       matInput
       [matDatepicker]="picker"
+      readonly
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -42,6 +43,17 @@
     <mat-timepicker-toggle [for]="timepicker" matSuffix />
   </mat-form-field>
   <br />
+  @if ( convidados.length > 0 ) {
+  <mat-chip-listbox class="full-width form-container__item">
+    @for (convidado of convidados; track convidado) {
+    <mat-chip color="primary" selected (removed)="removeConvidado(convidado)">
+      {{ convidado.nome }}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    }
+  </mat-chip-listbox>
+  <br />
+  }
   <div class="form-container__bottom">
     <button type="button" (click)="abreDialogConvidado()">
       <mat-icon class="person_add">person_add</mat-icon>

@@ -13,6 +13,8 @@ import { MatButton } from '@angular/material/button';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
+import { IConvidado } from '../../interfaces/iconvidado';
+import { MatChipsModule } from '@angular/material/chips';
 
 interface Comida {
   value: string;
@@ -38,6 +40,7 @@ interface Comida {
     MatTimepickerModule,
     MatButton,
     MatDialogModule,
+    MatChipsModule,
   ],
   templateUrl: './faca-sua-reserva.html',
   styleUrl: './faca-sua-reserva.scss',
@@ -52,6 +55,7 @@ export class FacaSuaReserva {
   quadraSelecionada: any;
   dataSelecionada: Date | null = null;
   horarioSelecionado: any;
+  convidados: IConvidado[] = [];
 
   constructor(private dialog: MatDialog) {}
 
@@ -67,12 +71,9 @@ export class FacaSuaReserva {
     const dialogRef = this.dialog.open(ConvidadosDialog, {
       width: '540px',
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Dados do convidado:', result);
-      } else {
-        console.log('O diálogo foi cancelado.');
-      }
-    });
+    dialogRef.afterClosed().subscribe((c) => this.convidados.push(c));
+  }
+  removeConvidado(c: IConvidado) {
+    this.convidados = this.convidados.filter((convidado) => convidado !== c);
   }
 }
