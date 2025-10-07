@@ -70,7 +70,7 @@ export class FacaSuaReserva {
     const dialogRef = this.dialog.open(ConvidadosDialog, {
       width: '540px',
     });
-    dialogRef.afterClosed().subscribe((c) => this.convidados.push(c));
+    dialogRef.afterClosed().subscribe((c) => c && this.convidados.push(c));
   }
   removeConvidado(c: IConvidado) {
     this.convidados = this.convidados.filter((convidado) => convidado !== c);
