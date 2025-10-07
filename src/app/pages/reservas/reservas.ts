@@ -4,7 +4,7 @@ import { Footer } from '../../components/footer/footer';
 import { ICourtCard } from '../../interfaces/icourt-card';
 import { NgClass } from '@angular/common';
 import { ProximasReservas } from '../../components/proximas-reservas/proximas-reservas';
-import { FacaSuaReserva } from "../../components/faca-sua-reserva/faca-sua-reserva";
+import { FacaSuaReserva } from '../../components/faca-sua-reserva/faca-sua-reserva';
 
 @Component({
   selector: 'app-reservas',
@@ -18,5 +18,8 @@ export class Reservas {
 
   ativarAba(str: string) {
     this.abaAtiva = str;
+  }
+  aoCriarReserva() {
+    this.abaAtiva = 'proximasReservas';
   }
 }

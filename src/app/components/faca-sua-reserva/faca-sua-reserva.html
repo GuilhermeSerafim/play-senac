@@ -9,16 +9,25 @@
       name="quadraSelecionada"
       [(ngModel)]="quadraSelecionada"
       #quadraSelecionadaControl="ngModel"
+      required
     >
       @for (quadra of quadras; track quadra) {
       <mat-option [value]="quadra.title">{{ quadra.title }}</mat-option>
       }
     </mat-select>
+    @if (quadraSelecionadaControl.hasError('required')) {
+      <mat-error >
+        O campo quadra é obrigatório.
+      </mat-error>
+    }
   </mat-form-field>
+
   <br />
+
   <mat-form-field appearance="outline" class="full-width form-container__item">
     <mat-label>Selecione a data</mat-label>
     <input
+      required
       name="dataSelecionada"
       [(ngModel)]="dataSelecionada"
       #dataSelecionadaControl="ngModel"
@@ -28,11 +37,17 @@
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="dataSelecionadaControl.hasError('required')">
+      A data é obrigatória.
+    </mat-error>
   </mat-form-field>
+
   <br />
+
   <mat-form-field appearance="outline" class="full-width form-container__item">
     <mat-label>Selecione o horário</mat-label>
     <input
+      required
       matInput
       [matTimepicker]="timepicker"
       [(ngModel)]="horarioSelecionado"
@@ -45,8 +60,13 @@
     />
     <mat-timepicker #timepicker />
     <mat-timepicker-toggle [for]="timepicker" matSuffix />
+    <mat-error *ngIf="horarioSelecionadoControl.hasError('required')">
+      O horário é obrigatório.
+    </mat-error>
   </mat-form-field>
+
   <br />
+
   @if ( convidados.length > 0 ) {
   <mat-chip-listbox class="full-width form-container__item">
     @for (convidado of convidados; track convidado) {
@@ -58,14 +78,26 @@
   </mat-chip-listbox>
   <br />
   }
+
   <div class="form-container__bottom">
     <button type="button" (click)="abreDialogConvidado()">
       <mat-icon class="person_add">person_add</mat-icon>
     </button>
-    <button matButton="elevated" class="enviar-button" type="submit">Confirmar</button>
+    <button
+      matButton="elevated"
+      class="enviar-button"
+      type="submit"
+      [disabled]="facaSuaReservaFormControl.invalid"
+      [ngStyle]="
+        facaSuaReservaFormControl.invalid
+          ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
+          : {}
+      "
+    >
+      Confirmar
+    </button>
   </div>
   <div class="form-container__right"></div>
 </form>
 
-
-<button (click)="teste()" matButton="">CLICK HERE (test)</button>
+<!-- <button (click)="teste()" matButton="">CLICK HERE (test)</button> -->

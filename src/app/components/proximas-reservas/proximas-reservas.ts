@@ -17,29 +17,30 @@ export class ProximasReservas implements OnInit {
   courts: ICourtCard[] = [];
   reservas: IReserva[] = [];
   public reservasCombinadas: IReservaDisplay[] = [];
+
   constructor(
     private readonly _courtService: CourtService,
     private readonly _reservaService: ReservaService
   ) {}
+
   ngOnInit(): void {
     this.courts = this._courtService.getCourts();
-    this.reservas = this._reservaService.getReservas();
+    this._reservaService.getReservas().subscribe((r) => (this.reservas = r));
     this.combinarDados();
+    console.log(this.reservas);
   }
 
   private combinarDados(): void {
-    this.reservasCombinadas = this.reservas
-      .map((reserva) => {
-        const courtInfo = this.courts.find((court) => court.title === reserva.quadra);
+    this.reservasCombinadas = this.reservas.map((reserva) => {
+      const courtInfo = this.courts.find((court) => court.title === reserva.quadra);
 
-        return {
-          pathImg: courtInfo?.pathImg || 'caminho/para/imagem/default.png',
-          title: reserva.quadra,
-          horario: reserva.horario,
-          capacidade: courtInfo?.capacidade,
-          data: reserva.data,
-        };
-      })
-      .sort((a, b) => a.data.getTime() - b.data.getTime()); // Ordena por data
+      return {
+        pathImg: courtInfo?.pathImg || 'images/default.png',
+        title: reserva.quadra,
+        horario: reserva.horario,
+        capacidade: courtInfo?.capacidade,
+        data: reserva.data,
+      };
+    });
   }
 }

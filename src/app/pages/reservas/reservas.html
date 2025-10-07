@@ -18,7 +18,7 @@
   @if(abaAtiva === 'proximasReservas') {
   <app-proximas-reservas />
   } @else {
-  <app-faca-sua-reserva/>
+  <app-faca-sua-reserva (aoCriarReserva)="aoCriarReserva()"/>
   }
 </div>
 <app-footer></app-footer>

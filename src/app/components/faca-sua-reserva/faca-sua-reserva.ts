@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -17,6 +17,8 @@ import { IConvidado } from '../../interfaces/iconvidado';
 import { MatChipsModule } from '@angular/material/chips';
 import { CourtService } from '../../services/court.service';
 import { ICourtCard } from '../../interfaces/icourt-card';
+import { ReservaService } from '../../services/reserva.service';
+import { IReserva } from '../../interfaces/ireserva';
 
 interface Comida {
   value: string;
@@ -59,14 +61,29 @@ export class FacaSuaReserva implements OnInit {
   convidados: IConvidado[] = [];
   quadras: ICourtCard[] = [];
 
-  constructor(private dialog: MatDialog, private readonly _quadraService: CourtService) {}
-  
+  // Vamos usar isso apenas para o pai saber que deve ir para os próximos reservas, pois ele que orquestra isso
+  @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
+
+  constructor(
+    private readonly _dialog: MatDialog,
+    private readonly _quadraService: CourtService,
+    private readonly _reservaService: ReservaService
+  ) {}
+
   ngOnInit(): void {
     this.quadras = this._quadraService.getCourts();
   }
 
-  onSubmit(_t6: NgForm) {
-    throw new Error('Method not implemented.');
+  onSubmit(f: NgForm) {
+    const reserva: IReserva = {
+      convidados: f.value.convidados,
+      data: f.value.dataSelecionada,
+      horario: f.value.horarioSelecionado,
+      quadra: f.value.quadraSelecionada,
+    };
+
+    this._reservaService.addReserva(reserva);
+    this.aoCriarReservaEmmit.emit();
   }
 
   teste() {
@@ -74,7 +91,7 @@ export class FacaSuaReserva implements OnInit {
     console.log(this.horarioSelecionado);
   }
   abreDialogConvidado() {
-    const dialogRef = this.dialog.open(ConvidadosDialog, {
+    const dialogRef = this._dialog.open(ConvidadosDialog, {
       width: '540px',
     });
     dialogRef.afterClosed().subscribe((c) => c && this.convidados.push(c));
