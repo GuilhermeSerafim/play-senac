@@ -14,7 +14,7 @@ import { FacaSuaReserva } from "../../components/faca-sua-reserva/faca-sua-reser
 })
 export class Reservas {
   courts: ICourtCard[] = [];
-  abaAtiva: string = 'facaSuaReserva';
+  abaAtiva: string = 'proximasReservas';
 
   ativarAba(str: string) {
     this.abaAtiva = str;

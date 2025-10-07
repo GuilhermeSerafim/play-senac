@@ -1,11 +1,11 @@
-@for (item of courts; track $index) {
+@for (item of reservasCombinadas; track $index) {
 <div class="card">
   <div class="card__left">
     <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
 
     <div class="info-wrapper">
       <h2>{{ item.title }}</h2>
-      <p>Horário: {{ item.horario }}</p>
+      <p>Horário: {{ item.title }}</p>
       <p>Capacidade: {{ item.capacidade }} pessoas</p>
       <p>
         Data: {{ (item.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
