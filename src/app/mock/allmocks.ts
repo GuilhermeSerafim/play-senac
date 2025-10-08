@@ -8,13 +8,15 @@ const mockConvidados: IConvidado[] = [
 ];
 
 export const mockReservaCompleta: IReserva = {
-    quadra: 'Tênis',
-    data: new Date(2025, 9, 1), // Mês 9 = Outubro, pois é base 0
-    horario: '10:00',
-    convidados: mockConvidados,
+  id: 100,
+  quadra: 'Tênis',
+  data: new Date(2025, 9, 1), // Mês 9 = Outubro, pois é base 0
+  horario: '10:00',
+  convidados: mockConvidados,
 };
 
 export const mockReservaSemConvidados: IReserva = {
+  id: 101,
   quadra: 'Society',
   data: new Date(2025, 8, 30),
   horario: '10:00',
@@ -25,6 +27,7 @@ export const mockListaDeReservas: IReserva[] = [
   mockReservaCompleta,
   mockReservaSemConvidados,
   {
+    id: 102,
     quadra: 'Poliesportiva externa',
     data: new Date(2025, 8, 29),
     horario: '10:30',

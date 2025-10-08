@@ -18,7 +18,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { CourtService } from '../../services/court.service';
 import { ICourtCard } from '../../interfaces/icourt-card';
 import { ReservaService } from '../../services/reserva.service';
-import { IReserva } from '../../interfaces/ireserva';
+import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
 
 interface Comida {
   value: string;
@@ -75,7 +75,7 @@ export class FacaSuaReserva implements OnInit {
   }
 
   onSubmit(f: NgForm) {
-    const reserva: IReserva = {
+    const reserva: ICreateReserva = {
       convidados: f.value.convidados,
       data: f.value.dataSelecionada,
       horario: f.value.horarioSelecionado,

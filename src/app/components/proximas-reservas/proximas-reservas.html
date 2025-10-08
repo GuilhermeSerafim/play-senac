@@ -1,21 +1,23 @@
-@for (item of reservasCombinadas; track $index) {
+@for (reserva of reservasCombinadas$ | async; track reserva.id) {
 <div class="card">
   <div class="card__left">
-    <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
+    <img [src]="reserva.pathImg" alt="Imagem da quadra {{ reserva.title }}" />
 
     <div class="info-wrapper">
-      <h2>{{ item.title }}</h2>
-      <p>Horário: {{ item.title }}</p>
-      <p>Capacidade: {{ item.capacidade }} pessoas</p>
+      <h2>{{ reserva.title }}</h2>
+      <p>Horário: {{ reserva.title }}</p>
+      <p>Capacidade: {{ reserva.capacidade }} pessoas</p>
       <p>
-        Data: {{ (item.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
-        {{ item.data | date : 'dd/MM' }}
+        Data: {{ (reserva.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
+        {{ reserva.data | date : 'dd/MM' }}
       </p>
     </div>
   </div>
 
   <div class="card__right">
-    <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
+    <button (click)="cancelarReserva(reserva.id)">
+      <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
+    </button>
   </div>
 </div>
 }
