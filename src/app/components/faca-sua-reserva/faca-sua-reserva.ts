@@ -16,7 +16,7 @@ import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
 import { IConvidado } from '../../interfaces/iconvidado';
 import { MatChipsModule } from '@angular/material/chips';
 import { CourtService } from '../../services/court.service';
-import { ICourtCard } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt-card';
 import { ReservaService } from '../../services/reserva.service';
 import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
 
@@ -59,7 +59,7 @@ export class FacaSuaReserva implements OnInit {
   dataSelecionada: Date | null = null;
   horarioSelecionado: any;
   convidados: IConvidado[] = [];
-  quadras: ICourtCard[] = [];
+  quadras: ICourt[] = [];
 
   // Vamos usar isso apenas para o pai saber que deve ir para os próximos reservas, pois ele que orquestra isso
   @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
@@ -71,7 +71,7 @@ export class FacaSuaReserva implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.quadras = this._quadraService.getCourts();
+    this._quadraService.getCourts().subscribe((q) => (this.quadras = q));
   }
 
   onSubmit(f: NgForm) {

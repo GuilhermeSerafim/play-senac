@@ -1,24 +1,21 @@
 @use '../../../styles/index' as *;
 
-.container-reservas {
-  padding: 20px;
-  max-width: 941px; // Adicionado para centralizar e limitar a largura
-  margin: 0 auto;
 
+.dashboard {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 941px;
   h1 {
     font-size: 32px; // Tamanho de exemplo
     font-weight: 700;
   }
-
-  // --- MENU DE ABAS ---
-  &__menu-reservas {
+  &__menu {
     margin: 38px 0;
     display: flex;
     gap: 88px; // Mais moderno que usar margin no filho
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid #eee; // Linha de fundo para as abas
-
     p {
       cursor: pointer;
       position: relative;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ICourtCard } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt-card';
 import { CourtService } from '../../services/court.service';
 
 @Component({
@@ -10,13 +10,11 @@ import { CourtService } from '../../services/court.service';
   styleUrl: './select-court.scss',
 })
 export class SelectCourt {
-  courts: ICourtCard[] = [];
+  courts: ICourt[] = [];
 
-  constructor(private courtService: CourtService) {
-    this.courts = this.courtService.getCourts();
-  }
+  constructor(private courtService: CourtService) {}
 
   ngOnInit(): void {
-    this.courts = this.courtService.getCourts();
+    this.courtService.getCourts().subscribe((courts) => (this.courts = courts));
   }
 }

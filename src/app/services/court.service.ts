@@ -1,27 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ICourtCard } from '../interfaces/icourt-card';
+import { ICourt } from '../interfaces/icourt-card';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { mockListaDeQuadras } from '../mock/allmocks';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourtService {
-  getCourts(): ICourtCard[] {
-    return [
-      {
-        pathImg: 'images/a.png',
-        title: 'Tênis',
-        capacidade: 4,
-      },
-      {
-        pathImg: 'images/b.png',
-        title: 'Society',
-        capacidade: 16,
-      },
-      {
-        pathImg: 'images/c.png',
-        title: 'Poliesportiva externa',
-        capacidade: 10,
-      },
-    ];
+  private courtSubject = new BehaviorSubject<ICourt[]>(mockListaDeQuadras);
+  public court$: Observable<ICourt[]> = this.courtSubject.asObservable();
+  getCourts(): Observable<ICourt[]> {
+    return this.court$;
   }
+
+  removeCourt(court: ICourt) {}
 }

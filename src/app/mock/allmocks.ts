@@ -1,4 +1,5 @@
 import { IConvidado } from '../interfaces/iconvidado';
+import { ICourt } from '../interfaces/icourt-card';
 import { IReserva } from '../interfaces/ireserva';
 
 const mockConvidados: IConvidado[] = [
@@ -32,5 +33,23 @@ export const mockListaDeReservas: IReserva[] = [
     data: new Date(2025, 8, 29),
     horario: '10:30',
     convidados: [mockConvidados[0]], // Apenas um convidado
+  },
+];
+
+export const mockListaDeQuadras: ICourt[] = [
+  {
+    pathImg: 'images/a.png',
+    title: 'Tênis',
+    capacidade: 4,
+  },
+  {
+    pathImg: 'images/b.png',
+    title: 'Society',
+    capacidade: 16,
+  },
+  {
+    pathImg: 'images/c.png',
+    title: 'Poliesportiva externa',
+    capacidade: 10,
   },
 ];

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICourtCard } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt-card';
 import { IReserva } from '../../interfaces/ireserva';
 import { CourtService } from '../../services/court.service';
 import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
@@ -17,7 +17,7 @@ import { map, Observable } from 'rxjs';
   styleUrl: './proximas-reservas.scss',
 })
 export class ProximasReservas implements OnInit {
-  courts: ICourtCard[] = [];
+  courts: ICourt[] = [];
   reservasCombinadas$!: Observable<IReservaDisplay[]>;
 
   constructor(
@@ -27,7 +27,7 @@ export class ProximasReservas implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.courts = this._courtService.getCourts();
+    this._courtService.getCourts().subscribe((courts) => (this.courts = courts));
     this.reservasCombinadas$ = this._reservaService.reservas$.pipe(
       map((reservasRecebidas) => {
         return reservasRecebidas

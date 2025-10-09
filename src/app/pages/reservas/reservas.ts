@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
-import { ICourtCard } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt-card';
 import { NgClass } from '@angular/common';
 import { ProximasReservas } from '../../components/proximas-reservas/proximas-reservas';
 import { FacaSuaReserva } from '../../components/faca-sua-reserva/faca-sua-reserva';
@@ -13,7 +13,7 @@ import { FacaSuaReserva } from '../../components/faca-sua-reserva/faca-sua-reser
   styleUrl: './reservas.scss',
 })
 export class Reservas {
-  courts: ICourtCard[] = [];
+  courts: ICourt[] = [];
   abaAtiva: string = 'proximasReservas';
 
   ativarAba(str: string) {

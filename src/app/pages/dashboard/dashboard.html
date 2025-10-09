@@ -1,0 +1,17 @@
+<app-header [isAdmin]="true"></app-header>
+<div class="dashboard">
+  <h1>Dashboard</h1>
+  <div class="dashboard__menu">
+    <p [ngClass]="abaAtiva === 'quadras' ? 'active' : ''" (click)="ativarAba('quadras')">Quadras</p>
+    <p
+      [ngClass]="abaAtiva === 'reservas' ? 'active' : ''"
+      (click)="ativarAba('reservas')"
+    >
+      Reservas
+    </p>
+  </div>
+  @if(abaAtiva === 'quadras') { } @else {
+  <app-quadras></app-quadras>
+  }
+</div>
+<app-footer></app-footer>
