@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ICourt } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt';
 import { CourtService } from '../../services/court.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-select-court',
-  imports: [MatIconModule],
+  imports: [MatIconModule, AsyncPipe],
   templateUrl: './select-court.html',
   styleUrl: './select-court.scss',
 })

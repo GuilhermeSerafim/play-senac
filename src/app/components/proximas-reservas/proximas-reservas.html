@@ -5,7 +5,7 @@
 
     <div class="info-wrapper">
       <h2>{{ reserva.title }}</h2>
-      <p>Horário: {{ reserva.title }}</p>
+      <p>Horário: {{ reserva.horario }}</p>
       <p>Capacidade: {{ reserva.capacidade }} pessoas</p>
       <p>
         Data: {{ (reserva.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},

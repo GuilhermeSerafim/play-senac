@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
-import { ICourt } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt';
 import { NgClass } from '@angular/common';
 import { ProximasReservas } from '../../components/proximas-reservas/proximas-reservas';
 import { FacaSuaReserva } from '../../components/faca-sua-reserva/faca-sua-reserva';

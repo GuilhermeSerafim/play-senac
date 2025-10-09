@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICourt } from '../interfaces/icourt-card';
+import { ICourt } from '../interfaces/icourt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { mockListaDeQuadras } from '../mock/allmocks';
 

@@ -16,7 +16,7 @@ import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
 import { IConvidado } from '../../interfaces/iconvidado';
 import { MatChipsModule } from '@angular/material/chips';
 import { CourtService } from '../../services/court.service';
-import { ICourt } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt';
 import { ReservaService } from '../../services/reserva.service';
 import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
 

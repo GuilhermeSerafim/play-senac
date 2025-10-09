@@ -1,5 +1,5 @@
 import { IConvidado } from '../interfaces/iconvidado';
-import { ICourt } from '../interfaces/icourt-card';
+import { ICourt } from '../interfaces/icourt';
 import { IReserva } from '../interfaces/ireserva';
 
 const mockConvidados: IConvidado[] = [

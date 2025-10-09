@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICourt } from '../../interfaces/icourt-card';
+import { ICourt } from '../../interfaces/icourt';
 import { IReserva } from '../../interfaces/ireserva';
 import { CourtService } from '../../services/court.service';
 import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
