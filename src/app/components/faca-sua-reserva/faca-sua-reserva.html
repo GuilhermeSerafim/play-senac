@@ -16,9 +16,7 @@
       }
     </mat-select>
     @if (quadraSelecionadaControl.hasError('required')) {
-      <mat-error >
-        O campo quadra é obrigatório.
-      </mat-error>
+    <mat-error> O campo quadra é obrigatório. </mat-error>
     }
   </mat-form-field>
 
@@ -37,9 +35,9 @@
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error *ngIf="dataSelecionadaControl.hasError('required')">
-      A data é obrigatória.
-    </mat-error>
+    @if (dataSelecionadaControl.hasError('required')) {
+    <mat-error> A data é obrigatória. </mat-error>
+    }
   </mat-form-field>
 
   <br />
@@ -54,15 +52,15 @@
       name="horarioSelecionado"
       #horarioSelecionadoControl="ngModel"
       [disabled]="!dataSelecionada"
-      type="time"
       matTimepickerMin="09:00"
       matTimepickerMax="20:00"
+      class="timepicker"
     />
     <mat-timepicker #timepicker />
     <mat-timepicker-toggle [for]="timepicker" matSuffix />
-    <mat-error *ngIf="horarioSelecionadoControl.hasError('required')">
-      O horário é obrigatório.
-    </mat-error>
+    @if (horarioSelecionadoControl.hasError('required')) {
+    <mat-error> O horário é obrigatório. </mat-error>
+    }
   </mat-form-field>
 
   <br />

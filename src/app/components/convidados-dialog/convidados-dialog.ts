@@ -42,7 +42,7 @@ export class ConvidadosDialog {
     this.dialogRef.close(false);
   }
 
-  onSubmit(_t5: NgForm) {
+  onSubmit() {
     const convidado: IConvidado = {
       nome: this.nomeConvidado,
       telefone: this.telefoneConvidado,

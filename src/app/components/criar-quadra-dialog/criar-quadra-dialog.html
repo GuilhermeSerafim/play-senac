@@ -1,0 +1,146 @@
+<form #criarQuadraForm="ngForm" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>Criar quadra</h1>
+
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field [style.marginTop.px]="30" appearance="outline">
+      <mat-label>Nome da quadra</mat-label>
+      <input
+        name="nomeQuadra"
+        #nomeQuadraControl="ngModel"
+        [(ngModel)]="nomeQuadra"
+        required
+        matInput
+      />
+      <mat-icon matSuffix>sports</mat-icon>
+      @if (nomeQuadraControl.invalid && nomeQuadraControl.touched) {
+      <mat-error>O nome é obrigatório.</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="horarios">
+      <mat-form-field appearance="outline">
+        <mat-label>Abertura</mat-label>
+        <input
+          required
+          matInput
+          [matTimepicker]="timepickerInicio"
+          [(ngModel)]="horaInicio"
+          name="horaInicio"
+          #horaInicioControl="ngModel"
+          readonly
+        />
+        <mat-timepicker-toggle [for]="timepickerInicio" matSuffix></mat-timepicker-toggle>
+        <mat-timepicker #timepickerInicio></mat-timepicker>
+        @if (horaInicioControl.invalid && horaInicioControl.touched) {
+        <mat-error>O horário de abertura é obrigatório.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fechamento</mat-label>
+        <input
+          required
+          matInput
+          [matTimepicker]="timepickerFim"
+          [(ngModel)]="horaFim"
+          name="horaFim"
+          #horaFimControl="ngModel"
+          readonly
+          [disabled]="!horaInicio"
+          [matTimepickerMin]="horaInicio"
+        />
+        <mat-timepicker-toggle [for]="timepickerFim" matSuffix></mat-timepicker-toggle>
+        <mat-timepicker #timepickerFim></mat-timepicker>
+        @if (horaFimControl.invalid && horaFimControl.touched &&
+        horaFimControl.hasError('required')) {
+        <mat-error>O horário de fechamento é obrigatório.</mat-error>
+        } @if (horaFimControl.invalid && horaFimControl.touched &&
+        horaFimControl.hasError('matTimepickerMin')) {
+        <mat-error>O horário de fechamento deve ser menor que o horário de aberturas.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Capacidade</mat-label>
+      <input
+        type="number"
+        required
+        matInput
+        [(ngModel)]="capacidade"
+        name="capacidade"
+        #capacidadeControl="ngModel"
+        min="1"
+      />
+      <mat-icon matSuffix>groups</mat-icon>
+      @if (capacidadeControl.invalid && capacidadeControl.touched) {
+      <mat-error>
+        @if (capacidadeControl.errors?.['required']) {
+        <span>A capacidade é obrigatória.</span>
+        } @if (capacidadeControl.errors?.['min']) {
+        <span>A capacidade deve ser no mínimo 1.</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>URL da Imagem</mat-label>
+      <input
+        type="url"
+        matInput
+        name="imagemUrl"
+        [(ngModel)]="imagemUrl"
+        #imageUrlControl="ngModel"
+        pattern="https?://.+"
+        placeholder="https://exemplo.com/imagem.png"
+      />
+      <mat-icon matSuffix>link</mat-icon>
+      @if (imageUrlControl.invalid && imageUrlControl.touched) {
+      <mat-error>
+        @if (imageUrlControl.errors?.['pattern']) {
+        <span>Por favor, insira uma URL válida (ex: https://...).</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Dias disponíveis</mat-label>
+      <mat-select
+        name="diasDisponiveis"
+        [(ngModel)]="diasSelecionados"
+        #diasControl="ngModel"
+        required
+        multiple
+      >
+        @for (dia of diasDaSemana; track $index) {
+        <mat-option [value]="dia">
+          {{ dia }}
+        </mat-option>
+        }
+      </mat-select>
+      <mat-icon matSuffix>date_range</mat-icon>
+
+      @if (diasControl.invalid && diasControl.touched) {
+      <mat-error>Selecione pelo menos uma opção.</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button class="btn-cancelar" mat-dialog-close color="warn">Cancelar</button>
+
+    <button
+      mat-raised-button
+      class="btn-confirmar"
+      color="primary"
+      [disabled]="criarQuadraForm.invalid"
+      [ngStyle]="
+        criarQuadraForm.invalid
+          ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
+          : {}
+      "
+    >
+      Confirmar
+    </button>
+  </mat-dialog-actions>
+</form>

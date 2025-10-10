@@ -20,15 +20,9 @@ import { ICourt } from '../../interfaces/icourt';
 import { ReservaService } from '../../services/reserva.service';
 import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
 
-interface Comida {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-faca-sua-reserva',
   standalone: true, // <-- É uma boa prática declarar explicitamente
-  providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
     FormsModule,
@@ -50,11 +44,6 @@ interface Comida {
   styleUrl: './faca-sua-reserva.scss',
 })
 export class FacaSuaReserva implements OnInit {
-  foods: Comida[] = [
-    { value: 'bife-0', viewValue: 'Bife' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
   quadraSelecionada: any;
   dataSelecionada: Date | null = null;
   horarioSelecionado: any;
