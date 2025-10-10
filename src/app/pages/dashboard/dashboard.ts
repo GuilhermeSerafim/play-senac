@@ -33,6 +33,6 @@ export class Dashboard implements OnInit {
     const dialogRef = this._dialog.open(CriarQuadraDialog, {
       width: '540px',
     });
-    dialogRef.afterClosed().subscribe((c) => console.log(c));
+    dialogRef.afterClosed().subscribe((q) => (q ? this.quadras.push(q) : ''));
   }
 }

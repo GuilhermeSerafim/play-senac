@@ -61,7 +61,7 @@ export class CriarQuadraDialog {
   constructor(public readonly dialogRef: MatDialogRef<CriarQuadraDialog>) {}
   onSubmit() {
     const quadra: ICourt = {
-      pathImg: this.imagemUrl ?? 'images/Complexo Esportivo no Parque Urbano.png',
+      pathImg: this.imagemUrl ? this.imagemUrl : 'images/Complexo Esportivo no Parque Urbano.png',
       title: this.nomeQuadra,
       capacidade: this.capacidade,
       diasDisponiveis: this.diasSelecionados,

@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
-import { CourtService } from '../../services/court.service';
 
 @Component({
   selector: 'app-quadras',
