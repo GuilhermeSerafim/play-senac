@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -11,14 +11,8 @@ import { CourtService } from '../../services/court.service';
   templateUrl: './quadras.html',
   styleUrl: './quadras.scss',
 })
-export class Quadras implements OnInit {
-  // Vou ter que subir as quadras para colocar como @input no dashboard, pois o dashboard estará responsável pela criação, portanto adição, esse componente vai estar responsável pela manipulação e renderização
-  courts: ICourt[] = [];
-  constructor(private readonly _courtService: CourtService) {}
-
-  ngOnInit(): void {
-    this._courtService.getCourts().subscribe((courts) => (this.courts = courts));
-  }
+export class Quadras {
+  @Input({ required: true }) courts: ICourt[] = [];
 
   cancelarQuadra() {
     throw new Error('Method not implemented.');
