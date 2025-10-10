@@ -6,15 +6,19 @@
       <h2>{{ item.title }}</h2>
       <p>Horário: {{ item.horarioAbertura }} - {{ item.horarioFechamento }}</p>
       <p>Capacidade: {{ item.capacidade }}</p>
-      <p>Data: {{ item.diasDisponiveis }}</p>
+      <p>
+        Dias disponíveis: @for (dia of item.diasDisponiveis; track dia; let isLast = $last) {
+        {{ dia | slice : 0 : 3 }}{{ !isLast ? ', ' : '' }}
+        }
+      </p>
     </div>
   </div>
   <div class="card__right">
-    <button (click)="cancelarQuadra()">
-      <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
-    </button>
     <button (click)="alterarQuadra()">
       <mat-icon class="card__right__edit-icon">edit</mat-icon>
+    </button>
+    <button (click)="cancelarQuadra()">
+      <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
     </button>
   </div>
 </div>

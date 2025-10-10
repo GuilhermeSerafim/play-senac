@@ -7,7 +7,7 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-select-court',
-  imports: [MatIconModule, AsyncPipe],
+  imports: [MatIconModule],
   templateUrl: './select-court.html',
   styleUrl: './select-court.scss',
 })
