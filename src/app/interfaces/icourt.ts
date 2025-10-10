@@ -3,6 +3,6 @@ export interface ICourt {
   title: string;
   capacidade?: number;
   diasDisponiveis?: string[];
-  horarioAbertura?: string;
-  horarioFechamento?: string;
+  horarioAbertura?: Date;
+  horarioFechamento?: Date;
 }

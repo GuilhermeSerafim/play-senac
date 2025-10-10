@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-quadras',
-  imports: [MatIcon, CommonModule],
+  imports: [MatIcon, CommonModule, DatePipe],
   templateUrl: './quadras.html',
   styleUrl: './quadras.scss',
 })

@@ -4,7 +4,10 @@
     <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
     <div class="info-wrapper">
       <h2>{{ item.title }}</h2>
-      <p>Horário: {{ item.horarioAbertura }} - {{ item.horarioFechamento }}</p>
+      <p>
+        Horário: {{ item.horarioAbertura | date : 'h:mm' }} -
+        {{ item.horarioFechamento | date : 'h:mm' }}
+      </p>
       <p>Capacidade: {{ item.capacidade }}</p>
       <p>
         Dias disponíveis: @for (dia of item.diasDisponiveis; track dia; let isLast = $last) {

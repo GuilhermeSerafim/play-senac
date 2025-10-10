@@ -41,8 +41,8 @@ export const mockListaDeQuadras: ICourt[] = [
     pathImg: 'images/a.png',
     title: 'Tênis',
     capacidade: 4,
-    horarioAbertura: '08:00',
-    horarioFechamento: '22:00',
+    horarioAbertura: new Date(2025, 9, 10, 8, 0),
+    horarioFechamento: new Date(2025, 9, 10, 22, 0),
     diasDisponiveis: [
       'Segunda-feira',
       'Terça-feira',
@@ -57,8 +57,8 @@ export const mockListaDeQuadras: ICourt[] = [
     pathImg: 'images/b.png',
     title: 'Society',
     capacidade: 16,
-    horarioAbertura: '08:00',
-    horarioFechamento: '22:00',
+    horarioAbertura: new Date(2025, 9, 10, 8, 0),
+    horarioFechamento: new Date(2025, 9, 10, 22, 0),
     diasDisponiveis: [
       'Segunda-feira',
       'Terça-feira',
@@ -73,8 +73,8 @@ export const mockListaDeQuadras: ICourt[] = [
     pathImg: 'images/c.png',
     title: 'Poliesportiva externa',
     capacidade: 10,
-    horarioAbertura: '08:00',
-    horarioFechamento: '23:00',
+    horarioAbertura: new Date(2025, 9, 10, 8, 0),
+    horarioFechamento: new Date(2025, 9, 10, 22, 0),
     diasDisponiveis: [
       'Segunda-feira',
       'Terça-feira',

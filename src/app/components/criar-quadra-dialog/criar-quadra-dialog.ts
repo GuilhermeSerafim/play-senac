@@ -43,8 +43,8 @@ import { MatOption, MatSelectModule } from '@angular/material/select';
 })
 export class CriarQuadraDialog {
   nomeQuadra: string = '';
-  horaInicio: string = '';
-  horaFim: string = '';
+  horaInicio!: Date;
+  horaFim!: Date;
   capacidade!: number;
   imagemUrl: string = '';
   diasDaSemana: string[] = [
