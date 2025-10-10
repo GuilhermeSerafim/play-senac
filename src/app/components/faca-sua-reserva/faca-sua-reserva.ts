@@ -79,12 +79,14 @@ export class FacaSuaReserva implements OnInit {
     console.log(this.dataSelecionada);
     console.log(this.horarioSelecionado);
   }
+
   abreDialogConvidado() {
     const dialogRef = this._dialog.open(ConvidadosDialog, {
       width: '540px',
     });
     dialogRef.afterClosed().subscribe((c) => c && this.convidados.push(c));
   }
+
   removeConvidado(c: IConvidado) {
     this.convidados = this.convidados.filter((convidado) => convidado !== c);
   }

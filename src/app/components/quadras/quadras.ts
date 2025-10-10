@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { CourtService } from '../../services/court.service';
 
 @Component({
   selector: 'app-quadras',
@@ -12,8 +13,10 @@ import { MatIcon } from '@angular/material/icon';
 export class Quadras {
   @Input({ required: true }) courts: ICourt[] = [];
 
-  cancelarQuadra() {
-    throw new Error('Method not implemented.');
+  constructor(private readonly _courtService: CourtService) {}
+
+  cancelarQuadra(q: ICourt) {
+    this._courtService.removeCourt(q);
   }
 
   alterarQuadra() {

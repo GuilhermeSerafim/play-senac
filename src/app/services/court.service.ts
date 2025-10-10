@@ -13,5 +13,9 @@ export class CourtService {
     return this.court$;
   }
 
-  removeCourt(court: ICourt) {}
+  removeCourt(court: ICourt): void {
+    const listaAtual = this.courtSubject.getValue();
+    const novaListaDeQuadras = listaAtual.filter((quadra) => quadra.title !== court.title);
+    this.courtSubject.next(novaListaDeQuadras);
+  }
 }
