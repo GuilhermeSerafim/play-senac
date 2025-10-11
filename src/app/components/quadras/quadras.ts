@@ -15,7 +15,7 @@ export class Quadras {
 
   constructor(private readonly _courtService: CourtService) {}
 
-  cancelarQuadra(q: ICourt) {
+  removeQuadra(q: ICourt) {
     this._courtService.removeCourt(q);
   }
 
