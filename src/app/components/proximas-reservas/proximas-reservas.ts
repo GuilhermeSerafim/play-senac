@@ -49,6 +49,17 @@ export class ProximasReservas implements OnInit {
     );
   }
 
+  /**
+   * Retorna uma nova data com uma hora a mais que a data fornecida.
+   * @param data A data inicial.
+   * @returns A nova data com +1 hora.
+   */
+  public getHorarioFinal(data: Date): Date {
+    const dataFinal = new Date(data);
+    dataFinal.setHours(dataFinal.getHours() + 1);
+    return dataFinal;
+  }
+
   cancelarReserva(idReserva: number) {
     const dialogRef = this._dialog.open(CancelarReservaDialog, {
       width: '540px',

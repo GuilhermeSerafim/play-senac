@@ -46,15 +46,14 @@ import { CourtService } from '../../services/court.service';
     MatDialogContent,
     MatDialogTitle,
     MatSelectModule,
-    MatHint,
   ],
   templateUrl: './alter-reserva-adm-dialog.html',
   styleUrl: './alter-reserva-adm-dialog.scss',
 })
 export class AlterReservaAdmDialog implements OnInit {
-  quadraSelecionada: string = "";
-  dataSelecionada: Date | null = null;
-  horarioSelecionado: any;
+  quadraSelecionada: string = '';
+  dataSelecionada: Date | undefined = undefined;
+  horarioSelecionado: Date | undefined = undefined;
   convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
 
@@ -66,10 +65,11 @@ export class AlterReservaAdmDialog implements OnInit {
 
   ngOnInit(): void {
     this._quadraService.getCourts().subscribe((q) => (this.quadras = q));
-    this.quadraSelecionada = this.data.title,
-    this.dataSelecionada = this.data.data,
-    this.horarioSelecionado = this.data.horario,
-    this.convidados = this.data.convidados
+    (this.quadraSelecionada = this.data.title),
+      (this.dataSelecionada = this.data.data),
+      (this.horarioSelecionado = this.data.horario),
+      (this.convidados = this.data.convidados);
+    console.log(this.data.horario);
   }
 
   abreDialogConvidado() {

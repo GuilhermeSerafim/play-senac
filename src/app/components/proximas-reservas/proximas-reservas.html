@@ -1,11 +1,14 @@
-@for (reserva of reservasCombinadas$ | async; track reserva.id) {
+@for (reserva of reservasCombinadas$ | async; track reserva.id;) {
 <div class="card">
   <div class="card__left">
     <img [src]="reserva.pathImg" alt="Imagem da quadra {{ reserva.title }}" />
 
     <div class="info-wrapper">
       <h2>{{ reserva.title }}</h2>
-      <p>Horário: {{ reserva.horario }}</p>
+      <p>
+        Horário: {{ reserva.horario | date : 'HH:mm' }} -
+        {{ getHorarioFinal(reserva.horario) | date : 'HH:mm' }}
+      </p>
       <p>Capacidade: {{ reserva.capacidade }} pessoas</p>
       <p>
         Data: {{ (reserva.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},

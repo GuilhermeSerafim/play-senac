@@ -15,7 +15,6 @@ import { AlterQuadraAdmDialog } from '../alter-reserva-adm-dialog/alter-quadra-a
 })
 export class Quadras {
   @Input({ required: true }) courts: ICourt[] = [];
-  quadraSelecionada: ICourt = {} as ICourt;
 
   constructor(private readonly _courtService: CourtService, private readonly _dialog: MatDialog) {}
 

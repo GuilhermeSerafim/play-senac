@@ -48,6 +48,17 @@ export class ReservasAdm implements OnInit {
     );
   }
 
+  /**
+   * Retorna uma nova data com uma hora a mais que a data fornecida.
+   * @param data A data inicial.
+   * @returns A nova data com +1 hora.
+   */
+  public getHorarioFinal(data: Date): Date {
+    const dataFinal = new Date(data);
+    dataFinal.setHours(dataFinal.getHours() + 1);
+    return dataFinal;
+  }
+
   cancelarReserva(idReserva: number) {
     const dialogRef = this._dialog.open(CancelarReservaDialog, {
       width: '540px',
@@ -62,6 +73,8 @@ export class ReservasAdm implements OnInit {
       width: '540px',
       data: reserva,
     });
-    dialogRef.afterClosed().subscribe((result) => result && this._reservaService.updateReserva(result));
+    dialogRef
+      .afterClosed()
+      .subscribe((result) => result && this._reservaService.updateReserva(result));
   }
 }

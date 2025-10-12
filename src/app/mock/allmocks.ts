@@ -12,7 +12,7 @@ export const mockReservaCompleta: IReserva = {
   id: 100,
   quadra: 'Tênis',
   data: new Date(2025, 9, 1), // Mês 9 = Outubro, pois é base 0
-  horario: '10:00',
+  horario:  new Date(2025, 9, 15, 12, 0),
   convidados: mockConvidados,
 };
 
@@ -20,7 +20,7 @@ export const mockReservaSemConvidados: IReserva = {
   id: 101,
   quadra: 'Society',
   data: new Date(2025, 8, 30),
-  horario: '10:00',
+  horario:  new Date(2025, 9, 15, 18, 0),
   convidados: [],
 };
 
@@ -31,7 +31,7 @@ export const mockListaDeReservas: IReserva[] = [
     id: 102,
     quadra: 'Poliesportiva externa',
     data: new Date(2025, 8, 29),
-    horario: '10:30',
+    horario: new Date(2025, 9, 15, 20, 0),
     convidados: [mockConvidados[0]], // Apenas um convidado
   },
 ];
@@ -44,10 +44,7 @@ export const mockListaDeQuadras: ICourt[] = [
     capacidade: 4,
     horarioAbertura: new Date(2025, 9, 10, 8, 0),
     horarioFechamento: new Date(2025, 9, 10, 22, 0),
-    diasDisponiveis: [
-      'Segunda-feira',
-      'Domingo',
-    ],
+    diasDisponiveis: ['Segunda-feira', 'Domingo'],
   },
   {
     id: 2,
@@ -72,12 +69,6 @@ export const mockListaDeQuadras: ICourt[] = [
     capacidade: 10,
     horarioAbertura: new Date(2025, 9, 10, 8, 0),
     horarioFechamento: new Date(2025, 9, 10, 22, 0),
-    diasDisponiveis: [
-      'Segunda-feira',
-      'Quarta-feira',
-      'Quinta-feira',
-      'Sábado',
-      'Domingo',
-    ],
+    diasDisponiveis: ['Segunda-feira', 'Quarta-feira', 'Quinta-feira', 'Sábado', 'Domingo'],
   },
 ];

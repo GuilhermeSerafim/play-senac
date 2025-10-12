@@ -4,7 +4,7 @@ export interface IReserva {
   id: number; // Ou string
   quadra: string;
   data: Date;
-  horario: string;
+  horario: Date;
   convidados: IConvidado[];
 }
 
