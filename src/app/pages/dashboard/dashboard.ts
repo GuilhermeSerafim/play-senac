@@ -9,10 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { CriarQuadraDialog } from '../../components/criar-quadra-dialog/criar-quadra-dialog';
 import { ICourt } from '../../interfaces/icourt';
 import { CourtService } from '../../services/court.service';
+import { ReservasAdm } from "../../components/reservas-adm/reservas-adm";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Header, Footer, FormsModule, CommonModule, Quadras, MatButton],
+  imports: [Header, Footer, FormsModule, CommonModule, Quadras, MatButton, ReservasAdm],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

@@ -10,6 +10,8 @@
   @if(abaAtiva === 'quadras') { 
     <button matButton="elevated" class="dashboard__criar-quadra" (click)="criarQuadra()">Criar quadra</button>
     <app-quadras [courts]="quadras"></app-quadras>
-  } @else { }
+  } @else { 
+    <app-reservas-adm/>
+  }
 </div>
 <app-footer></app-footer>

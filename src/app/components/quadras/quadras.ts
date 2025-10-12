@@ -3,6 +3,8 @@ import { ICourt } from '../../interfaces/icourt';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CourtService } from '../../services/court.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CancelarReservaAdmDialog } from '../cancelar-reserva-adm-dialog/cancelar-reserva-adm-dialog';
 
 @Component({
   selector: 'app-quadras',
@@ -13,10 +15,13 @@ import { CourtService } from '../../services/court.service';
 export class Quadras {
   @Input({ required: true }) courts: ICourt[] = [];
 
-  constructor(private readonly _courtService: CourtService) {}
+  constructor(private readonly _courtService: CourtService, private readonly _dialog: MatDialog) {}
 
   removeQuadra(q: ICourt) {
-    this._courtService.removeCourt(q);
+    const dialogRef = this._dialog.open(CancelarReservaAdmDialog, {
+      width: '540px',
+    });
+    dialogRef.afterClosed().subscribe((remove) => remove && this._courtService.removeCourt(q));
   }
 
   alterarQuadra() {
