@@ -11,13 +11,20 @@
         Data: {{ (reserva.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
         {{ reserva.data | date : 'dd/MM' }}
       </p>
+      @if(reserva.convidados.length > 0) {
+      <p>
+        Convidados: @for (item of reserva.convidados; track $index; let isLast = $last) {
+        {{ item.nome }}{{ !isLast ? ', ' : '' }}
+        }
+      </p>
+      }
     </div>
   </div>
 
   <div class="card__right">
-      <button (click)="alterarQuadra(reserva)">
-        <mat-icon class="card__right__edit-icon">edit</mat-icon>
-      </button>
+    <button (click)="alterarQuadra(reserva)">
+      <mat-icon class="card__right__edit-icon">edit</mat-icon>
+    </button>
     <button (click)="cancelarReserva(reserva.id)">
       <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
     </button>

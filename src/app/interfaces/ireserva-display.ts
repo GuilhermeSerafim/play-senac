@@ -1,3 +1,4 @@
+import { IConvidado } from "./iconvidado";
 
 export interface IReservaDisplay {
   id: number;
@@ -6,4 +7,5 @@ export interface IReservaDisplay {
   horario: string;
   capacidade?: number;
   data: Date;
+  convidados: IConvidado[];
 }

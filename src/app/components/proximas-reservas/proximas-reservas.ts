@@ -18,7 +18,6 @@ import { map, Observable } from 'rxjs';
 })
 export class ProximasReservas implements OnInit {
   courts: ICourt[] = [];
-  // É um Observable porque ele é o resultado de uma operação sobre outro Observable.
   reservasCombinadas$!: Observable<IReservaDisplay[]>;
 
   constructor(
@@ -30,7 +29,6 @@ export class ProximasReservas implements OnInit {
   ngOnInit(): void {
     this._courtService.getCourts().subscribe((courts) => (this.courts = courts));
 
-    // Resultado: O reservasCombinadas$ se torna um novo Observable que emitirá esse array combinado e ordenado sempre que a fonte original (reservas$) emitir um novo valor.
     this.reservasCombinadas$ = this._reservaService.reservas$.pipe(
       map((reservasRecebidas) => {
         return reservasRecebidas
@@ -40,6 +38,7 @@ export class ProximasReservas implements OnInit {
               id: reserva.id,
               title: reserva.quadra,
               horario: reserva.horario,
+              convidados: reserva.convidados,
               data: reserva.data,
               pathImg: courtInfo?.pathImg || 'images/default.png',
               capacidade: courtInfo?.capacidade || 0,

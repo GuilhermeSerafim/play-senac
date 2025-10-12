@@ -37,6 +37,7 @@ export class ReservasAdm implements OnInit {
               id: reserva.id,
               title: reserva.quadra,
               horario: reserva.horario,
+              convidados: reserva.convidados,
               data: reserva.data,
               pathImg: courtInfo?.pathImg || 'images/default.png',
               capacidade: courtInfo?.capacidade || 0,
@@ -61,6 +62,6 @@ export class ReservasAdm implements OnInit {
       width: '540px',
       data: reserva,
     });
-    dialogRef.afterClosed().subscribe((result) => result && this._courtService.updateCourt(result));
+    dialogRef.afterClosed().subscribe((result) => result && this._reservaService.updateReserva(result));
   }
 }

@@ -39,4 +39,12 @@ export class ReservaService {
     const novaListaDeReservas = listaAtual.filter((reserva) => reserva.id !== idParaRemover);
     this.reservasSubject.next(novaListaDeReservas);
   }
+
+  updateReserva(updateReserva: IReserva): void {
+    const reservas = this.reservasSubject.getValue();
+    const reservasMaisReservaAtualizada = reservas.map((r) =>
+      r.id === updateReserva.id ? updateReserva : r
+    );
+    this.reservasSubject.next(reservasMaisReservaAtualizada);
+  }
 }
