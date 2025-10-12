@@ -1,0 +1,59 @@
+@use '../../../styles/index' as *;
+
+.card {
+  display: flex; // ✨ Coloca left e right lado a lado
+  justify-content: space-between; // ✨ Empurra para as extremidades
+  align-items: center; // ✨ Alinha verticalmente ao centro
+  width: 100%;
+  padding: 16px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra sutil
+  margin-bottom: 20px; // Espaçamento entre os cards
+
+  &__left {
+    display: flex; // ✨ Coloca a imagem ao lado do texto
+    align-items: center; // ✨ Alinha a imagem e o texto verticalmente
+    gap: 20px; // Espaçamento entre a imagem e o texto
+
+    img {
+      width: 200px;
+      height: 116px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .info-wrapper {
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+      }
+      p {
+        font-size: 14px;
+        color: #666;
+        margin: 4px 0;
+      }
+    }
+  }
+
+  &__right {
+    .material-symbols-outlined {
+      cursor: pointer;
+      color: #333;
+    }
+  }
+  &__right__cancel-icon {
+    color: $color-support-orange-warn;
+    font-size: 32px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+  }
+}
