@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { CourtService } from '../../services/court.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CancelarReservaAdmDialog } from '../cancelar-reserva-adm-dialog/cancelar-reserva-adm-dialog';
-import { AlterReservaAdmDialog } from '../alter-reserva-adm-dialog/alter-reserva-adm-dialog';
+import { AlterQuadraAdmDialog } from '../alter-reserva-adm-dialog/alter-quadra-adm-dialog';
 
 @Component({
   selector: 'app-quadras',
@@ -27,12 +27,10 @@ export class Quadras {
   }
 
   alterarQuadra(quadra: ICourt) {
-    const dialogRef = this._dialog.open(AlterReservaAdmDialog, {
+    const dialogRef = this._dialog.open(AlterQuadraAdmDialog, {
       width: '540px',
-      // Isso significa que ele copia todos os valores do objeto, incluindo objetos aninhados, etc.
-      // Criando novas referências em vez de apenas apontar para os mesmos endereços de memória.
-      data: structuredClone(quadra),
+      data: quadra,
     });
-    dialogRef.afterClosed().subscribe((result) => console.log(result));
+    dialogRef.afterClosed().subscribe((result) => result && this._courtService.updateCourt(result));
   }
 }

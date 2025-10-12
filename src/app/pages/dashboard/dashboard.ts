@@ -26,6 +26,7 @@ export class Dashboard implements OnInit {
   ngOnInit(): void {
     this._courtService.getCourts().subscribe((courts) => (this.quadras = courts));
   }
+  
   ativarAba(aba: string) {
     this.abaAtiva = aba;
   }

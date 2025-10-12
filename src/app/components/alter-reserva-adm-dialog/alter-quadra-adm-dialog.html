@@ -1,5 +1,5 @@
-<form #criarQuadraForm="ngForm" (ngSubmit)="onSubmit($event)">
-  <h1 mat-dialog-title>Criar quadra</h1>
+<form #criarQuadraForm="ngForm" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>Alterar quadra</h1>
 
   <mat-dialog-content class="mat-typography">
     <mat-form-field [style.marginTop.px]="30" appearance="outline">
@@ -91,17 +91,10 @@
         name="imagemUrl"
         [(ngModel)]="imagemUrl"
         #imageUrlControl="ngModel"
-        pattern="https?://.+"
         placeholder="https://exemplo.com/imagem.png"
       />
       <mat-icon matSuffix>link</mat-icon>
-      @if (imageUrlControl.invalid && imageUrlControl.touched) {
-      <mat-error>
-        @if (imageUrlControl.errors?.['pattern']) {
-        <span>Por favor, insira uma URL válida (ex: https://...).</span>
-        }
-      </mat-error>
-      }
+        <mat-hint>Por favor, insira uma URL válida (ex: https://...).</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Dias disponíveis</mat-label>
