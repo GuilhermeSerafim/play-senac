@@ -72,27 +72,21 @@
 
     }
   </mat-dialog-content>
-  <mat-dialog-actions class="form-bottom">
-    <button type="button" (click)="abreDialogConvidado()">
-      <mat-icon class="person_add">person_add</mat-icon>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button class="btn-cancelar" mat-dialog-close color="warn">Cancelar</button>
+
+    <button
+      mat-raised-button
+      class="btn-confirmar"
+      color="primary"
+      [disabled]="facaSuaReservaFormControl.invalid"
+      [ngStyle]="
+        facaSuaReservaFormControl.invalid
+          ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
+          : {}
+      "
+    >
+      Confirmar
     </button>
-
-    <div class="form-bottom__botoes">
-      <button mat-raised-button class="btn-cancelar" mat-dialog-close color="warn">Cancelar</button>
-
-      <button
-        mat-raised-button
-        class="btn-confirmar"
-        color="primary"
-        [disabled]="facaSuaReservaFormControl.invalid"
-        [ngStyle]="
-          facaSuaReservaFormControl.invalid
-            ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
-            : {}
-        "
-      >
-        Confirmar
-      </button>
-    </div>
   </mat-dialog-actions>
 </form>

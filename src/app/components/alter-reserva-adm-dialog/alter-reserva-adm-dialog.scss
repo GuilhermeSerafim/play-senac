@@ -36,23 +36,3 @@ mat-dialog-content {
     background-color: #1e52c7; // tom mais escuro e consistente no hover
   }
 }
-
-.form-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.person_add {
-  cursor: pointer;
-  color: $color-primary-yellow;
-  width: 40px;
-  height: 40px;
-  font-size: 40px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-
-  &:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
