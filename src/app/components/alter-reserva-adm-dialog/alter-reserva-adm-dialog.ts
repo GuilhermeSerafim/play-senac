@@ -22,6 +22,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { IConvidado } from '../../interfaces/iconvidado';
 import { ICourt } from '../../interfaces/icourt';
 import { CourtService } from '../../services/court.service';
+import { IReserva } from '../../interfaces/ireserva';
 
 @Component({
   selector: 'app-alter-reserva-adm-dialog',
@@ -52,8 +53,8 @@ import { CourtService } from '../../services/court.service';
 })
 export class AlterReservaAdmDialog implements OnInit {
   quadraSelecionada: string = '';
-  dataSelecionada: Date | undefined = undefined;
-  horarioSelecionado: Date | undefined = undefined;
+  dataSelecionada!: Date;
+  horarioSelecionado!: Date;
   convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
 
@@ -76,11 +77,18 @@ export class AlterReservaAdmDialog implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  removeConvidado(_t74: IConvidado) {
-    throw new Error('Method not implemented.');
+  removeConvidado(convidado: IConvidado) {
+    this.convidados = this.convidados.filter((c) => c !== convidado);
   }
 
-  onSubmit(_t5: NgForm) {
-    throw new Error('Method not implemented.');
+  onSubmit() {
+    const reserva: IReserva = {
+      id: this.data.id,
+      quadra: this.quadraSelecionada,
+      convidados: this.convidados,
+      data: this.dataSelecionada,
+      horario: this.horarioSelecionado,
+    };
+    this._dialogRef.close(reserva);
   }
 }

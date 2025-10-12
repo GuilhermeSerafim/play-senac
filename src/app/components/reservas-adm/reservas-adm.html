@@ -6,8 +6,8 @@
     <div class="info-wrapper">
       <h2>{{ reserva.title }}</h2>
          <p>
-        Horário: {{ reserva.horario | date : 'h:mm' }} -
-        {{ getHorarioFinal(reserva.horario) | date : 'h:mm' }}
+        Horário: {{ reserva.horario | date : 'HH:mm' }} -
+        {{ getHorarioFinal(reserva.horario) | date : 'HH:mm' }}
       </p>
       <p>Capacidade: {{ reserva.capacidade }} pessoas</p>
       <p>
