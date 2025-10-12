@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
   MatDialogClose,
@@ -12,14 +11,13 @@ import {
 } from '@angular/material/dialog';
 import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInput } from '@angular/material/input';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatTimepickerModule } from '@angular/material/timepicker';
-import { ICourt, ICreateCourt } from '../../interfaces/icourt';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOption, MatSelectModule } from '@angular/material/select';
-import { CourtService } from '../../services/court.service';
-
+import { ICourt } from '../../interfaces/icourt';
 @Component({
-  selector: 'app-criar-quadra-dialog',
+  selector: 'app-alter-reserva-adm-dialog',
   imports: [
     CommonModule,
     FormsModule,
@@ -39,10 +37,10 @@ import { CourtService } from '../../services/court.service';
     MatOption,
     MatSelectModule,
   ],
-  templateUrl: './criar-quadra-dialog.html',
-  styleUrl: './criar-quadra-dialog.scss',
+  templateUrl: './alter-reserva-adm-dialog.html',
+  styleUrl: './alter-reserva-adm-dialog.scss',
 })
-export class CriarQuadraDialog {
+export class AlterReservaAdmDialog {
   nomeQuadra: string = '';
   horaInicio!: Date;
   horaFim!: Date;
@@ -58,20 +56,11 @@ export class CriarQuadraDialog {
     'Domingo',
   ];
   diasSelecionados: string[] = [];
+  
+  // Aqui vou usar MatDialogData
+  constructor(public readonly _dialogRef: MatDialogRef<AlterReservaAdmDialog>) {}
 
-  constructor(
-    public readonly _dialogRef: MatDialogRef<CriarQuadraDialog>,
-    public readonly _courtService: CourtService
-  ) {}
-  onSubmit() {
-    const quadra: ICreateCourt = {
-      pathImg: this.imagemUrl ? this.imagemUrl : 'images/Complexo Esportivo no Parque Urbano.png',
-      title: this.nomeQuadra,
-      capacidade: this.capacidade,
-      diasDisponiveis: this.diasSelecionados,
-      horarioAbertura: this.horaInicio,
-      horarioFechamento: this.horaFim,
-    };
-    this._dialogRef.close(quadra);
+  onSubmit(e: any) {
+    console.log(e);
   }
 }

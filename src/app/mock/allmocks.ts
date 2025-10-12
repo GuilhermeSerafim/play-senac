@@ -38,6 +38,7 @@ export const mockListaDeReservas: IReserva[] = [
 
 export const mockListaDeQuadras: ICourt[] = [
   {
+    id: 1,
     pathImg: 'images/a.png',
     title: 'Tênis',
     capacidade: 4,
@@ -54,6 +55,7 @@ export const mockListaDeQuadras: ICourt[] = [
     ],
   },
   {
+    id: 2,
     pathImg: 'images/b.png',
     title: 'Society',
     capacidade: 16,
@@ -70,6 +72,7 @@ export const mockListaDeQuadras: ICourt[] = [
     ],
   },
   {
+    id: 3,
     pathImg: 'images/c.png',
     title: 'Poliesportiva externa',
     capacidade: 10,

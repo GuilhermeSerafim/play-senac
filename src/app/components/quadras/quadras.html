@@ -1,4 +1,4 @@
-@for (item of courts; track $index) {
+@for (item of courts; track item.id) {
 <div class="card">
   <div class="card__left">
     <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="card__right">
-    <button (click)="alterarQuadra()">
+    <button (click)="alterarQuadra(item)">
       <mat-icon class="card__right__edit-icon">edit</mat-icon>
     </button>
     <button (click)="removeQuadra(item)">

@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CriarQuadraDialog } from '../../components/criar-quadra-dialog/criar-quadra-dialog';
 import { ICourt } from '../../interfaces/icourt';
 import { CourtService } from '../../services/court.service';
-import { ReservasAdm } from "../../components/reservas-adm/reservas-adm";
+import { ReservasAdm } from '../../components/reservas-adm/reservas-adm';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +34,6 @@ export class Dashboard implements OnInit {
     const dialogRef = this._dialog.open(CriarQuadraDialog, {
       width: '540px',
     });
-    dialogRef.afterClosed().subscribe((q) => (q ? this.quadras.push(q) : ''));
+    dialogRef.afterClosed().subscribe((q) => q && this._courtService.addCourt(q));
   }
 }
