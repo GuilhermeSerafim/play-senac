@@ -8,6 +8,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reserva-dialog';
+import { AlterReservaAdmDialog } from '../alter-reserva-adm-dialog/alter-reserva-adm-dialog';
 
 @Component({
   selector: 'app-reservas-adm',
@@ -53,5 +54,13 @@ export class ReservasAdm implements OnInit {
     dialogRef
       .afterClosed()
       .subscribe((remove) => remove && this._reservaService.removeReserva(idReserva));
+  }
+
+  alterarQuadra(reserva: IReservaDisplay) {
+    const dialogRef = this._dialog.open(AlterReservaAdmDialog, {
+      width: '540px',
+      data: reserva,
+    });
+    dialogRef.afterClosed().subscribe((result) => result && this._courtService.updateCourt(result));
   }
 }
