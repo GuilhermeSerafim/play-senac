@@ -1,28 +1,38 @@
 @use '../../../styles/index' as *;
+
 h2 {
   margin: 0 0 32px 15px;
 }
+
 .courts__container {
   margin: auto 15px;
   display: flex;
   justify-content: space-between;
+  gap: 20px; // Adiciona um espaçamento entre os cartões
+  flex-wrap: wrap; // Permite que os cartões quebrem a linha se não houver espaço
+
   &__card {
+    position: relative; // Essencial para posicionar o status
+    flex: 0 0 calc(33.333% - 20px); // Para 3 colunas com gap
+    max-width: 270px; // Define uma largura máxima para o cartão
+
     img {
-      flex-shrink: 0;
-      aspect-ratio: 1/1;
+      width: 100%; // Garante que a imagem preencha o cartão
+      height: 180px; // Altura fixa para as imagens para uniformidade
+      object-fit: cover; // Corta a imagem para cobrir a área
       border-radius: 10px 10px 0 0;
     }
-    :hover {
+
+    &:hover {
       cursor: pointer;
     }
   }
+
   &__card__info {
-    width: 270px;
-    height: 166px;
-    flex-shrink: 0;
+    width: 100%; // Ocupa a largura total do cartão
+    min-height: 166px; // Use min-height para permitir que o conteúdo se ajuste
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     border-radius: 0 0 4px 4px;
-    transition: box-shadow 0.3s ease-in-out;
     padding: 24px;
     transition: box-shadow 0.3s ease-in-out;
 
@@ -30,8 +40,24 @@ h2 {
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
       cursor: pointer;
     }
+
     h3 {
       margin: 0 0 16px 0;
     }
+  }
+
+  .court-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    min-width: 90px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    // A propriedade background-color foi removida daqui
   }
 }

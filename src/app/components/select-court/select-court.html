@@ -7,6 +7,16 @@
       <h3>{{ item.title }}</h3>
       <p>Veja mais <mat-icon>chevron_right</mat-icon></p>
     </div>
+    <div
+      class="court-status"
+      [ngStyle]="{ 'background-color': isCourtAvailable(item) ? '#4CAF50' : '#F44336' }"
+    >
+      @if (isCourtAvailable(item)) {
+      <span>Disponível</span>
+      } @else {
+      <span>Fechada</span>
+      }
+    </div>
   </div>
   }
 </div>
