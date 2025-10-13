@@ -23,6 +23,7 @@
     min-width: 28.5ch; // Reserva espaço para ~28.5 caracteres. Ajuste fino se necessário.
     white-space: nowrap; // Garante que o texto não quebre a linha durante a digitação
     text-align: left; // Mantém o alinhamento do texto à esquerda dentro do wrapper
+      line-height: 80px;
   }
 
   &__overlay {
