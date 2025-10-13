@@ -4,19 +4,26 @@
   <div class="court-card">
     <div class="court-card__image-wrapper">
       <img [src]="item.pathImg" alt="Foto da quadra {{ item.title }}" />
-      
-      <div class="court-card__status"
-           [class.available]="isCourtAvailable(item)">
-           @if (isCourtAvailable(item)) {
-            <span>Disponível</span>
-           } @else {
-            <span>Fechada</span>
-           }
+
+      <div class="court-card__status" [class.available]="isCourtAvailable(item)">
+        @if (isCourtAvailable(item)) {
+        <span>Disponível</span>
+        } @else {
+        <span>Fechada</span>
+        }
       </div>
     </div>
-    
+
     <div class="court-card__info">
       <h3>{{ item.title }}</h3>
+      @if (item.diasDisponiveis && item.diasDisponiveis.length > 0) {
+      <div class="court-card__days">
+        <span
+          >Dias disponiveis: @for (dia of item.diasDisponiveis; track dia; let
+          isLast = $last) { {{ dia | slice : 0 : 3 }}{{ !isLast ? ', ' : '' }} }</span
+        >
+      </div>
+      }
     </div>
   </div>
   }

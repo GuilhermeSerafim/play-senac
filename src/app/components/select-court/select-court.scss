@@ -7,25 +7,29 @@ $card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 $card-shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
 h2 {
-  margin: 0 0 32px 20px;
+  
+  // O espaçamento lateral agora é controlado pelo padding do container
+  margin-bottom: 32px;
+  margin-left: 20px;
 }
 
 .courts__container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px; // Espaçamento perfeito entre todos os cards
+  padding: 0 20px; // Adiciona um respiro nas laterais do container
 }
 
 .court-card {
   background-color: #ffffff;
-  border-radius: 12px; // Bordas mais arredondadas e unificadas
-  overflow: hidden; // Garante que a imagem respeite as bordas arredondadas
+  border-radius: 12px;
+  overflow: hidden;
   box-shadow: $card-shadow;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px); // Efeito de "levantar" o card
+    transform: translateY(-5px);
     box-shadow: $card-shadow-hover;
   }
 
@@ -33,10 +37,9 @@ h2 {
     position: relative;
     
     img {
-      width: 100%;
-      display: block; // Remove espaços em branco indesejados
-      aspect-ratio: 16 / 10; // Proporção para evitar distorção. 16/9 ou 4/3 também são boas opções.
-      object-fit: cover; // Garante que a imagem cubra o espaço sem esticar
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
     }
   }
   
@@ -45,18 +48,15 @@ h2 {
     top: 12px;
     right: 12px;
     padding: 4px 12px;
-    border-radius: 9999px; // Formato de "pílula"
+    border-radius: 9999px;
     font-size: 12px;
     font-weight: 600;
     color: #ffffff;
-    background-color: $color-unavailable; // Cor padrão é Fechada
-
-    // Adiciona um fundo semi-transparente para melhor legibilidade
     backdrop-filter: blur(4px);
-    background-color: rgba(220, 38, 38, 0.8);
+    background-color: rgba(220, 38, 38, 0.8); // Cor para "Fechada"
 
     &.available {
-      background-color: rgba(22, 163, 74, 0.8);
+      background-color: rgba(22, 163, 74, 0.8); // Cor para "Disponível"
     }
   }
 
@@ -68,6 +68,25 @@ h2 {
       font-size: 1.125rem; // 18px
       font-weight: 600;
       color: #1f2937;
+    }
+
+    &__days {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      color: #6b7280;
+
+      mat-icon {
+        font-size: 16px;
+        height: 16px;
+        width: 16px;
+      }
+
+      span {
+        font-size: 0.875rem; // 14px
+        font-weight: 500;
+      }
     }
   }
 }

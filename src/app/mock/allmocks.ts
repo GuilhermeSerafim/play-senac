@@ -39,7 +39,7 @@ export const mockListaDeReservas: IReserva[] = [
 export const mockListaDeQuadras: ICourt[] = [
   {
     id: 1,
-    pathImg: 'images/a.png',
+    pathImg: 'images/tenis.jpg',
     title: 'Tênis',
     capacidade: 4,
     horarioAbertura: new Date(2025, 9, 10, 8, 0),
@@ -48,7 +48,7 @@ export const mockListaDeQuadras: ICourt[] = [
   },
   {
     id: 2,
-    pathImg: 'images/b.png',
+    pathImg: 'images/society.jpg',
     title: 'Society',
     capacidade: 16,
     horarioAbertura: new Date(2025, 9, 10, 8, 0),
@@ -64,7 +64,7 @@ export const mockListaDeQuadras: ICourt[] = [
   },
   {
     id: 3,
-    pathImg: 'images/c.png',
+    pathImg: 'images/poliesportiva-externa.jpg',
     title: 'Poliesportiva externa',
     capacidade: 10,
     horarioAbertura: new Date(2025, 9, 10, 8, 0),
