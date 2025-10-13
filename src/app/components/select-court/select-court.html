@@ -1,21 +1,22 @@
 <h2>Escolha a quadra</h2>
 <div class="courts__container">
   @for (item of courts; track $index) {
-  <div class="courts__container__card">
-    <img [src]="item.pathImg" />
-    <div class="courts__container__card__info">
-      <h3>{{ item.title }}</h3>
-      <p>Veja mais <mat-icon>chevron_right</mat-icon></p>
+  <div class="court-card">
+    <div class="court-card__image-wrapper">
+      <img [src]="item.pathImg" alt="Foto da quadra {{ item.title }}" />
+      
+      <div class="court-card__status"
+           [class.available]="isCourtAvailable(item)">
+           @if (isCourtAvailable(item)) {
+            <span>Disponível</span>
+           } @else {
+            <span>Fechada</span>
+           }
+      </div>
     </div>
-    <div
-      class="court-status"
-      [ngStyle]="{ 'background-color': isCourtAvailable(item) ? '#4CAF50' : '#F44336' }"
-    >
-      @if (isCourtAvailable(item)) {
-      <span>Disponível</span>
-      } @else {
-      <span>Fechada</span>
-      }
+    
+    <div class="court-card__info">
+      <h3>{{ item.title }}</h3>
     </div>
   </div>
   }
