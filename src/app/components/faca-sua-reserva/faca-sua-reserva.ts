@@ -20,6 +20,7 @@ import { ICourt } from '../../interfaces/icourt';
 import { ReservaService } from '../../services/reserva.service';
 import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
 
+
 @Component({
   selector: 'app-faca-sua-reserva',
   standalone: true, // <-- É uma boa prática declarar explicitamente
@@ -52,6 +53,12 @@ export class FacaSuaReserva implements OnInit {
 
   // Vamos usar isso apenas para o pai saber que deve ir para os próximos reservas, pois ele que orquestra isso
   @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
+
+  filtroDeData = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Previne que Sábados (6) e Domingos (0) sejam selecionados
+    return day !== 0 && day !== 6;
+  };
 
   constructor(
     private readonly _dialog: MatDialog,
