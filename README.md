@@ -1,29 +1,29 @@
-# Em desenvolvimento
-**Play Senac** é um sistema web em **Angular** para **agendamento e gerenciamento de quadras esportivas** no campus do Senac.  
-O objetivo é substituir processos manuais por operações digitais de reservas (CRUD), tudo com uma interface moderna e responsiva.
+# Play Senac 🏀⚽
 
-## 🚀 Funcionalidades principais
-- Cadastro, consulta, edição e cancelamento de reservas (CRUD).  
-- Gerenciamento de quadras (nome, tipo, horário, disponibilidade).  
-- Interface responsiva e fácil de usar, com navegação fluida via rotas.  
-- Estrutura modular preparada para escalabilidade.  
+![Status do Projeto: Em Desenvolvimento](https://img.shields.io/badge/status-em_desenvolvimento-yellow)
 
+Sistema web para agendamento e gerenciamento de quadras esportivas no campus do Senac, focado na digitalização e otimização de reservas.
 
-## 🔮 Melhorias previstas
-- Relatórios de uso e ocupação das quadras.  
-- Notificações automáticas.  
-- Regras de prioridade para reservas.  
-- Integração mobile (PWA).  
+## 🎯 Sobre o Projeto
 
+O **Play Senac** nasceu para modernizar a gestão das quadras esportivas da instituição. O objetivo principal é substituir processos manuais, como agendamentos por telefone ou planilhas, por uma operação digital centralizada.
 
-## 🛠 Tecnologias utilizadas
-- **Angular**
-- **TypeScript**  
-- **SCSS**
-- **Angular Material**
-- **Figma**  
+A plataforma permite o CRUD (Criação, Leitura, Atualização e Deleção) de reservas, oferecendo uma interface moderna, intuitiva e responsiva, acessível de qualquer dispositivo.
 
+## ✨ Funcionalidades Principais
 
-## 🎨 Design
-- [Protótipo](https://www.figma.com/proto/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?page-id=74%3A66&node-id=126-1295&viewport=131%2C56%2C0.33&t=e0yD6WmMJGD6Dzqe-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=126%3A1295)
-- [Figma](https://www.figma.com/design/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?node-id=258-798&t=FZqCDBkWWdEpp5ab-1)
+* **Agendamento Rápido:** Usuários podem visualizar horários disponíveis e reservar quadras em poucos cliques.
+* **Gestão de Reservas:** Painel administrativo para gerenciar todos os agendamentos (aprovar, cancelar, editar).
+* **Visualização em Tempo Real:** Um calendário ou *dashboard* que exibe a ocupação das quadras em tempo real.
+* **(Em breve):** Histórico de agendamentos e notificações.
+
+## 🛠️ Tecnologias Utilizadas
+
+* **Frontend:** [Angular](https://angular.io/)
+* **Backend:** [Java](https://www.java.com/) com [Spring Boot](https://spring.io/projects/spring-boot)
+* **Design (UI/UX):** [Figma](https://www.figma.com/)
+
+## 🔗 Links do Projeto
+
+* **[Repositório Backend](https://github.com/GuilhermeSerafim/play-senac-api)**
+* **[Protótipo (Figma)](https://www.figma.com/proto/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?node-id=74-66&t=imzkF1T5s64SmrGi-1)**
