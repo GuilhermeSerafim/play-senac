@@ -9,6 +9,7 @@ import { mockListaDeQuadras } from '../mock/allmocks';
 export class CourtService {
   private courtSubject = new BehaviorSubject<ICourt[]>(mockListaDeQuadras);
   public court$: Observable<ICourt[]> = this.courtSubject.asObservable();
+  
   getCourts(): Observable<ICourt[]> {
     return this.court$;
   }

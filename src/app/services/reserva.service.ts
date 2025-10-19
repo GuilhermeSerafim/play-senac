@@ -13,6 +13,10 @@ export class ReservaService {
 
   public readonly reservas$: Observable<IReserva[]> = this.reservasSubject.asObservable();
 
+  getReservas(): Observable<IReserva[]> {
+    return this.reservas$;
+  }
+
   addReserva(novaReserva: ICreateReserva): void {
     const currentReservas = this.reservasSubject.getValue();
 
