@@ -77,11 +77,6 @@ export class FacaSuaReserva implements OnInit {
     this.aoCriarReservaEmmit.emit();
   }
 
-  teste() {
-    console.log(this.dataSelecionada);
-    console.log(this.horarioSelecionado);
-  }
-
   abreDialogConvidado() {
     const dialogRef = this._dialog.open(ConvidadosDialog, {
       width: '540px',
@@ -94,24 +89,28 @@ export class FacaSuaReserva implements OnInit {
   }
 
   /**
-   * Filtro para o MatDatepicker que desabilita todas as datas passadas.
-   * Permite a seleção apenas da data atual ou de datas futuras.
-   * * @param d A data que o calendário está tentando renderizar. Pode ser nula.
-   * @returns {boolean} Retorna 'true' se a data for hoje ou futura, e 'false' caso contrário.
+   * Desabilita:
+   * 1. Todas as datas passadas.
+   * 2. Todas as datas que não pertencem ao ano atual.
+   * @param d A data que o calendário está tentando renderizar. Pode ser nula.
+   * @returns {boolean} Retorna 'true' se a data for válida, e 'false' caso contrário.
    */
   filtroDeData = (d: Date | null): boolean => {
-    // Se a data for nula, retorna true para evitar erros inesperados.
     if (!d) {
       return true;
     }
 
     const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
 
     // Zera as informações de tempo (horas, minutos, segundos) da data de hoje
     // para garantir que a comparação seja feita apenas com base no dia, mês e ano.
     hoje.setHours(0, 0, 0, 0);
 
-    // Retorna 'true' apenas se a data do calendário (d) for maior ou igual a hoje.
-    return d.getTime() >= hoje.getTime();
+    const ehHojeOuFuturo = d.getTime() >= hoje.getTime();
+
+    const ehDoAnoAtual = d.getFullYear() === anoAtual;
+
+    return ehHojeOuFuturo && ehDoAnoAtual;
   };
 }
