@@ -1,25 +1,25 @@
-@for (item of courts; track item.id) {
+@for (court of courts; track court.id) {
 <div class="card">
   <div class="card__left">
-    <img [src]="item.pathImg" alt="Imagem da quadra {{ item.title }}" />
+    <img [src]="court.pathImg" alt="Imagem da quadra {{ court.title }}" />
     <div class="info-wrapper">
-      <h2>{{ item.title }}</h2>
+      <h2>{{ court.title }}</h2>
       <p>
-        Horário: {{ item.horarioAbertura | date : 'HH:mm' }} -
-        {{ item.horarioFechamento | date : 'HH:mm' }}
+        Horário: {{ court.horarioAbertura | date : 'HH:mm' }} -
+        {{ court.horarioFechamento | date : 'HH:mm' }}
       </p>
-      <p>Capacidade: {{ item.capacidade }}</p>
+      <p>Capacidade: {{ court.capacidade }}</p>
       <p>
-       Dias disponiveis: @for (dia of item.diasDisponiveis; track dia; let
+       Dias disponiveis: @for (dia of court.diasDisponiveis; track dia; let
           isLast = $last) { {{ diaDaSemanaEnum[dia]  }}{{ !isLast ? ', ' : '' }} }
       </p>
     </div>
   </div>
   <div class="card__right">
-    <button (click)="alterarQuadra(item)">
+    <button (click)="alterarQuadra(court)">
       <mat-icon class="card__right__edit-icon">edit</mat-icon>
     </button>
-    <button (click)="removeQuadra(item)">
+    <button (click)="removeQuadra(court.id)">
       <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
     </button>
   </div>

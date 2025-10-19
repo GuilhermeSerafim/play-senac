@@ -46,4 +46,19 @@ export class ReservaService {
   getReservaById(id: number): Observable<IReserva | undefined> {
     return this.reservas$.pipe(map((reservas) => reservas.find((r) => r.id === id)));
   }
+
+
+  /**
+   * Remove todas as reservas associadas a um ID de quadra específico.
+   * @param quadraId O ID da quadra que foi removida.
+   */
+  public removeReservesByCourtId(quadraId: number): void {
+    const listaAtual = this.reservasSubject.getValue();
+
+    const novaLista = listaAtual.filter((reserva) => {
+      return reserva.quadra.id !== quadraId;
+    });
+
+    this.reservasSubject.next(novaLista);
+  }
 }

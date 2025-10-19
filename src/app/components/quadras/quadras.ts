@@ -20,11 +20,11 @@ export class Quadras {
 
   constructor(private readonly _courtService: CourtService, private readonly _dialog: MatDialog) {}
 
-  removeQuadra(q: ICourt) {
+  removeQuadra(idCourt: number) {
     const dialogRef = this._dialog.open(CancelarReservaAdmDialog, {
       width: '540px',
     });
-    dialogRef.afterClosed().subscribe((remove) => remove && this._courtService.removeCourt(q));
+    dialogRef.afterClosed().subscribe((remove) => remove && this._courtService.removeCourt(idCourt));
   }
 
   alterarQuadra(quadra: ICourt) {
