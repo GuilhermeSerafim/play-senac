@@ -33,10 +33,10 @@ export class ProximasReservas implements OnInit {
       map((reservasRecebidas) => {
         return reservasRecebidas
           .map((reserva) => {
-            const courtInfo = this.courts.find((court) => court.title === reserva.quadra);
+            const courtInfo = this.courts.find((court) => court.title === reserva.quadra.title);
             return {
               id: reserva.id,
-              title: reserva.quadra,
+              quadra: reserva.quadra,
               horario: reserva.horario,
               convidados: reserva.convidados,
               data: reserva.data,
