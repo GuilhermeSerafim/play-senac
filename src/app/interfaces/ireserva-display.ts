@@ -1,9 +1,10 @@
 import { IConvidado } from "./iconvidado";
+import { ICourt } from "./icourt";
 
 export interface IReservaDisplay {
   id: number;
   pathImg: string;
-  title: string;
+  quadra: ICourt;
   horario: Date;
   capacidade?: number;
   data: Date;

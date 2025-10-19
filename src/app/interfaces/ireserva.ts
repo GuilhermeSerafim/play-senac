@@ -1,8 +1,9 @@
 import { IConvidado } from './iconvidado';
+import { ICourt } from './icourt';
 
 export interface IReserva {
   id: number; // Ou string
-  quadra: string;
+  quadra: ICourt;
   data: Date;
   horario: Date;
   convidados: IConvidado[];

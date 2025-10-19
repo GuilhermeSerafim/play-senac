@@ -3,7 +3,7 @@ export interface ICourt {
   pathImg: string;
   title: string;
   capacidade?: number;
-  diasDisponiveis?: string[];
+  diasDisponiveis?: number[];
   horarioAbertura?: Date;
   horarioFechamento?: Date;
 }

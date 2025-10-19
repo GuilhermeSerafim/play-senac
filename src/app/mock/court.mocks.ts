@@ -1,18 +1,6 @@
 import { ICourt } from '../interfaces/icourt';
 import { DiaDaSemana } from '../enum/DiaDaSemana'; // 1. Importando o Enum
-
-/**
- * Helper para criar um objeto Date focado apenas no horário.
- * Isso evita o uso de datas arbitrárias (como 2025, 9, 10) no mock.
- * @param hour A hora (0-23)
- * @param minute O minuto (0-59)
- * @returns Um objeto Date com a data de hoje, mas com o horário especificado.
- */
-const createTime = (hour: number, minute: number = 0): Date => {
-  const date = new Date();
-  date.setHours(hour, minute, 0, 0);
-  return date;
-};
+import { createTime } from '../helpers/date.helpers';
 
 // --- Mocks de Quadras ---
 
@@ -21,11 +9,12 @@ export const mockQuadraTenis: ICourt = {
   pathImg: 'images/tenis.jpg',
   title: 'Tênis',
   capacidade: 4,
-  horarioAbertura: createTime(8),      // 3. Usando o helper de horário
+  horarioAbertura: createTime(8), // 3. Usando o helper de horário
   horarioFechamento: createTime(22),
-  diasDisponiveis: [                    // 2. Usando o Enum para clareza
+  diasDisponiveis: [
+    // 2. Usando o Enum para clareza
     DiaDaSemana.Domingo,
-    DiaDaSemana.Sabado
+    DiaDaSemana.Sabado,
   ],
 };
 
@@ -41,7 +30,7 @@ export const mockQuadraSociety: ICourt = {
     DiaDaSemana.Terca,
     DiaDaSemana.Quarta,
     DiaDaSemana.Quinta,
-    DiaDaSemana.Sexta
+    DiaDaSemana.Sexta,
   ],
 };
 
@@ -52,10 +41,7 @@ export const mockQuadraPoliExterna: ICourt = {
   capacidade: 10,
   horarioAbertura: createTime(8),
   horarioFechamento: createTime(22),
-  diasDisponiveis: [
-    DiaDaSemana.Terca,
-    DiaDaSemana.Quarta
-  ],
+  diasDisponiveis: [DiaDaSemana.Terca, DiaDaSemana.Quarta],
 };
 
 // Lista consolidada para facilitar a importação em outros lugares

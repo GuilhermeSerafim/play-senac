@@ -1,50 +1,45 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { mockListaDeReservas } from '../mock/allmocks'; // Apenas para a carga inicial
+import { map } from 'rxjs/operators';
+
 import { ICreateReserva, IReserva } from '../interfaces/ireserva';
+import { mockListaDeReservas } from '../mock/reserva.mocks';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReservaService {
-  private reservasSubject = new BehaviorSubject<IReserva[]>(mockListaDeReservas);
+  private readonly reservasSubject = new BehaviorSubject<IReserva[]>(mockListaDeReservas);
 
-  public reservas$: Observable<IReserva[]> = this.reservasSubject.asObservable();
-
-  constructor() {}
-
-  getReservas(): Observable<IReserva[]> {
-    return this.reservas$;
-  }
+  public readonly reservas$: Observable<IReserva[]> = this.reservasSubject.asObservable();
 
   addReserva(novaReserva: ICreateReserva): void {
-    const listaAtual = this.reservasSubject.getValue();
+    const currentReservas = this.reservasSubject.getValue();
 
-    // Simula o back-end criando um novo ID.
-    // Uma forma simples é pegar o maior ID atual e somar 1.
-    const maxId = listaAtual.reduce((max, r) => (r.id > max ? r.id : max), 0);
-
+    const maxId = currentReservas.reduce((max, r) => (r.id > max ? r.id : max), 0);
     const novaReservaComId: IReserva = {
       ...novaReserva,
       id: maxId + 1,
     };
 
-    const novaListaDeReservas: IReserva[] = [...listaAtual, novaReservaComId];
-    // Emitindo a nova lista para todos os componentes que estão inscritos
-    this.reservasSubject.next(novaListaDeReservas);
+    this.reservasSubject.next([...currentReservas, novaReservaComId]);
   }
 
   removeReserva(idParaRemover: number): void {
-    const listaAtual = this.reservasSubject.getValue();
-    const novaListaDeReservas = listaAtual.filter((reserva) => reserva.id !== idParaRemover);
-    this.reservasSubject.next(novaListaDeReservas);
+    const currentReservas = this.reservasSubject.getValue();
+    const updatedReservas = currentReservas.filter((reserva) => reserva.id !== idParaRemover);
+    this.reservasSubject.next(updatedReservas);
   }
 
-  updateReserva(updateReserva: IReserva): void {
-    const reservas = this.reservasSubject.getValue();
-    const reservasMaisReservaAtualizada = reservas.map((r) =>
-      r.id === updateReserva.id ? updateReserva : r
+  updateReserva(reservaAtualizada: IReserva): void {
+    const currentReservas = this.reservasSubject.getValue();
+    const updatedReservas = currentReservas.map((reserva) =>
+      reserva.id === reservaAtualizada.id ? reservaAtualizada : reserva
     );
-    this.reservasSubject.next(reservasMaisReservaAtualizada);
+    this.reservasSubject.next(updatedReservas);
+  }
+
+  getReservaById(id: number): Observable<IReserva | undefined> {
+    return this.reservas$.pipe(map((reservas) => reservas.find((r) => r.id === id)));
   }
 }
