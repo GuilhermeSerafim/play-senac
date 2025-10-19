@@ -10,9 +10,8 @@
       </p>
       <p>Capacidade: {{ item.capacidade }}</p>
       <p>
-        Dias disponíveis: @for (dia of item.diasDisponiveis; track dia; let isLast = $last) {
-        {{ dia | slice : 0 : 3 }}{{ !isLast ? ', ' : '' }}
-        }
+       Dias disponiveis: @for (dia of item.diasDisponiveis; track dia; let
+          isLast = $last) { {{ diaDaSemanaEnum[dia]  }}{{ !isLast ? ', ' : '' }} }
       </p>
     </div>
   </div>

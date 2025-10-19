@@ -6,6 +6,7 @@ import { CourtService } from '../../services/court.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CancelarReservaAdmDialog } from '../cancelar-reserva-adm-dialog/cancelar-reserva-adm-dialog';
 import { AlterQuadraAdmDialog } from '../alter-reserva-adm-dialog/alter-quadra-adm-dialog';
+import { DiaDaSemana } from '../../enum/DiaDaSemana';
 
 @Component({
   selector: 'app-quadras',
@@ -15,6 +16,7 @@ import { AlterQuadraAdmDialog } from '../alter-reserva-adm-dialog/alter-quadra-a
 })
 export class Quadras {
   @Input({ required: true }) courts: ICourt[] = [];
+  public diaDaSemanaEnum = DiaDaSemana;
 
   constructor(private readonly _courtService: CourtService, private readonly _dialog: MatDialog) {}
 
