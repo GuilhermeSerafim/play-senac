@@ -92,6 +92,7 @@ export class FacaSuaReserva implements OnInit {
    * Desabilita:
    * 1. Todas as datas passadas.
    * 2. Todas as datas que não pertencem ao ano atual.
+   * * 3. Todos os dias da semana em que a quadra selecionada não funciona.
    * @param d A data que o calendário está tentando renderizar. Pode ser nula.
    * @returns {boolean} Retorna 'true' se a data for válida, e 'false' caso contrário.
    */
@@ -102,15 +103,31 @@ export class FacaSuaReserva implements OnInit {
 
     const hoje = new Date();
     const anoAtual = hoje.getFullYear();
-
-    // Zera as informações de tempo (horas, minutos, segundos) da data de hoje
-    // para garantir que a comparação seja feita apenas com base no dia, mês e ano.
-    hoje.setHours(0, 0, 0, 0);
+    hoje.setHours(0, 0, 0, 0); // Zera o tempo para comparação
 
     const ehHojeOuFuturo = d.getTime() >= hoje.getTime();
-
     const ehDoAnoAtual = d.getFullYear() === anoAtual;
 
-    return ehHojeOuFuturo && ehDoAnoAtual;
+    if (!this.quadraSelecionada || !this.quadraSelecionada.diasDisponiveis) {
+      return false;
+    }
+
+    const diaDaSemana = d.getDay();
+
+    // Verifica se o dia da semana da data 'd' está incluído no array de dias da quadra
+    const ehDiaDisponivel = this.quadraSelecionada.diasDisponiveis.includes(diaDaSemana);
+
+    // Retorna true APENAS se todas as condições passarem
+    return ehHojeOuFuturo && ehDoAnoAtual && ehDiaDisponivel;
   };
+
+  /**
+   * Chamado quando o usuário troca a quadra.
+   * Limpa as seleções dependentes para evitar dados inválidos.
+   */
+  onQuadraChange() {
+    this.dataSelecionada = undefined!;
+    this.horarioSelecionado = undefined!;
+    this.convidados = [];
+  }
 }

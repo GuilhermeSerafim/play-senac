@@ -10,6 +10,7 @@
       [(ngModel)]="quadraSelecionada"
       #quadraSelecionadaControl="ngModel"
       required
+      (selectionChange)="onQuadraChange()"
     >
       @for (quadra of quadras; track quadra.id) {
       <mat-option [value]="quadra">
@@ -35,6 +36,7 @@
       [matDatepicker]="picker"
       readonly
       [matDatepickerFilter]="filtroDeData"
+      [disabled]="!quadraSelecionada"
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
