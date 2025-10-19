@@ -14,7 +14,7 @@
         required
       >
         @for (quadra of quadras; track quadra) {
-        <mat-option [value]="quadra.title">{{ quadra.title }}</mat-option>
+        <mat-option [value]="quadra">{{ quadra.title }}</mat-option>
         }
       </mat-select>
       @if (quadraSelecionadaControl.hasError('required')) {
