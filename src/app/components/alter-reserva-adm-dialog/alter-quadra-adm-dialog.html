@@ -1,4 +1,4 @@
-<form #criarQuadraForm="ngForm" (ngSubmit)="onSubmit()">
+<form #alterarQuadraForm="ngForm" (ngSubmit)="onSubmit()">
   <h1 mat-dialog-title>Alterar quadra</h1>
 
   <mat-dialog-content class="mat-typography">
@@ -94,8 +94,9 @@
         placeholder="https://exemplo.com/imagem.png"
       />
       <mat-icon matSuffix>link</mat-icon>
-        <mat-hint>Por favor, insira uma URL válida (ex: https://...).</mat-hint>
+      <mat-hint>Por favor, insira uma URL válida (ex: https://...).</mat-hint>
     </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>Dias disponíveis</mat-label>
       <mat-select
@@ -105,34 +106,22 @@
         required
         multiple
       >
-        @for (dia of diasDaSemana; track $index) {
-        <mat-option [value]="dia">
-          {{ dia }}
+        @for (dia of diasDaSemanaOptions; track dia.key) {
+        <mat-option [value]="dia.key">
+          {{ dia.value }}
         </mat-option>
         }
       </mat-select>
       <mat-icon matSuffix>date_range</mat-icon>
-
       @if (diasControl.invalid && diasControl.touched) {
-      <mat-error>Selecione pelo menos uma opção.</mat-error>
+      <mat-error>Selecione pelo menos um dia.</mat-error>
       }
     </mat-form-field>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button class="btn-cancelar" mat-dialog-close color="warn">Cancelar</button>
-
-    <button
-      mat-raised-button
-      class="btn-confirmar"
-      color="primary"
-      [disabled]="criarQuadraForm.invalid"
-      [ngStyle]="
-        criarQuadraForm.invalid
-          ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
-          : {}
-      "
-    >
+    <button type="button" mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+    <button mat-raised-button color="primary" [disabled]="alterarQuadraForm.invalid">
       Confirmar
     </button>
   </mat-dialog-actions>
