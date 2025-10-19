@@ -11,11 +11,11 @@
       #quadraSelecionadaControl="ngModel"
       required
     >
-      @for (quadra of quadras; track quadra) {
-      <mat-option [value]="quadra.title">{{ quadra.title }}</mat-option>
+      @for (quadra of quadras; track quadra.id) {
+      <mat-option [value]="quadra">{{ quadra.title }}</mat-option>
       }
     </mat-select>
-    @if (quadraSelecionadaControl.hasError('required')) {
+    @if (quadraSelecionadaControl.touched && quadraSelecionadaControl.hasError('required')) {
     <mat-error> O campo quadra é obrigatório. </mat-error>
     }
   </mat-form-field>
@@ -83,8 +83,9 @@
       <mat-icon class="person_add">person_add</mat-icon>
     </button>
     <button
-      matButton="elevated"
+      mat-raised-button
       class="enviar-button"
+      color="primary"
       type="submit"
       [disabled]="facaSuaReservaFormControl.invalid"
       [ngStyle]="
@@ -96,7 +97,4 @@
       Confirmar
     </button>
   </div>
-  <div class="form-container__right"></div>
 </form>
-
-<!-- <button (click)="teste()" matButton="">CLICK HERE (test)</button> -->

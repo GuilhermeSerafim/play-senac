@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -18,8 +17,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { CourtService } from '../../services/court.service';
 import { ICourt } from '../../interfaces/icourt';
 import { ReservaService } from '../../services/reserva.service';
-import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
-
+import { ICreateReserva } from '../../interfaces/ireserva';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-faca-sua-reserva',
@@ -30,52 +29,48 @@ import { ICreateReserva, IReserva } from '../../interfaces/ireserva';
     MatFormField,
     MatLabel,
     MatSelect,
-    MatInput,
     MatOption,
     MatDatepickerModule,
     MatIconModule,
-    MatDatepickerToggle,
     MatFormFieldModule,
     MatTimepickerModule,
     MatButton,
     MatDialogModule,
     MatChipsModule,
+    MatInput,
   ],
   templateUrl: './faca-sua-reserva.html',
   styleUrl: './faca-sua-reserva.scss',
 })
 export class FacaSuaReserva implements OnInit {
-  quadraSelecionada: any;
-  dataSelecionada: Date | null = null;
-  horarioSelecionado: any;
+  quadraSelecionada!: ICourt;
+  dataSelecionada!: Date;
+  horarioSelecionado!: Date;
   convidados: IConvidado[] = [];
+
   quadras: ICourt[] = [];
 
   // Vamos usar isso apenas para o pai saber que deve ir para os próximos reservas, pois ele que orquestra isso
   @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
 
-  filtroDeData = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
-    // Previne que Sábados (6) e Domingos (0) sejam selecionados
-    return day !== 0 && day !== 6;
-  };
-
   constructor(
     private readonly _dialog: MatDialog,
-    private readonly _quadraService: CourtService,
+    private readonly _courtService: CourtService,
     private readonly _reservaService: ReservaService
   ) {}
 
   ngOnInit(): void {
-    this._quadraService.getCourts().subscribe((q) => (this.quadras = q));
+    this._courtService.getCourts().subscribe((q) => (this.quadras = q));
   }
 
   onSubmit(f: NgForm) {
+    if (f.invalid) return;
+
     const reserva: ICreateReserva = {
-      convidados: f.value.convidados,
-      data: f.value.dataSelecionada,
-      horario: f.value.horarioSelecionado,
-      quadra: f.value.quadraSelecionada,
+      quadra: this.quadraSelecionada,
+      data: this.dataSelecionada,
+      horario: this.horarioSelecionado,
+      convidados: this.convidados,
     };
 
     this._reservaService.addReserva(reserva);
@@ -97,4 +92,26 @@ export class FacaSuaReserva implements OnInit {
   removeConvidado(c: IConvidado) {
     this.convidados = this.convidados.filter((convidado) => convidado !== c);
   }
+
+  /**
+   * Filtro para o MatDatepicker que desabilita todas as datas passadas.
+   * Permite a seleção apenas da data atual ou de datas futuras.
+   * * @param d A data que o calendário está tentando renderizar. Pode ser nula.
+   * @returns {boolean} Retorna 'true' se a data for hoje ou futura, e 'false' caso contrário.
+   */
+  filtroDeData = (d: Date | null): boolean => {
+    // Se a data for nula, retorna true para evitar erros inesperados.
+    if (!d) {
+      return true;
+    }
+
+    const hoje = new Date();
+
+    // Zera as informações de tempo (horas, minutos, segundos) da data de hoje
+    // para garantir que a comparação seja feita apenas com base no dia, mês e ano.
+    hoje.setHours(0, 0, 0, 0);
+
+    // Retorna 'true' apenas se a data do calendário (d) for maior ou igual a hoje.
+    return d.getTime() >= hoje.getTime();
+  };
 }
