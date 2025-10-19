@@ -112,9 +112,9 @@
         required
         multiple
       >
-        @for (dia of diasDaSemana; track $index) {
-        <mat-option [value]="dia">
-          {{ dia }}
+        @for (dia of diasDaSemanaOptions; track $index) {
+        <mat-option [value]="dia.key">
+          {{ dia.value }}
         </mat-option>
         }
       </mat-select>

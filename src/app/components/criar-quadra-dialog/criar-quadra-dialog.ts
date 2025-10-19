@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -14,9 +14,10 @@ import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/m
 import { MatIconModule } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatTimepickerModule } from '@angular/material/timepicker';
-import { ICourt, ICreateCourt } from '../../interfaces/icourt';
+import { ICreateCourt } from '../../interfaces/icourt';
 import { MatOption, MatSelectModule } from '@angular/material/select';
-import { CourtService } from '../../services/court.service';
+import { enumToObjectArray } from '../../enum/enumToObjectArray';
+import { DiaDaSemana } from '../../enum/DiaDaSemana';
 
 @Component({
   selector: 'app-criar-quadra-dialog',
@@ -42,27 +43,22 @@ import { CourtService } from '../../services/court.service';
   templateUrl: './criar-quadra-dialog.html',
   styleUrl: './criar-quadra-dialog.scss',
 })
-export class CriarQuadraDialog {
+export class CriarQuadraDialog implements OnInit {
   nomeQuadra: string = '';
   horaInicio!: Date;
   horaFim!: Date;
   capacidade!: number;
   imagemUrl: string = '';
-  diasDaSemana: string[] = [
-    'Segunda-feira',
-    'Terça-feira',
-    'Quarta-feira',
-    'Quinta-feira',
-    'Sexta-feira',
-    'Sábado',
-    'Domingo',
-  ];
-  diasSelecionados: string[] = [];
 
-  constructor(
-    public readonly _dialogRef: MatDialogRef<CriarQuadraDialog>,
-    public readonly _courtService: CourtService
-  ) {}
+  diasDaSemanaOptions: { key: number; value: string }[] = [];
+  diasSelecionados: number[] = [];
+
+  constructor(public readonly _dialogRef: MatDialogRef<CriarQuadraDialog>) {}
+
+  ngOnInit(): void {
+    this.diasDaSemanaOptions = enumToObjectArray(DiaDaSemana);
+  }
+  
   onSubmit() {
     const quadra: ICreateCourt = {
       pathImg: this.imagemUrl ? this.imagemUrl : 'images/Complexo Esportivo no Parque Urbano.png',
