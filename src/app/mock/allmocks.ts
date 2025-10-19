@@ -20,12 +20,13 @@ export const mockQuadraTenis: ICourt = {
   id: 1,
   pathImg: 'images/tenis.jpg',
   title: 'Tênis',
-  capacidade: 4,
-  horarioAbertura: createTime(8),      // 3. Usando o helper de horário
+  capacidade: 2,
+  horarioAbertura: createTime(8), // 3. Usando o helper de horário
   horarioFechamento: createTime(22),
-  diasDisponiveis: [                    // 2. Usando o Enum para clareza
+  diasDisponiveis: [
+    // 2. Usando o Enum para clareza
     DiaDaSemana.Domingo,
-    DiaDaSemana.Sabado
+    DiaDaSemana.Sabado,
   ],
 };
 
@@ -41,7 +42,7 @@ export const mockQuadraSociety: ICourt = {
     DiaDaSemana.Terca,
     DiaDaSemana.Quarta,
     DiaDaSemana.Quinta,
-    DiaDaSemana.Sexta
+    DiaDaSemana.Sexta,
   ],
 };
 
@@ -52,10 +53,7 @@ export const mockQuadraPoliExterna: ICourt = {
   capacidade: 10,
   horarioAbertura: createTime(8),
   horarioFechamento: createTime(22),
-  diasDisponiveis: [
-    DiaDaSemana.Terca,
-    DiaDaSemana.Quarta
-  ],
+  diasDisponiveis: [DiaDaSemana.Terca, DiaDaSemana.Quarta],
 };
 
 // Lista consolidada para facilitar a importação em outros lugares

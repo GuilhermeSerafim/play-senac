@@ -12,7 +12,9 @@
       required
     >
       @for (quadra of quadras; track quadra.id) {
-      <mat-option [value]="quadra">{{ quadra.title }}</mat-option>
+      <mat-option [value]="quadra">
+        {{ quadra.title }} (Capacidade: {{ quadra.capacidade }})
+      </mat-option>
       }
     </mat-select>
     @if (quadraSelecionadaControl.touched && quadraSelecionadaControl.hasError('required')) {
@@ -79,8 +81,16 @@
   }
 
   <div class="form-container__bottom">
-    <button type="button" (click)="abreDialogConvidado()">
-      <mat-icon class="person_add">person_add</mat-icon>
+    <!-- -1 por causa que o user é consome uma quantidade tb -->
+    <button
+      type="button"
+      (click)="abreDialogConvidado()"
+      mat-icon-button
+      [disabled]="!quadraSelecionada || convidados.length >= quadraSelecionada.capacidade! - 1"
+      aria-label="Adicionar convidado"
+      class="btn-person__add"
+    >
+      <mat-icon>person_add</mat-icon>
     </button>
     <button
       mat-raised-button
