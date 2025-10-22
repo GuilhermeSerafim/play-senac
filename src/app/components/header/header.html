@@ -2,7 +2,7 @@
   <div class="header__container">
     <nav class="header__nav">
       <a
-        routerLink="/inicio"
+        routerLink="/home"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         class="header__item header__link"
@@ -21,13 +21,13 @@
     </nav>
 
     <div class="header__logo">
-      <a routerLink="/inicio" aria-label="Ir para a página inicial">
+      <a routerLink="/home" aria-label="Ir para a página inicial">
         <img src="images/logo.png" class="header__img" alt="Logo PlaySenac" />
       </a>
     </div>
 
     <div class="header__actions">
-      <a routerLink="/entrar" class="header__item header__login">Entre</a>
+      <a routerLink="/entre" class="header__item header__login">Entre</a>
       <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
     </div>
   </div>
