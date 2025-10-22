@@ -21,7 +21,7 @@ export class ViewSwitcher {
   constructor(private readonly _router: Router) {}
   selectAdminView(): void {
     this.viewModeService.setViewMode(ViewMode.Admin);
-    this._router.navigate(['/home']);
+    this._router.navigate(['/dashboard']);
   }
 
   selectUserView(): void {
