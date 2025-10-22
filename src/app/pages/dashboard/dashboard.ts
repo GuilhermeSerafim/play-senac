@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Header } from '../../components/header/header';
-import { Footer } from '../../components/footer/footer';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Quadras } from '../../components/quadras/quadras';
@@ -13,7 +11,7 @@ import { ReservasAdm } from '../../components/reservas-adm/reservas-adm';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Header, Footer, FormsModule, CommonModule, Quadras, MatButton, ReservasAdm],
+  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -26,7 +24,7 @@ export class Dashboard implements OnInit {
   ngOnInit(): void {
     this._courtService.getCourts().subscribe((courts) => (this.quadras = courts));
   }
-  
+
   ativarAba(aba: string) {
     this.abaAtiva = aba;
   }
