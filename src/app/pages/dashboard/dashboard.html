@@ -1,4 +1,4 @@
-<app-header [isAdmin]="true"></app-header>
+<app-header></app-header>
 <div class="dashboard">
   <h1>Dashboard</h1>
   <div class="dashboard__menu">
@@ -7,11 +7,13 @@
       Reservas
     </p>
   </div>
-  @if(abaAtiva === 'quadras') { 
-    <button matButton="elevated" class="dashboard__criar-quadra" (click)="criarQuadra()">Criar quadra</button>
-    <app-quadras [courts]="quadras"></app-quadras>
-  } @else { 
-    <app-reservas-adm/>
+  @if(abaAtiva === 'quadras') {
+  <button matButton="elevated" class="dashboard__criar-quadra" (click)="criarQuadra()">
+    Criar quadra
+  </button>
+  <app-quadras [courts]="quadras"></app-quadras>
+  } @else {
+  <app-reservas-adm />
   }
 </div>
 <app-footer></app-footer>

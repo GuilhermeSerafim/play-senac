@@ -1,0 +1,24 @@
+<div class="selection-container">
+  <header class="header">
+    <h1>Bem-vindo ao Play Senac Demo</h1>
+    <p>Escolha como você deseja visualizar a aplicação:</p>
+  </header>
+
+  <main class="options-container">
+    <div class="option-card admin-card" (click)="selectAdminView()" role="button" tabindex="0">
+      <mat-icon class="option-icon">admin_panel_settings</mat-icon>
+      <h2>Visão do Administrador</h2>
+      <p>Gerencie quadras, reservas e veja todas as funcionalidades.</p>
+      </div>
+
+    <div class="option-card user-card" (click)="selectUserView()" role="button" tabindex="0">
+      <mat-icon class="option-icon">person</mat-icon>
+      <h2>Visão do Usuário</h2>
+      <p>Faça reservas, convide amigos e veja suas agendas.</p>
+       </div>
+  </main>
+
+  <footer class="footer-note">
+    <p>Esta é uma versão de demonstração.</p>
+  </footer>
+</div>

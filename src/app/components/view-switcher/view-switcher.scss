@@ -1,0 +1,196 @@
+@use '../../../styles/variables' as *;
+// ==============================
+// 🎨 Cores (Variáveis usadas do seu prompt)
+// ==============================
+$color-primary-blue: #004a8d;
+$color-primary-orange: #f27f54;
+$color-primary-yellow: #ffce00;
+$color-primary-gray: #778888;
+$color-support-blue-lightest: #4a97e6;
+$color-support-blue-light: #2967f4;
+$color-support-blue-nav: #0051a2;
+$color-support-blue-darkA: #072f54;
+$color-support-blue-darkB: #082036;
+$color-support-orange-strong: #f77f00;
+$color-support-purple-gray: #33283f;
+$color-support-orange-tint: #fdc280;
+$color-support-orange-warn: #dc2626;
+$color-base-white: #ffffff;
+$color-base-gray-lightest: #f7f7f7;
+$color-base-gray-light: #e4e8f0;
+$color-base-gray-dark: #1e2127;
+$color-info-text: #31708f;
+$color-info-bg: #d9edf7;
+$color-warning-text: #8a6d3b;
+$color-warning-bg: #fcf8e3;
+
+// ==============================
+// ✍️ Tipografia (Variáveis usadas do seu prompt)
+// ==============================
+$font-family-base: 'Montserrat', sans-serif;
+$font-title-lg-size: 48px;
+$font-title-lg-line-height: 56px;
+$font-title-lg-weight: 700;
+$font-title-md-size: 36px;
+$font-title-md-line-height: 40px;
+$font-title-md-weight: 700;
+$font-title-sm-size: 28px;
+$font-title-sm-line-height: 32px;
+$font-title-sm-weight: 600;
+$font-text-md-size: 16px;
+$font-text-md-line-height: 22px;
+$font-text-md-weight: 400;
+$font-text-sm-size: 14px;
+$font-text-sm-line-height: 20px;
+$font-text-sm-weight: 400;
+
+// ==============================
+// Estilos do Componente
+// ==============================
+
+.selection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  // Usando azul escuro como fundo principal
+  background-color: $color-support-blue-darkB; 
+  color: $color-base-white; // Texto principal branco
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: $font-family-base; // Aplicando a fonte base
+}
+
+.header {
+  margin-bottom: 3rem;
+
+  .logo {
+    max-width: 150px;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    // Usando estilo de título médio
+    font-size: $font-title-md-size;
+    line-height: $font-title-md-line-height;
+    font-weight: $font-title-md-weight;
+    margin-bottom: 0.5rem;
+    color: $color-base-white; // Título branco para destaque
+  }
+
+  p {
+    // Usando estilo de texto médio
+    font-size: $font-text-md-size;
+    line-height: $font-text-md-line-height;
+    font-weight: $font-text-md-weight;
+    color: $color-base-gray-light; // Cinza claro para subtítulo
+    opacity: 0.9;
+  }
+}
+
+.options-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 3rem;
+}
+
+.option-card {
+  // Usando um azul intermediário para os cards
+  background-color: $color-support-blue-darkA; 
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid transparent; 
+
+  .option-icon {
+    font-size: 4rem;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1.5rem;
+    // Usando a cor laranja da marca como destaque para ícones
+    color: $color-primary-orange; 
+  }
+
+  h2 {
+    // Usando estilo de título pequeno
+    font-size: $font-title-sm-size;
+    line-height: $font-title-sm-line-height;
+    font-weight: $font-title-sm-weight;
+    margin-bottom: 0.8rem;
+    color: $color-base-white;
+  }
+
+  p {
+    // Usando estilo de texto pequeno
+    font-size: $font-text-sm-size;
+    line-height: $font-text-sm-line-height;
+    font-weight: $font-text-sm-weight;
+    opacity: 0.8;
+    color: $color-base-gray-light;
+    margin-bottom: 1.5rem;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    // Destaca a borda com laranja no hover
+    border-color: $color-primary-orange; 
+  }
+
+  // Estilo para botões (se você adicionar)
+  button {
+    margin-top: auto;
+    // Estilo do botão usando cores da paleta
+    color: $color-primary-orange;
+    border-color: $color-primary-orange;
+    &:hover {
+      // Leve fundo laranja no hover
+      background-color: rgba($color-primary-orange, 0.1); 
+    }
+  }
+}
+
+.footer-note {
+  margin-top: 2rem;
+  // Texto pequeno para a nota de rodapé
+  font-size: $font-text-sm-size; 
+  color: $color-primary-gray; // Cinza da marca para a nota
+  opacity: 0.7;
+}
+
+// Responsividade para telas menores
+@media (max-width: 768px) {
+  .header h1 {
+    // Ajusta o título para SM em telas menores
+    font-size: $font-title-sm-size; 
+    line-height: $font-title-sm-line-height;
+  }
+  .options-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .option-card {
+    padding: 2rem 1.5rem;
+    .option-icon {
+      font-size: 3rem;
+      width: 48px;
+      height: 48px;
+    }
+    h2 {
+      // Mantém SM ou ajusta se necessário
+      font-size: 1.3rem; // Exemplo de ajuste menor que SM
+    }
+  }
+}

@@ -1,5 +1,3 @@
-// Em: src/app/core/helpers/date.helpers.ts
-
 /**
  * Cria um objeto Date com a data de hoje, mas com a hora e minuto especificados.
  * Ideal para representar horários sem se preocupar com uma data específica.
