@@ -5,6 +5,7 @@ import { Cadastro } from './pages/cadastro/cadastro';
 import { Reservas } from './pages/reservas/reservas';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { ViewSwitcher } from './components/view-switcher/view-switcher';
+import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'escolher-perfil', pathMatch: 'full' },
@@ -14,4 +15,5 @@ export const routes: Routes = [
   { path: 'cadastro', component: Cadastro },
   { path: 'reservas', component: Reservas },
   { path: 'dashboard', component: Dashboard },
+  { path: '**', component: NotFound }
 ];
