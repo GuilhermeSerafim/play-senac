@@ -8,10 +8,12 @@ import { CriarQuadraDialog } from '../../components/criar-quadra-dialog/criar-qu
 import { ICourt } from '../../interfaces/icourt';
 import { CourtService } from '../../services/court.service';
 import { ReservasAdm } from '../../components/reservas-adm/reservas-adm';
+import { Footer } from '../../components/footer/footer';
+import { Header } from '../../components/header/header';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm],
+  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm, Footer, Header],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

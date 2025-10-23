@@ -9,11 +9,7 @@
         >Home</a
       >
 
-      @if (isAdmin == "admin") {
-      <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link"
-        >Dashboard</a
-      >
-      } @else {
+      @if (!(isAdmin == "admin")) {
       <a routerLink="/reservas" routerLinkActive="active" class="header__item header__link"
         >Reservas</a
       >
@@ -25,10 +21,16 @@
         <img src="images/logo.png" class="header__img" alt="Logo PlaySenac" />
       </a>
     </div>
+    @if (!(isAdmin == "admin")) {
+      <div class="header__actions">
+        <a routerLink="/entre" class="header__item header__login">Entre</a>
+        <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
+      </div>
+    } @else {
+      <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link"
+        >Dashboard</a
+      >
+    }
 
-    <div class="header__actions">
-      <a routerLink="/entre" class="header__item header__login">Entre</a>
-      <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
-    </div>
   </div>
 </header>
