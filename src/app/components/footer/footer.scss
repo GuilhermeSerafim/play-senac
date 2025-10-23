@@ -90,3 +90,27 @@
     margin-bottom: 20px;
   }
 }
+
+.guiler {
+    position: relative; // importante para o ::after ficar alinhado
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $color-primary-yellow;
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+}
