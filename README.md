@@ -29,4 +29,4 @@ A plataforma permite o CRUD (Criação, Leitura, Atualização e Deleção) de r
 * **[Protótipo (Figma)](https://www.figma.com/proto/k0ublZXSnKWTw9W9YGRCF7/Play-Senac?node-id=74-66&t=imzkF1T5s64SmrGi-1)**
 
 
-<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=1E3A5F&height=120&section=footer"/>
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=004a8d&height=120&section=footer"/>
