@@ -5,4 +5,6 @@ export interface CourtResponse {
   limiteJogadores: number;
   horarioAbertura: string | null;
   horarioFechamento: string | null;
+  diasSemana: number[];
+  bloqueada: boolean;
 }

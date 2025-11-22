@@ -52,8 +52,9 @@ export class CourtService {
       nome: quadra.title,
       limiteJogadores: quadra.capacidade,
       imagemUrl: quadra.pathImg,
-      horarioAbertura: quadra.horarioAbertura!.toISOString(),
-      horarioFechamento: quadra.horarioFechamento!.toISOString(),
+
+      horarioAbertura: this.formatTimeForJava(quadra.horarioAbertura),
+      horarioFechamento: this.formatTimeForJava(quadra.horarioFechamento),
     };
 
     this.http.post(this.API_URL, payloadJava).subscribe({
@@ -71,8 +72,9 @@ export class CourtService {
       nome: updatedCourt.title,
       limiteJogadores: updatedCourt.capacidade,
       imagemUrl: updatedCourt.pathImg,
-      horarioAbertura: updatedCourt.horarioAbertura!.toISOString(),
-      horarioFechamento: updatedCourt.horarioFechamento!.toISOString(),
+
+      horarioAbertura: this.formatTimeForJava(updatedCourt.horarioAbertura),
+      horarioFechamento: this.formatTimeForJava(updatedCourt.horarioFechamento),
     };
     this.http.put(`${this.API_URL}/${updatedCourt.id}`, payloadJava).subscribe({
       next: () => {
@@ -90,12 +92,10 @@ export class CourtService {
       title: backendData.nome,
       pathImg: this.fixGoogleDriveUrl(backendData.imagemUrl),
       capacidade: backendData.limiteJogadores,
-
       horarioAbertura: this.timeToDate(backendData.horarioAbertura)!,
       horarioFechamento: this.timeToDate(backendData.horarioFechamento)!,
-
-      // TODO: Se o back ainda não manda os dias, mantenha array vazio ou trate depois
-      diasDisponiveis: [],
+      diasDisponiveis: backendData.diasSemana || [],
+      bloqueada: backendData.bloqueada,
     };
   }
 
@@ -138,5 +138,22 @@ export class CourtService {
     }
 
     return url;
+  }
+
+  /**
+   * Converte um objeto Date do JS para string "HH:mm:00" que o Java LocalTime aceita.
+   */
+  private formatTimeForJava(date: Date | null | undefined): string | null {
+    if (!date) return null;
+
+    // Garante que é um objeto Date válido
+    const d = new Date(date);
+
+    // Pega as horas e minutos e adiciona o zero à esquerda se for menor que 10 (ex: 9 vira 09)
+    const hours = d.getHours().toString().padStart(2, '0');
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+
+    // Retorna o formato limpo: "11:00:00"
+    return `${hours}:${minutes}:00`;
   }
 }
