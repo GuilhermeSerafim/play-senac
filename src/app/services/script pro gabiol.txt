@@ -1,0 +1,41 @@
+insert into quadra (nome, limite_jogadores, imagem_url, is_bloqueada) 
+values ("Society", 16, "https://drive.google.com/file/d/1V7UkUMcroOqK4Fnv1p4neVRJp9pdJzGR/view?usp=sharing", 0), ("Poliesportiva externa", 10, "https://drive.google.com/file/d/1V7UkUMcroOqK4Fnv1p4neVRJp9pdJzGR/view?usp=sharing", 0);
+
+INSERT INTO reserva (data_hora_inicio, data_hora_fim, fk_usuario, fk_quadra)
+VALUES 
+    ('2025-10-01 12:00:00', '2025-10-01 13:00:00', 17, 1),  
+    ('2025-09-30 18:00:00', '2025-09-30 19:00:00', 17, 11), 
+    ('2025-09-29 20:00:00', '2025-09-29 21:00:00', 17, 12); 
+17 (id user) - 1 (tenis) 11 (society) 12 (Poli)
+describe disponibilidade_quadra;
+select * from usuario;
+select * from reserva;
+select * from quadra;
+select * from disponibilidade_quadra;
+
+
+
+INSERT INTO disponibilidade_quadra (dia, horario_inicio, horario_fim, quadra_id)
+VALUES 
+    -- 1. Quadra de Tênis (ID 1) - Sábado e Domingo
+    (0, '08:00:00', '22:00:00', 1), -- Domingo
+    (6, '08:00:00', '22:00:00', 1), -- Sábado
+
+    -- 2. Society (ID 11) - Segunda a Sexta
+    (1, '08:00:00', '22:00:00', 11), -- Segunda
+    (2, '08:00:00', '22:00:00', 11), -- Terça
+    (3, '08:00:00', '22:00:00', 11), -- Quarta
+    (4, '08:00:00', '22:00:00', 11), -- Quinta
+    (5, '08:00:00', '22:00:00', 11), -- Sexta
+
+    -- 3. Poliesportiva Externa (ID 12) - Terça e Quarta
+    (2, '08:00:00', '22:00:00', 12), -- Terça
+    (3, '08:00:00', '22:00:00', 12); -- Quarta
+    
+    ALTER TABLE disponibilidade_quadra 
+DROP FOREIGN KEY FKj2xiop8q9c9k0tewjyw60uhfh;
+    ALTER TABLE disponibilidade_quadra
+DROP COLUMN email,
+DROP COLUMN nome,
+DROP COLUMN telefone,
+DROP COLUMN fk_reserva;

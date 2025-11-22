@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICourt, ICreateCourt } from '../interfaces/icourt';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { ReservaService } from './reserva.service';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { CourtResponse } from '../interfaces/court-response.interface';
@@ -87,16 +86,37 @@ export class CourtService {
     });
   }
 
-  private adapter(backendData: CourtResponse): ICourt {
+private adapter(backendData: CourtResponse): ICourt {
     return {
       id: backendData.id, 
-      title: backendData.nome,             
-      pathImg: backendData.imagemUrl,      
+      title: backendData.nome,
+      pathImg: backendData.imagemUrl,
       capacidade: backendData.limiteJogadores,
-      // Tratamento para datas (se vier null, cria data atual ou trata como preferir)
-      horarioAbertura: backendData.horarioAbertura ? new Date(backendData.horarioAbertura) : new Date(), 
-      horarioFechamento: backendData.horarioFechamento ? new Date(backendData.horarioFechamento) : new Date(),
-      diasDisponiveis: []
+      
+      horarioAbertura: this.timeToDate(backendData.horarioAbertura)!,
+      horarioFechamento: this.timeToDate(backendData.horarioFechamento)!,
+      
+      // TODO: Se o back ainda não manda os dias, mantenha array vazio ou trate depois
+      diasDisponiveis: [] 
     };
+  }
+  
+  /**
+   * Helper para converter string "HH:mm:ss" do Java para Date do JS
+   */
+  private timeToDate(timeStr: string | null): Date | null {
+    if (!timeStr) return null;
+
+    // 2. Quebramos a string "08:00:00" nos dois pontos
+    const parts = timeStr.split(':'); // ["08", "00", "00"]
+    
+    const date = new Date();
+    
+    // 3. Setamos a hora e minuto na data de hoje
+    date.setHours(Number(parts[0]));
+    date.setMinutes(Number(parts[1]));
+    date.setSeconds(0);
+    
+    return date;
   }
 }
