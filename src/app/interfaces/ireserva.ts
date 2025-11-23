@@ -13,7 +13,6 @@ export interface IReserva {
 
 export interface ICreateReserva {
   quadraId: number;
-  usuarioId: number;
   dataInicio: Date;
   dataFim: Date;
   convidados: IConvidado[];

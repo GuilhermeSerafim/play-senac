@@ -101,9 +101,9 @@ export class FacaSuaReserva implements OnInit {
     dataFimFinal.setHours(horaFim.getHours(), horaFim.getMinutes(), 0);
 
     // 3. Cria o Payload
+    const usuarioIdLogado = Number(localStorage.getItem('userId'));
     const novaReserva: ICreateReserva = {
       quadraId: this.quadraSelecionada.id,
-      usuarioId: 17, // TODO: Pegar do AuthService/LocalStorage dinamicamente
       dataInicio: dataInicioFinal,
       dataFim: dataFimFinal,
       // Cria uma copia do arr

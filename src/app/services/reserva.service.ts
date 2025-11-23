@@ -24,7 +24,7 @@ export class ReservaService {
 
   loadReservas(): void {
     this.http
-      .get<ReservaResponse[]>(this.API_URL)
+      .get<ReservaResponse[]>(`${this.API_URL}/minhas`)
       .pipe(map((listaJava) => listaJava.map((item) => this.adapter(item))))
       .subscribe({
         next: (listaPronta) => this.reservasSubject.next(listaPronta),
@@ -69,7 +69,6 @@ export class ReservaService {
       dataHoraFim: this.formatDateForJava(novaReserva.dataFim),
       // Assumindo que no front você tem o ID da quadra e do usuário dentro de novaReserva
       idQuadra: novaReserva.quadraId,
-      idUsuario: novaReserva.usuarioId,
       convidados: novaReserva.convidados, // Se houver lógica de convidados, adicione aqui
     };
 
