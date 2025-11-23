@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Bloquear Quadra: {{ data.quadra.title }}</h2>
+
+<mat-dialog-content>
+  <div class="bloqueio-form">
+    
+    <!-- DATA -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Selecione a data</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="dataSelecionada" required readonly>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- HORÁRIOS -->
+    <div class="horarios-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Início</mat-label>
+        <input matInput [matTimepicker]="pickerInicio" [(ngModel)]="horarioInicioSelecionado" required>
+        <mat-timepicker #pickerInicio />
+        <mat-timepicker-toggle [for]="pickerInicio" matSuffix />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fim</mat-label>
+        <input matInput [matTimepicker]="pickerFim" [(ngModel)]="horarioFimSelecionado" required>
+        <mat-timepicker #pickerFim />
+        <mat-timepicker-toggle [for]="pickerFim" matSuffix />
+      </mat-form-field>
+    </div>
+
+    @if (erroDeHorario) {
+      <div class="error-msg">
+        <mat-icon>error</mat-icon> {{ erroDeHorario }}
+      </div>
+    }
+
+    <!-- MOTIVO -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Motivo do bloqueio</mat-label>
+      <textarea matInput [(ngModel)]="motivo" placeholder="Ex: Manutenção, Chuva..." required rows="3"></textarea>
+    </mat-form-field>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button 
+    mat-raised-button 
+    color="warn" 
+    (click)="onConfirm()"
+    [disabled]="!dataSelecionada || !horarioInicioSelecionado || !horarioFimSelecionado || !motivo || erroDeHorario"
+  >
+    Bloquear
+  </button>
+</mat-dialog-actions>
