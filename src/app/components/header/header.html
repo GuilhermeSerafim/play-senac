@@ -1,36 +1,52 @@
 <header class="header">
   <div class="header__container">
+    <!-- NAV (Links de Navegação) -->
     <nav class="header__nav">
       <a
         routerLink="/home"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         class="header__item header__link"
-        >Home</a
       >
+        Home
+      </a>
 
-      @if (!(isAdmin == "admin")) {
-      <a routerLink="/reservas" routerLinkActive="active" class="header__item header__link"
-        >Reservas</a
-      >
+      <!-- Só mostra "Reservas" se NÃO for admin (ou seja, user comum ou visitante) -->
+      @if ((isAdmin$ | async) === false) {
+      <a routerLink="/reservas" routerLinkActive="active" class="header__item header__link">
+        Reservas
+      </a>
       }
     </nav>
 
+    <!-- LOGO -->
     <div class="header__logo">
       <a routerLink="/home" aria-label="Ir para a página inicial">
         <img src="images/logo.png" class="header__img" alt="Logo PlaySenac" />
       </a>
     </div>
-    @if (!(isAdmin == "admin")) {
-      <div class="header__actions">
-        <a routerLink="/entre" class="header__item header__login">Entre</a>
-        <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
-      </div>
-    } @else {
-      <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link"
-        >Dashboard</a
-      >
-    }
 
+    <!-- AÇÕES (Direita) -->
+    <div class="header__actions">
+      <!-- CASO 1: Usuário NÃO LOGADO -->
+      @if ((isLoggedIn$ | async) === false) {
+      <a routerLink="/entre" class="header__item header__login">Entre</a>
+      <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
+      }
+
+      <!-- CASO 2: Usuário LOGADO -->
+      @else {
+
+      <!-- Se for ADMIN, mostra link pro Dashboard -->
+      @if (isAdmin$ | async) {
+      <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link">
+        Dashboard
+      </a>
+      }
+
+      <!-- Botão SAIR (comum para todos logados) -->
+      <a (click)="sair()" class="header__item header__login" style="cursor: pointer"> Sair </a>
+      }
+    </div>
   </div>
 </header>
