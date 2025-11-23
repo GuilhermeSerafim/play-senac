@@ -55,6 +55,8 @@ export class CourtService {
 
       horarioAbertura: this.formatTimeForJava(quadra.horarioAbertura),
       horarioFechamento: this.formatTimeForJava(quadra.horarioFechamento),
+      diasSemana: quadra.diasDisponiveis,
+      bloqueada: quadra.bloqueada,
     };
 
     this.http.post(this.API_URL, payloadJava).subscribe({
