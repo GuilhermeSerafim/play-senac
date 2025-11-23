@@ -106,16 +106,18 @@ export class FacaSuaReserva implements OnInit {
       usuarioId: 17, // TODO: Pegar do AuthService/LocalStorage dinamicamente
       dataInicio: dataInicioFinal,
       dataFim: dataFimFinal,
-      convidados: this.convidados,
+      // Cria uma copia do arr
+      convidados: [...this.convidados],
     };
 
-    this._reservaService.addReserva(novaReserva);
-    
-    // Reseta o form
-    this.onQuadraChange();
-    
-    // Avisa o pai (Dashboard) para trocar de aba ou atualizar
-    this.aoCriarReservaEmmit.emit();
+    this._reservaService.addReserva(novaReserva).subscribe({
+      next: () => {
+        f.resetForm(); // Para limpar os validadores tb
+        this.onQuadraChange();
+        this.aoCriarReservaEmmit.emit();
+      },
+      error: (err) => console.error('Erro ao criar:', err)
+    });
   }
 
   abreDialogConvidado() {

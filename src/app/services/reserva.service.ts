@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { ICreateReserva, IReserva } from '../interfaces/ireserva';
 import { environment } from '../../environments/environment.development';
@@ -61,7 +61,7 @@ export class ReservaService {
     });
   }
 
-  addReserva(novaReserva: ICreateReserva): void {
+  addReserva(novaReserva: ICreateReserva): Observable<any> {
     // Montamos o payload que o Java espera receber
     const payloadJava = {
       // Como ICreateReserva geralmente tem o objeto Date, convertemos para String ISO ou formato do Java
@@ -70,15 +70,12 @@ export class ReservaService {
       // Assumindo que no front você tem o ID da quadra e do usuário dentro de novaReserva
       idQuadra: novaReserva.quadraId,
       idUsuario: novaReserva.usuarioId,
-      convidados: [], // Se houver lógica de convidados, adicione aqui
+      convidados: novaReserva.convidados, // Se houver lógica de convidados, adicione aqui
     };
 
-    this.http.post(this.API_URL, payloadJava).subscribe({
-      next: () => {
-        this.loadReservas(); // Recarrega a lista do banco
-      },
-      error: (err) => console.error('Erro ao criar reserva:', err),
-    });
+   return this.http.post(this.API_URL, payloadJava).pipe(
+      tap(() => this.loadReservas()) // Recarrega a lista automaticamente no sucesso
+    );
   }
 
   getReservaById(id: number): Observable<IReserva | undefined> {
