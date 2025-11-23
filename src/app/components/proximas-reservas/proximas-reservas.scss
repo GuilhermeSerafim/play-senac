@@ -1,114 +1,148 @@
 @use '../../../styles/index' as *;
 
+// Container principal do componente
+:host {
+  display: block;
+  width: 100%;
+  // max-width: 900px; // Opcional: Limita a largura em telas grandes
+  margin: 0 auto;
+}
+
+// Container para a lista de cards (Scrollável se precisar)
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Espaço entre os cards
+  padding-bottom: 40px; // Espaço extra no final antes do footer
+}
+
 .card {
-  display: flex; // ✨ Coloca left e right lado a lado
-  justify-content: space-between; // ✨ Empurra para as extremidades
-  align-items: center; // ✨ Alinha verticalmente ao centro
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 16px;
-  border-radius: 5px;
+  border-radius: 8px; // Arredondamento mais suave
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra sutil
-  margin-bottom: 20px; // Espaçamento entre os cards
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); // Sombra mais suave
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px); // Efeito de "levantar" ao passar o mouse
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
 
   &__left {
-    display: flex; // ✨ Coloca a imagem ao lado do texto
-    align-items: center; // ✨ Alinha a imagem e o texto verticalmente
-    gap: 20px; // Espaçamento entre a imagem e o texto
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1; // Ocupa todo o espaço disponível à esquerda
 
     img {
-      width: 200px;
-      height: 116px;
+      width: 180px; // Um pouco menor para ficar elegante
+      height: 110px;
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: 6px;
+      flex-shrink: 0; // Impede a imagem de esmagar
     }
 
     .info-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
       h2 {
-        font-size: 18px;
+        font-size: 1.2rem;
         font-weight: 600;
-        margin: 0 0 8px 0;
+        margin: 0 0 4px 0;
+        color: #333;
       }
+
       p {
-        font-size: 14px;
+        font-size: 0.95rem;
         color: #666;
-        margin: 4px 0;
+        margin: 0;
+        line-height: 1.4;
       }
     }
   }
 
   &__right {
-    .material-symbols-outlined {
-      cursor: pointer;
-      color: #333;
-    }
-  }
-  &__right__cancel-icon {
-    color: $color-support-orange-warn;
-    font-size: 32px;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
 
-    &:hover {
-      transform: scale(1.1);
-      opacity: 0.8;
+    // Botão de cancelar
+    &__cancel-icon {
+      color: $color-support-orange-warn;
+      font-size: 32px;
+      width: 32px; // Definir tamanho fixo ajuda no alinhamento
+      height: 32px;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
     }
   }
 }
 
-
+// Empty State (estilizado conforme conversamos antes)
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
-  // Espaçamento e Tamanho
   padding: 4rem 2rem;
   margin-top: 20px;
-  width: 100%;
-  min-height: 250px; // Garante uma altura legal mesmo sem conteúdo
-  
-  // Visual "Ghost" (Fantasma)
-  background-color: #fafafa; // Um cinza muito, muito claro (quase branco)
-  border: 2px dashed #e0e0e0; // Borda tracejada indica "vazio"
+  background-color: #fafafa;
+  border: 2px dashed #e0e0e0;
   border-radius: 8px;
-  
-  // Tipografia e Cores
   text-align: center;
-  color: #757575; // Cinza médio para não cansar a vista
-  transition: all 0.3s ease;
+  color: #757575;
 
-  // Estilo do Ícone
   mat-icon {
-    font-size: 64px; // Ícone grande
+    font-size: 64px;
     height: 64px;
     width: 64px;
-    color: #e0e0e0; // Ícone bem clarinho para ser sutil
+    color: #e0e0e0;
     margin-bottom: 16px;
   }
 
-  // Estilo do Texto
   p {
     font-size: 1.1rem;
     font-weight: 500;
     margin: 0;
   }
+}
 
-  // (Opcional) Um efeito hover para dar vida
-  &:hover {
-    background-color: #f0f8ff; // Azulzinho muito claro (AliceBlue)
-    border-color: $color-primary-blue; // Sua cor azul principal
-    
-    mat-icon {
-      color: $color-primary-blue;
-      opacity: 0.5;
+// RESPONSIVIDADE (Mobile)
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column; // Empilha conteúdo
+    align-items: flex-start; // Alinha à esquerda
+    gap: 16px;
+
+    &__left {
+      width: 100%;
+      flex-direction: column; // Imagem em cima, texto embaixo
+      align-items: flex-start;
+      gap: 12px;
+
+      img {
+        width: 100%; // Imagem ocupa largura total
+        height: 160px; // Um pouco mais alta no mobile
+      }
     }
-    
-    p {
-      color: $color-primary-blue;
+
+    &__right {
+      width: 100%;
+      justify-content: flex-end; // Botão vai para a direita
+      padding-left: 0;
+      padding-top: 10px;
+      border-top: 1px solid #eee; // Separador sutil
     }
   }
 }

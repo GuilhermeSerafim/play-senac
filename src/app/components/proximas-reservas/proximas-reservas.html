@@ -1,42 +1,48 @@
-@for (reserva of reservasHidratadas$ | async; track reserva.id) {
-<div class="card">
-  <div class="card__left">
-    <img [src]="reserva.quadra.pathImg" alt="Imagem da quadra {{ reserva.quadra.title }}" />
+<!-- Envolvemos a lista em um container para controle de layout -->
+<div class="cards-list">
+  
+  @for (reserva of reservasHidratadas$ | async; track reserva.id) {
+    <div class="card">
+      <div class="card__left">
+        <!-- Imagem -->
+        <img [src]="reserva.quadra.pathImg" alt="Imagem da quadra {{ reserva.quadra.title }}" />
 
-    <div class="info-wrapper">
-      <h2>{{ reserva.quadra.title }}</h2>
+        <div class="info-wrapper">
+          <h2>{{ reserva.quadra.title }}</h2>
 
-      <p>
-        Horário: {{ reserva.dataInicio | date : 'HH:mm' }} -
-        {{ reserva.dataFim | date : 'HH:mm' }}
-      </p>
+          <p>
+            Horário: {{ reserva.dataInicio | date : 'HH:mm' }} -
+            {{ reserva.dataFim | date : 'HH:mm' }}
+          </p>
 
-      <p>Capacidade: {{ reserva.quadra.capacidade }} pessoas</p>
+          <p>Capacidade: {{ reserva.quadra.capacidade }} pessoas</p>
 
-      <p>
-        Data: {{ (reserva.dataInicio | date : 'EEEE')?.replace('-feira', '') | titlecase }},
-        {{ reserva.dataInicio | date : 'dd/MM' }}
-      </p>
+          <p>
+            Data: {{ (reserva.dataInicio | date : 'EEEE')?.replace('-feira', '') | titlecase }},
+            {{ reserva.dataInicio | date : 'dd/MM' }}
+          </p>
 
-      @if(reserva.convidados && reserva.convidados.length > 0) {
-      <p>
-        Convidados: @for (item of reserva.convidados; track $index; let isLast = $last) {
-        {{ item.nome }}{{ !isLast ? ', ' : '' }}
-        }
-      </p>
-      }
+          @if(reserva.convidados && reserva.convidados.length > 0) {
+            <p>
+              Convidados: @for (item of reserva.convidados; track $index; let isLast = $last) {
+              {{ item.nome }}{{ !isLast ? ', ' : '' }}
+              }
+            </p>
+          }
+        </div>
+      </div>
+
+      <div class="card__right">
+        <button (click)="cancelarReserva(reserva.id)" mat-icon-button matTooltip="Cancelar Reserva">
+          <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
+  } @empty {
+    <div class="empty-state">
+      <mat-icon>event_busy</mat-icon>
+      <p>Você não possui reservas agendadas.</p>
+    </div>
+  }
 
-  <div class="card__right">
-    <button (click)="cancelarReserva(reserva.id)">
-      <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
-    </button>
-  </div>
 </div>
-} @empty {
-<div class="empty-state">
-  <mat-icon>event_busy</mat-icon>
-  <p>Você não possui reservas agendadas.</p>
-</div>
-}
