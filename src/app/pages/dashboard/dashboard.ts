@@ -10,10 +10,11 @@ import { CourtService } from '../../services/court.service';
 import { ReservasAdm } from '../../components/reservas-adm/reservas-adm';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
+import { BloqueiosAdm } from "../../components/bloqueios-adm/bloqueios-adm";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm, Footer, Header],
+  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm, Footer, Header, BloqueiosAdm],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

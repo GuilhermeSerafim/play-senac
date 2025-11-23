@@ -7,8 +7,8 @@ export interface IBloqueio {
   
   // Dependendo de como seu back retorna, pode ser o objeto ou só o ID
   // Vou assumir que retorna o objeto simplificado ou ID, ajuste conforme seu DTO
-  quadraId: number; 
-  usuarioId: number;
+  idQuadra: number; 
+  idUsuario: number;
 }
 
 // Interface para criação (POST) e edição (PUT)
