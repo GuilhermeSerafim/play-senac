@@ -1,6 +1,17 @@
+@let reservas = reservasCombinadas$ | async; @if (!reservas) {
+<div class="loading-container">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+} @else if (reservas.length === 0) {
+<div class="empty-state">
+  <mat-icon>event_busy</mat-icon>
+  <p>Nenhuma reserva encontrada no sistema.</p>
+</div>
+} @else {
+
 <!-- Envolvemos em um container se precisar de estilos específicos -->
 <div class="adm-reservas-list">
-  @for (reserva of reservasCombinadas$ | async; track reserva.id) {
+  @for (reserva of reservas; track reserva.id) {
   <div class="card">
     <div class="card__left">
       <!-- Imagem hidratada da quadra -->
@@ -50,3 +61,4 @@
   </div>
   }
 </div>
+}

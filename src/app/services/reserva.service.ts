@@ -60,10 +60,7 @@ export class ReservaService {
       convidados: novaReserva.convidados || [],
     };
 
-    return this.http.post(this.API_URL, payloadJava).pipe(
-      // Após criar, se for user comum, recarrega a lista 'minhas'
-      tap(() => this.getMinhasReservas().subscribe())
-    );
+    return this.http.post(this.API_URL, payloadJava);
   }
 
   updateReserva(reserva: IReserva): Observable<any> {

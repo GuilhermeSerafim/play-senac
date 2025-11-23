@@ -9,16 +9,17 @@ import { MatIcon } from '@angular/material/icon';
 import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reserva-dialog';
 import { AlterReservaAdmDialog } from '../alter-reserva-adm-dialog/alter-reserva-adm-dialog';
 import { IReserva } from '../../interfaces/ireserva';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-reservas-adm',
   standalone: true,
-  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe],
+  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinner],
   templateUrl: './reservas-adm.html',
   styleUrl: './reservas-adm.scss',
 })
 export class ReservasAdm implements OnInit {
-  reservasCombinadas$!: Observable<IReserva[]>;
+  reservasCombinadas$!: Observable<IReserva[] | null>;
 
   // Subject para forçar recarregamento manual (refresh)
   private refresh$ = new Observable<void>((observer) => observer.next());
@@ -56,11 +57,10 @@ export class ReservasAdm implements OnInit {
                   bloqueada: infoDaQuadra?.bloqueada || false,
                 },
               } as IReserva;
-            })
-            // Ordena: Mais recentes primeiro
-            .sort((a, b) => b.dataInicio.getTime() - a.dataInicio.getTime())
+            }).sort((a, b) => b.dataInicio.getTime() - a.dataInicio.getTime())
         );
-      })
+      }),
+      startWith(null)
     );
   }
 

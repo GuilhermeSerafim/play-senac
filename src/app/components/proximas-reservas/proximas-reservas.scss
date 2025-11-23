@@ -118,6 +118,12 @@
   }
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
 // RESPONSIVIDADE (Mobile)
 @media (max-width: 768px) {
   .card {
