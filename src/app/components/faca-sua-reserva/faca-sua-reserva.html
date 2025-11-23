@@ -3,6 +3,7 @@
   #facaSuaReservaFormControl="ngForm"
   (ngSubmit)="onSubmit(facaSuaReservaFormControl)"
 >
+  <!-- QUADRA -->
   <mat-form-field appearance="outline" class="full-width form-container__item">
     <mat-label>Selecione a quadra</mat-label>
     <mat-select
@@ -25,6 +26,7 @@
 
   <br />
 
+  <!-- DATA -->
   <mat-form-field appearance="outline" class="full-width form-container__item">
     <mat-label>Selecione a data</mat-label>
     <input
@@ -47,32 +49,63 @@
 
   <br />
 
-  <mat-form-field appearance="outline" class="full-width form-container__item">
-    <mat-label>Selecione o horário</mat-label>
-    <input
-      required
-      matInput
-      [matTimepicker]="timepicker"
-      [(ngModel)]="horarioSelecionado"
-      name="horarioSelecionado"
-      #horarioSelecionadoControl="ngModel"
-      [disabled]="!dataSelecionada"
-      matTimepickerMin="09:00"
-      matTimepickerMax="20:00"
-      class="timepicker"
-    />
-    <mat-timepicker #timepicker />
-    <mat-timepicker-toggle [for]="timepicker" matSuffix />
-    @if (horarioSelecionadoControl.hasError('required')) {
-    <mat-error> O horário é obrigatório. </mat-error>
-    }
-  </mat-form-field>
+  <!-- HORÁRIOS (Lado a Lado) -->
+  <div class="horarios">
+    <mat-form-field appearance="outline" >
+      <mat-label>Início</mat-label>
+      <input
+        required
+        matInput
+        [matTimepicker]="pickerInicio"
+        [(ngModel)]="horarioInicioSelecionado"
+        name="horarioInicioSelecionado"
+        #inicioControl="ngModel"
+        [disabled]="!dataSelecionada"
+        matTimepickerMin="06:00"
+        matTimepickerMax="23:00"
+      />
+      <mat-timepicker #pickerInicio />
+      <mat-timepicker-toggle [for]="pickerInicio" matSuffix />
+      @if (inicioControl.hasError('required')) {
+        <mat-error>Obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fim</mat-label>
+      <input
+        required
+        matInput
+        [matTimepicker]="pickerFim"
+        [(ngModel)]="horarioFimSelecionado"
+        name="horarioFimSelecionado"
+        #fimControl="ngModel"
+        [disabled]="!dataSelecionada"
+        matTimepickerMin="06:00"
+        matTimepickerMax="23:00"
+      />
+      <mat-timepicker #pickerFim />
+      <mat-timepicker-toggle [for]="pickerFim" matSuffix />
+      @if (fimControl.hasError('required')) {
+        <mat-error>Obrigatório</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <!-- Erro de Intervalo -->
+  @if (erroDeHorario && horarioInicioSelecionado && horarioFimSelecionado) {
+    <div style="color: #f44336; font-size: 12px; margin-top: -15px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px;">
+      <mat-icon style="font-size: 16px; height: 16px; width: 16px;">error</mat-icon>
+      <span>{{ erroDeHorario }}</span>
+    </div>
+  }
 
   <br />
 
+  <!-- CONVIDADOS -->
   @if ( convidados.length > 0 ) {
   <mat-chip-listbox class="full-width form-container__item">
-    @for (convidado of convidados; track convidado) {
+    @for (convidado of convidados; track $index) {
     <mat-chip color="primary" selected (removed)="removeConvidado(convidado)">
       {{ convidado.nome }}
       <mat-icon matChipRemove>cancel</mat-icon>
@@ -83,25 +116,27 @@
   }
 
   <div class="form-container__bottom">
-    <!-- -1 por causa que o user é consome uma quantidade tb -->
+    <!-- Botão Adicionar Convidado -->
     <button
       type="button"
       (click)="abreDialogConvidado()"
       mat-icon-button
-      [disabled]="!quadraSelecionada || convidados.length >= quadraSelecionada.capacidade! - 1"
+      [disabled]="!quadraSelecionada || (quadraSelecionada.capacidade && convidados.length >= quadraSelecionada.capacidade - 1)"
       aria-label="Adicionar convidado"
       class="btn-person__add"
     >
       <mat-icon>person_add</mat-icon>
     </button>
+
+    <!-- Botão Confirmar -->
     <button
       mat-raised-button
       class="enviar-button"
       color="primary"
       type="submit"
-      [disabled]="facaSuaReservaFormControl.invalid"
+      [disabled]="facaSuaReservaFormControl.invalid || erroDeHorario"
       [ngStyle]="
-        facaSuaReservaFormControl.invalid
+        (facaSuaReservaFormControl.invalid || erroDeHorario)
           ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
           : {}
       "
