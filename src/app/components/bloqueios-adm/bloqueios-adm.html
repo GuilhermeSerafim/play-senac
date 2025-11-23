@@ -1,6 +1,6 @@
 @let bloqueios = bloqueios$ | async; @if(!bloqueios) {
 <div class="loading-container">
-  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  <mat-spinner diameter="50"></mat-spinner>
 </div>
 } @else if(bloqueios.length === 0) {
 <div class="empty-state">

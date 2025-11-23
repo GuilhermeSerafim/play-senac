@@ -9,12 +9,12 @@ import { MatIcon } from '@angular/material/icon';
 import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reserva-dialog';
 import { AlterReservaAdmDialog } from '../alter-reserva-adm-dialog/alter-reserva-adm-dialog';
 import { IReserva } from '../../interfaces/ireserva';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-reservas-adm',
   standalone: true,
-  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinner],
+  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinnerModule],
   templateUrl: './reservas-adm.html',
   styleUrl: './reservas-adm.scss',
 })

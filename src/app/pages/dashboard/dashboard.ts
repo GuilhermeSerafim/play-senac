@@ -11,15 +11,16 @@ import { ReservasAdm } from '../../components/reservas-adm/reservas-adm';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { BloqueiosAdm } from "../../components/bloqueios-adm/bloqueios-adm";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm, Footer, Header, BloqueiosAdm],
+  imports: [FormsModule, CommonModule, Quadras, MatButton, ReservasAdm, Footer, Header, BloqueiosAdm, MatProgressSpinnerModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard implements OnInit {
-  abaAtiva: string = 'quadras';
+  abaAtiva: string = 'bloqueio';
   quadras: ICourt[] = [];
 
   constructor(private readonly _courtService: CourtService, private readonly _dialog: MatDialog) {}

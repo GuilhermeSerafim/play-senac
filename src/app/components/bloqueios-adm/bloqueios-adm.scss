@@ -134,9 +134,10 @@
 .loading-container {
   display: flex;
   justify-content: center;
-  padding: 2rem 0;
+  align-items: center;
+  height: 300px; // Altura reservada para o loading não "pular" a tela
+  width: 100%;
 }
-
 // Responsividade
 @media (max-width: 768px) {
   .card {
