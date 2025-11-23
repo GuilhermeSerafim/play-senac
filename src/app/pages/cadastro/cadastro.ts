@@ -71,7 +71,8 @@ export class Cadastro {
         
         // Tenta pegar a mensagem do back-end, senão usa uma genérica
         if (err.status === 409 || err.status === 400) {
-           this.errorMessage = err.error?.message || 'Dados inválidos ou e-mail já cadastrado.';
+          this.errorMessage = err.error || 'Dados inválidos';
+          //  this.errorMessage = err.error?.message || 'Dados inválidos ou e-mail já cadastrado.';
         } else {
            this.errorMessage = 'Erro ao conectar com o servidor. Tente novamente.';
         }
