@@ -131,6 +131,12 @@
   }
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
 // Responsividade
 @media (max-width: 768px) {
   .card {

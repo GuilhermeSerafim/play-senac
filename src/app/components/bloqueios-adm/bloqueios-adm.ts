@@ -9,6 +9,7 @@ import { BloqueioService } from '../../services/bloqueio.service';
 import { CourtService } from '../../services/court.service';
 import { IBloqueio } from '../../interfaces/ibloqueio';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 // Interface interna para exibição "Hidratada" (com dados visuais da quadra)
 interface IBloqueioDisplay extends IBloqueio {
@@ -25,7 +26,9 @@ interface IBloqueioDisplay extends IBloqueio {
     MatButtonModule, 
     MatTooltipModule, 
     DatePipe,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinner,
+    MatIconModule
   ],
   templateUrl: './bloqueios-adm.html',
   styleUrl: './bloqueios-adm.scss'
