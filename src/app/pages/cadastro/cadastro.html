@@ -5,10 +5,10 @@
 
     <!-- Mensagem de erro do servidor (ex: E-mail já cadastrado) -->
     @if (errorMessage) {
-      <div class="error-banner">
-        <mat-icon>error</mat-icon>
-        {{ errorMessage }}
-      </div>
+    <div class="error-banner">
+      <mat-icon>error</mat-icon>
+      {{ errorMessage }}
+    </div>
     }
 
     <!-- NOME -->
@@ -93,6 +93,7 @@
         #senha="ngModel"
         required
         minlength="6"
+        [pattern]="passwordPattern"
       />
       <mat-icon matPrefix>lock</mat-icon>
       <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
@@ -102,25 +103,35 @@
       <mat-error>
         @if (senha.errors?.['required']) {
         <span>A senha é obrigatória.</span>
-        } @if (senha.errors?.['minlength']) {
+        } @else if (senha.errors?.['minlength']) {
         <span>A senha deve ter no mínimo 6 caracteres.</span>
+        } @else if (senha.errors?.['pattern']) {
+        <span>
+          A senha está fraca
+        </span>
         }
       </mat-error>
       }
     </mat-form-field>
 
-    <button 
-      mat-raised-button 
-      class="cadastro-button" 
+    <button
+      mat-raised-button
+      class="cadastro-button"
       type="submit"
       color="primary"
       [disabled]="cadastroForm.invalid"
     >
-      Se torne um <span [style.color]="'#FFCE00'" style="margin-left: 4px;">Player</span>!
+      Se torne um <span [style.color]="'#FFCE00'" style="margin-left: 4px">Player</span>!
     </button>
 
-    <p align="center" style="margin-top: 20px;">
-      Já tem uma conta? <span (click)="temConta()" class="tem-conta" style="color: #005eb8; cursor: pointer; font-weight: bold;">Entre!</span>
+    <p align="center" style="margin-top: 20px">
+      Já tem uma conta?
+      <span
+        (click)="temConta()"
+        class="tem-conta"
+        style="color: #005eb8; cursor: pointer; font-weight: bold"
+        >Entre!</span
+      >
     </p>
   </form>
 </div>

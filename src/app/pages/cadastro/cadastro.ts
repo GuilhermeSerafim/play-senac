@@ -25,7 +25,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; //
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.scss',
@@ -36,9 +36,10 @@ export class Cadastro {
   private snackBar = inject(MatSnackBar); // Para mostrar mensagens de erro/sucesso
 
   hidePassword: boolean = true;
-  
+
   // Variável para mostrar erro vindo do back (ex: "Email já existe")
   errorMessage = '';
+  passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$';
 
   constructor() {}
 
@@ -52,7 +53,7 @@ export class Cadastro {
       nome: form.value.nome,
       email: form.value.email,
       senha: form.value.senha,
-      telefone: form.value.telefone
+      telefone: form.value.telefone,
     };
 
     this.authService.cadastrar(payload).subscribe({
@@ -60,23 +61,23 @@ export class Cadastro {
         // Sucesso!
         this.snackBar.open('Cadastro realizado com sucesso!', 'Fechar', {
           duration: 3000,
-          panelClass: ['success-snackbar']
+          panelClass: ['success-snackbar'],
         });
-        
+
         // Redireciona para o Login
         this.router.navigate(['/entre']);
       },
       error: (err) => {
         console.error('Erro no cadastro', err);
-        
+
         // Tenta pegar a mensagem do back-end, senão usa uma genérica
         if (err.status === 409 || err.status === 400) {
           this.errorMessage = err.error || 'Dados inválidos';
           //  this.errorMessage = err.error?.message || 'Dados inválidos ou e-mail já cadastrado.';
         } else {
-           this.errorMessage = 'Erro ao conectar com o servidor. Tente novamente.';
+          this.errorMessage = 'Erro ao conectar com o servidor. Tente novamente.';
         }
-      }
+      },
     });
   }
 

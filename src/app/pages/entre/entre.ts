@@ -45,6 +45,8 @@ export class Entre {
   // URL do endpoint de login (ajuste se for diferente no Java, ex: /auth/login)
   private readonly API_URL = `${environment.apiUrl}/login`;
 
+  passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$';
+
   constructor(private readonly _el: ElementRef) {}
 
   aoClicarEmCriarUmaConta() {
@@ -72,10 +74,7 @@ export class Entre {
       next: (response) => {
         // 1. CHAME O AUTH SERVICE PARA AVISAR O SISTEMA INTEIRO
         // (Ele vai salvar no localStorage e atualizar o Observable isLoggedIn$)
-        this.authService.loginSuccess(
-          response.token,
-          response.role,
-        );
+        this.authService.loginSuccess(response.token, response.role);
 
         // 2. Lógica de redirecionamento baseada na Role
         if (response.role === 'ADMIN') {
