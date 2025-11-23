@@ -4,8 +4,11 @@
   (ngSubmit)="onSubmit()"
 >
   <h1 mat-dialog-title>Alterar reserva</h1>
+  
   <mat-dialog-content class="mat-typography">
-    <mat-form-field appearance="outline" class="full-width form-container__item">
+    
+    <!-- QUADRA -->
+    <mat-form-field [style.marginTop.px]="30" appearance="outline" class="full-width form-container__item">
       <mat-label>Selecione a quadra</mat-label>
       <mat-select
         name="quadraSelecionada"
@@ -14,14 +17,15 @@
         required
       >
         @for (quadra of quadras; track quadra.id) {
-        <mat-option [value]="quadra">{{ quadra.title }}</mat-option>
+          <mat-option [value]="quadra">{{ quadra.title }}</mat-option>
         }
       </mat-select>
       @if (quadraSelecionadaControl.hasError('required')) {
-      <mat-error> O campo quadra é obrigatório. </mat-error>
+        <mat-error> O campo quadra é obrigatório. </mat-error>
       }
     </mat-form-field>
 
+    <!-- DATA -->
     <mat-form-field appearance="outline" class="full-width form-container__item">
       <mat-label>Selecione a data</mat-label>
       <input
@@ -36,55 +40,77 @@
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       @if (dataSelecionadaControl.hasError('required')) {
-      <mat-error> A data é obrigatória. </mat-error>
+        <mat-error> A data é obrigatória. </mat-error>
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width form-container__item">
-      <mat-label>Selecione o horário</mat-label>
-      <input
-        required
-        matInput
-        [matTimepicker]="timepicker"
-        [(ngModel)]="horarioSelecionado"
-        name="horarioSelecionado"
-        #horarioSelecionadoControl="ngModel"
-        matTimepickerMin="09:00"
-        matTimepickerMax="20:00"
-        class="timepicker"
-      />
-      <mat-timepicker #timepicker />
-      <mat-timepicker-toggle [for]="timepicker" matSuffix />
-      @if (horarioSelecionadoControl.hasError('required')) {
-      <mat-error> O horário é obrigatório. </mat-error>
-      }
-    </mat-form-field>
+    <!-- ÁREA DE HORÁRIOS (Lado a Lado) -->
+    <div style="display: flex; gap: 16px;">
+      
+      <!-- Horário Início -->
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Início</mat-label>
+        <input
+          required
+          matInput
+          [matTimepicker]="pickerInicio"
+          [(ngModel)]="horarioInicioSelecionado"
+          name="horarioInicioSelecionado"
+          #inicioControl="ngModel"
+          matTimepickerMin="06:00"
+          matTimepickerMax="23:00"
+        />
+        <mat-timepicker #pickerInicio />
+        <mat-timepicker-toggle [for]="pickerInicio" matSuffix />
+        @if (inicioControl.hasError('required')) {
+          <mat-error>Obrigatório</mat-error>
+        }
+      </mat-form-field>
 
-    @if ( convidados.length > 0 ) {
-    <mat-chip-listbox class="full-width form-container__item">
-      @for (convidado of convidados; track convidado) {
-      <mat-chip color="primary" selected (removed)="removeConvidado(convidado)">
-        {{ convidado.nome }}
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-      }
-    </mat-chip-listbox>
+      <!-- Horário Fim -->
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Fim</mat-label>
+        <input
+          required
+          matInput
+          [matTimepicker]="pickerFim"
+          [(ngModel)]="horarioFimSelecionado"
+          name="horarioFimSelecionado"
+          #fimControl="ngModel"
+          matTimepickerMin="06:00"
+          matTimepickerMax="23:00"
+        />
+        <mat-timepicker #pickerFim />
+        <mat-timepicker-toggle [for]="pickerFim" matSuffix />
+        @if (fimControl.hasError('required')) {
+          <mat-error>Obrigatório</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
+    <!-- MENSAGEM DE ERRO DE INTERVALO (Customizada) -->
+    <!-- Só aparece se os campos estiverem preenchidos mas a lógica estiver errada -->
+    @if (erroDeHorario && horarioInicioSelecionado && horarioFimSelecionado) {
+      <div style="color: #f44336; font-size: 12px; margin-top: -10px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
+        <mat-icon style="font-size: 16px; height: 16px; width: 16px;">error</mat-icon>
+        <span>{{ erroDeHorario }}</span>
+      </div>
     }
+
+
   </mat-dialog-content>
+
+  <!-- AÇÕES -->
   <mat-dialog-actions align="end">
-    <button mat-raised-button class="btn-cancelar" mat-dialog-close color="warn">Cancelar</button>
+    <button mat-raised-button class="btn-cancelar" mat-dialog-close type="button" color="warn">Cancelar</button>
 
     <button
       mat-raised-button
       class="btn-confirmar"
       color="primary"
-      [disabled]="facaSuaReservaFormControl.invalid"
-      [ngStyle]="
-        facaSuaReservaFormControl.invalid
-          ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
-          : {}
-      "
+      type="submit"
+      [disabled]="facaSuaReservaFormControl.invalid || erroDeHorario"
+      [ngStyle]="(facaSuaReservaFormControl.invalid || erroDeHorario) ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' } : {}"
     >
       Confirmar
     </button>

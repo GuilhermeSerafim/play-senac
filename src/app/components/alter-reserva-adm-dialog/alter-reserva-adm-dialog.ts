@@ -44,7 +44,8 @@ export class AlterReservaAdmDialog implements OnInit {
   quadraSelecionada!: ICourt;
 
   dataSelecionada!: Date;
-  horarioSelecionado!: Date;
+  horarioInicioSelecionado!: Date;
+  horarioFimSelecionado!: Date;
 
   convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
@@ -59,7 +60,8 @@ export class AlterReservaAdmDialog implements OnInit {
   ngOnInit(): void {
     // dataInicio serve tanto para a data quanto para a hora inicial
     this.dataSelecionada = new Date(this._data.dataInicio);
-    this.horarioSelecionado = new Date(this._data.dataInicio);
+    this.horarioInicioSelecionado = new Date(this._data.dataInicio);
+    this.horarioFimSelecionado = new Date(this._data.dataFim);
 
     this.convidados = this._data.convidados ? [...this._data.convidados] : [];
 
@@ -69,6 +71,30 @@ export class AlterReservaAdmDialog implements OnInit {
         this.quadraSelecionada = this.quadras.find((q) => q.id === this._data.quadra.id)!;
       }
     });
+  }
+
+  /**
+   * Validação Lógica do Intervalo
+   * Retorna uma string com o erro ou null se estiver tudo certo.
+   */
+  get erroDeHorario(): string | null {
+    if (!this.horarioInicioSelecionado || !this.horarioFimSelecionado) return null;
+
+    const inicio = new Date(this.horarioInicioSelecionado);
+    const fim = new Date(this.horarioFimSelecionado);
+
+    // Normaliza a data base para garantir que estamos comparando apenas as horas
+    inicio.setFullYear(2000, 0, 1);
+    fim.setFullYear(2000, 0, 1);
+
+    const diferencaMs = fim.getTime() - inicio.getTime();
+    const diferencaMinutos = diferencaMs / (1000 * 60);
+
+    if (diferencaMinutos <= 0) return 'O fim deve ser após o início.';
+    if (diferencaMinutos < 30) return 'Mínimo de 30 minutos.';
+    if (diferencaMinutos > 120) return 'Máximo de 2 horas.';
+
+    return null;
   }
 
   abreDialogConvidado() {
@@ -88,19 +114,18 @@ export class AlterReservaAdmDialog implements OnInit {
   }
 
   onSubmit() {
-    // 1. Juntar Data + Hora em um objeto só
+    if (this.erroDeHorario) return;
+
     const dataInicioFinal = new Date(this.dataSelecionada);
-    const hora = new Date(this.horarioSelecionado);
+    const horaInicio = new Date(this.horarioInicioSelecionado);
+    dataInicioFinal.setHours(horaInicio.getHours(), horaInicio.getMinutes(), 0);
 
-    dataInicioFinal.setHours(hora.getHours(), hora.getMinutes(), 0);
+    const dataFimFinal = new Date(this.dataSelecionada);
+    const horaFim = new Date(this.horarioFimSelecionado);
+    dataFimFinal.setHours(horaFim.getHours(), horaFim.getMinutes(), 0);
 
-    // 2. Calcular dataFim (Assumindo 1 hora de duração padrão)
-    const dataFimFinal = new Date(dataInicioFinal);
-    dataFimFinal.setHours(dataInicioFinal.getHours() + 1);
-
-    // 3. Montar o objeto IReserva atualizado
     const reservaAtualizada: IReserva = {
-      ...this._data, // Mantém ID, Usuario, etc.
+      ...this._data,
       quadra: this.quadraSelecionada,
       convidados: this.convidados,
       dataInicio: dataInicioFinal,
