@@ -11,8 +11,8 @@
         Home
       </a>
 
-      <!-- Só mostra "Reservas" se NÃO for admin (ou seja, user comum ou visitante) -->
-      @if ((isAdmin$ | async) === false) {
+    
+      @if ((isAdmin$ | async) === false && !((isLoggedIn$ | async) === false)) {
       <a routerLink="/reservas" routerLinkActive="active" class="header__item header__link">
         Reservas
       </a>

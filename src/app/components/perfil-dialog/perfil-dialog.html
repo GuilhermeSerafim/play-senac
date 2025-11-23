@@ -52,6 +52,8 @@
           [type]="hidePassword ? 'password' : 'text'"
           name="novaSenha"
           [(ngModel)]="novaSenha"
+          placeholder="Digite sua nova senha"
+          required
         />
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
           <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
@@ -71,7 +73,18 @@
         <mat-icon>delete</mat-icon>
         Excluir
       </button>
-      <button mat-flat-button color="primary" type="submit" class="save-btn">
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        class="save-btn"
+        [disabled]="perfilForm.invalid"
+        [ngStyle]="
+          perfilForm.invalid
+            ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
+            : {}
+        "
+      >
         Salvar alterações
       </button>
 

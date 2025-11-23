@@ -15,6 +15,9 @@ import { DiaDaSemana } from '../../enum/DiaDaSemana';
   styleUrl: './quadras.scss',
 })
 export class Quadras {
+bloquearQuadra(_t1: ICourt) {
+throw new Error('Method not implemented.');
+}
   @Input({ required: true }) courts: ICourt[] = [];
   public diaDaSemanaEnum = DiaDaSemana;
 
