@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
-import { map, Observable } from 'rxjs';
-import { IReservaDisplay } from '../../interfaces/ireserva-display';
+import { combineLatest, map, Observable } from 'rxjs';
 import { CourtService } from '../../services/court.service';
 import { ReservaService } from '../../services/reserva.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -9,6 +8,7 @@ import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reserva-dialog';
 import { AlterReservaAdmDialog } from '../alter-reserva-adm-dialog/alter-reserva-adm-dialog';
+import { IReserva } from '../../interfaces/ireserva';
 
 @Component({
   selector: 'app-reservas-adm',
@@ -18,7 +18,7 @@ import { AlterReservaAdmDialog } from '../alter-reserva-adm-dialog/alter-reserva
 })
 export class ReservasAdm implements OnInit {
   courts: ICourt[] = [];
-  reservasCombinadas$!: Observable<IReservaDisplay[]>;
+  reservasCombinadas$!: Observable<IReserva[]>;
 
   constructor(
     private readonly _courtService: CourtService,
@@ -26,24 +26,31 @@ export class ReservasAdm implements OnInit {
     private readonly _dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
-    this._courtService.getCourts().subscribe((courts) => (this.courts = courts));
-    this.reservasCombinadas$ = this._reservaService.reservas$.pipe(
-      map((reservasRecebidas) => {
-        return reservasRecebidas
-          .map((reserva) => {
-            const courtInfo = this.courts.find((court) => court.title === reserva.quadra.title);
-            return {
-              id: reserva.id,
-              quadra: reserva.quadra,
-              horario: reserva.horario,
-              convidados: reserva.convidados,
-              data: reserva.data,
-              pathImg: courtInfo?.pathImg || 'images/default.png',
-              capacidade: courtInfo?.capacidade || 0,
-            };
-          })
-          .sort((a, b) => a.data.getTime() - b.data.getTime());
+ ngOnInit(): void {
+    this.reservasCombinadas$ = combineLatest([
+      this._courtService.getCourts(),
+      this._reservaService.getReservas()
+    ]).pipe(
+      map(([listaQuadras, listaReservas]) => {
+        
+        return listaReservas.map((reserva) => {
+          // Acha a quadra completa
+          const infoDaQuadra = listaQuadras.find((q) => q.id === reserva.quadra.id);
+
+          // Retorna o objeto IReserva, mas agora "recheado" com os dados da quadra
+          return {
+            ...reserva, // Copia ID, datas, usuario, convidados...
+            
+            // Sobrescreve a quadra parcial pela quadra completa que achamos
+            quadra: { 
+              ...reserva.quadra, // Mantém ID
+              title: infoDaQuadra?.title || `Quadra #${reserva.quadra.id}`,
+              pathImg: infoDaQuadra?.pathImg || 'assets/default.png',
+              capacidade: infoDaQuadra?.capacidade || 0
+            }
+          } as IReserva;
+        })
+        .sort((a, b) => a.dataInicio.getTime() - b.dataInicio.getTime());
       })
     );
   }
@@ -68,7 +75,7 @@ export class ReservasAdm implements OnInit {
       .subscribe((remove) => remove && this._reservaService.removeReserva(idReserva));
   }
 
-  alterarQuadra(reserva: IReservaDisplay) {
+  alterarQuadra(reserva: IReserva) {
     const dialogRef = this._dialog.open(AlterReservaAdmDialog, {
       width: '540px',
       data: reserva,

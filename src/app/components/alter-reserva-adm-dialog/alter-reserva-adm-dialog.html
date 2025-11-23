@@ -13,7 +13,7 @@
         #quadraSelecionadaControl="ngModel"
         required
       >
-        @for (quadra of quadras; track quadra) {
+        @for (quadra of quadras; track quadra.id) {
         <mat-option [value]="quadra">{{ quadra.title }}</mat-option>
         }
       </mat-select>

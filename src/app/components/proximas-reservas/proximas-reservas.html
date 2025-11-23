@@ -1,20 +1,24 @@
-@for (reserva of reservasCombinadas$ | async; track reserva.id;) {
+@for (reserva of reservasHidratadas$ | async; track reserva.id) {
 <div class="card">
   <div class="card__left">
-    <img [src]="reserva.pathImg" alt="Imagem da quadra {{ reserva.quadra.title }}" />
+    <img [src]="reserva.quadra.pathImg" alt="Imagem da quadra {{ reserva.quadra.title }}" />
 
     <div class="info-wrapper">
       <h2>{{ reserva.quadra.title }}</h2>
+
       <p>
-        Horário: {{ reserva.horario | date : 'HH:mm' }} -
-        {{ getHorarioFinal(reserva.horario) | date : 'HH:mm' }}
+        Horário: {{ reserva.dataInicio | date : 'HH:mm' }} -
+        {{ reserva.dataFim | date : 'HH:mm' }}
       </p>
-      <p>Capacidade: {{ reserva.capacidade }} pessoas</p>
+
+      <p>Capacidade: {{ reserva.quadra.capacidade }} pessoas</p>
+
       <p>
-        Data: {{ (reserva.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
-        {{ reserva.data | date : 'dd/MM' }}
+        Data: {{ (reserva.dataInicio | date : 'EEEE')?.replace('-feira', '') | titlecase }},
+        {{ reserva.dataInicio | date : 'dd/MM' }}
       </p>
-      @if(reserva.convidados.length > 0) {
+
+      @if(reserva.convidados && reserva.convidados.length > 0) {
       <p>
         Convidados: @for (item of reserva.convidados; track $index; let isLast = $last) {
         {{ item.nome }}{{ !isLast ? ', ' : '' }}
@@ -29,5 +33,10 @@
       <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
     </button>
   </div>
+</div>
+} @empty {
+<div class="empty-state">
+  <mat-icon>event_busy</mat-icon>
+  <p>Você não possui reservas agendadas.</p>
 </div>
 }

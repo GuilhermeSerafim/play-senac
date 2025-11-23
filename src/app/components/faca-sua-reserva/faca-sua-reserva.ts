@@ -64,17 +64,17 @@ export class FacaSuaReserva implements OnInit {
   }
 
   onSubmit(f: NgForm) {
-    if (f.invalid) return;
+    // if (f.invalid) return;
 
-    const reserva: ICreateReserva = {
-      quadra: this.quadraSelecionada,
-      data: this.dataSelecionada,
-      horario: this.horarioSelecionado,
-      convidados: this.convidados,
-    };
+    // const reserva: ICreateReserva = {
+    //   quadra: this.quadraSelecionada,
+    //   data: this.dataSelecionada,
+    //   horario: this.horarioSelecionado,
+    //   convidados: this.convidados,
+    // };
 
-    this._reservaService.addReserva(reserva);
-    this.aoCriarReservaEmmit.emit();
+    // this._reservaService.addReserva(reserva);
+    // this.aoCriarReservaEmmit.emit();
   }
 
   abreDialogConvidado() {

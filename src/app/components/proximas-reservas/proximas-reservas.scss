@@ -57,3 +57,58 @@
     }
   }
 }
+
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  // Espaçamento e Tamanho
+  padding: 4rem 2rem;
+  margin-top: 20px;
+  width: 100%;
+  min-height: 250px; // Garante uma altura legal mesmo sem conteúdo
+  
+  // Visual "Ghost" (Fantasma)
+  background-color: #fafafa; // Um cinza muito, muito claro (quase branco)
+  border: 2px dashed #e0e0e0; // Borda tracejada indica "vazio"
+  border-radius: 8px;
+  
+  // Tipografia e Cores
+  text-align: center;
+  color: #757575; // Cinza médio para não cansar a vista
+  transition: all 0.3s ease;
+
+  // Estilo do Ícone
+  mat-icon {
+    font-size: 64px; // Ícone grande
+    height: 64px;
+    width: 64px;
+    color: #e0e0e0; // Ícone bem clarinho para ser sutil
+    margin-bottom: 16px;
+  }
+
+  // Estilo do Texto
+  p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  // (Opcional) Um efeito hover para dar vida
+  &:hover {
+    background-color: #f0f8ff; // Azulzinho muito claro (AliceBlue)
+    border-color: $color-primary-blue; // Sua cor azul principal
+    
+    mat-icon {
+      color: $color-primary-blue;
+      opacity: 0.5;
+    }
+    
+    p {
+      color: $color-primary-blue;
+    }
+  }
+}

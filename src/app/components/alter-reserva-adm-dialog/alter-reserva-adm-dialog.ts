@@ -16,7 +16,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { IReservaDisplay } from '../../interfaces/ireserva-display';
 import { IConvidado } from '../../interfaces/iconvidado';
 import { ICourt } from '../../interfaces/icourt';
 import { IReserva } from '../../interfaces/ireserva';
@@ -43,29 +42,30 @@ import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
 })
 export class AlterReservaAdmDialog implements OnInit {
   quadraSelecionada!: ICourt;
+
   dataSelecionada!: Date;
   horarioSelecionado!: Date;
+
   convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
 
   constructor(
     private readonly _dialogRef: MatDialogRef<AlterReservaAdmDialog>,
-    @Inject(MAT_DIALOG_DATA) public readonly _data: IReservaDisplay,
+    @Inject(MAT_DIALOG_DATA) public readonly _data: IReserva,
     private readonly _quadraService: CourtService,
     private readonly _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.dataSelecionada = this._data.data;
-    this.horarioSelecionado = this._data.horario;
+    // dataInicio serve tanto para a data quanto para a hora inicial
+    this.dataSelecionada = new Date(this._data.dataInicio);
+    this.horarioSelecionado = new Date(this._data.dataInicio);
+
     this.convidados = this._data.convidados ? [...this._data.convidados] : [];
 
-    this._quadraService.court$.subscribe((allCourts) => {
+    this._quadraService.getCourts().subscribe((allCourts) => {
       this.quadras = allCourts;
-
       if (this._data.quadra) {
-        // Encontra a quadra na lista do serviço pelo ID.
-        // Isso garante que a referência do objeto é a correta para o <mat-select>
         this.quadraSelecionada = this.quadras.find((q) => q.id === this._data.quadra.id)!;
       }
     });
@@ -88,13 +88,25 @@ export class AlterReservaAdmDialog implements OnInit {
   }
 
   onSubmit() {
+    // 1. Juntar Data + Hora em um objeto só
+    const dataInicioFinal = new Date(this.dataSelecionada);
+    const hora = new Date(this.horarioSelecionado);
+
+    dataInicioFinal.setHours(hora.getHours(), hora.getMinutes(), 0);
+
+    // 2. Calcular dataFim (Assumindo 1 hora de duração padrão)
+    const dataFimFinal = new Date(dataInicioFinal);
+    dataFimFinal.setHours(dataInicioFinal.getHours() + 1);
+
+    // 3. Montar o objeto IReserva atualizado
     const reservaAtualizada: IReserva = {
-      id: this._data.id,
+      ...this._data, // Mantém ID, Usuario, etc.
       quadra: this.quadraSelecionada,
       convidados: this.convidados,
-      data: this.dataSelecionada,
-      horario: this.horarioSelecionado,
+      dataInicio: dataInicioFinal,
+      dataFim: dataFimFinal,
     };
+
     this._dialogRef.close(reservaAtualizada);
   }
 }
