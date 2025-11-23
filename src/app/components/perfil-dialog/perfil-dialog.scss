@@ -97,27 +97,54 @@
   }
 }
 
-// Botão de Salvar
-.actions {
-  margin-top: 40px; // Espaço entre o último input e o botão
-  
-  .save-btn {
-    background-color: #2563eb; // Azul vibrante (igual da imagem)
-    color: white;
-    height: 48px; // Altura confortável
-    width: 100%;
+.actions-row {
+  margin-top: 40px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+
+  button {
+    flex: 1; // deixa os dois botões com o mesmo tamanho
+    height: 48px;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
+  }
+
+  /* Botão salvar */
+  .save-btn {
+    background-color: #2563eb; // azul padrão que você já usa
+    color: white;
 
     &:hover {
       background-color: #1d4ed8;
     }
   }
+
+  /* Botão excluir */
+  .delete-btn {
+    background-color: #dc2626; // vermelho elegante
+    color: #fff;
+
+    &:hover {
+      background-color: #b91c1c;
+    }
+
+    mat-icon {
+      font-size: 20px;
+      margin-top: -2px;
+    }
+  }
 }
+
+
 
 .loading-text {
   text-align: center;

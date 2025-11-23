@@ -11,7 +11,7 @@ export interface UsuarioDados {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
   private http = inject(HttpClient);
@@ -31,5 +31,9 @@ export class UsuarioService {
    */
   atualizarDados(dados: UsuarioDados): Observable<any> {
     return this.http.put(`${this.API_URL}/atualizar`, dados);
+  }
+
+  deletarUsuario(): Observable<any> {
+    return this.http.delete(`${this.API_URL}/deletar/`);
   }
 }
