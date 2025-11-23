@@ -1,0 +1,126 @@
+@use '../../../styles/index' as *;
+
+// Remove margens padrão do host do dialog para controlar tudo no container
+:host {
+  display: block;
+}
+
+.perfil-container {
+  padding: 24px 32px; // Mais espaço interno
+  position: relative;
+  min-width: 450px; // Largura um pouco maior para acomodar label + input
+  background-color: #fff;
+}
+
+// Botão de fechar (X)
+.header-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  
+  .close-btn {
+    color: #666;
+    margin-right: -10px; // Compensa o padding do botão para alinhar à direita visualmente
+    margin-top: -10px;
+  }
+}
+
+// Cabeçalho (Foto e Nome)
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 24px; // Espaço generoso entre foto e nome
+  margin-bottom: 40px; // Afasta do formulário
+
+  .avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #e0e0e0; // Cinza do placeholder
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0; // Impede a foto de amassar
+
+    mat-icon {
+      font-size: 48px; // Ícone maior
+      width: 48px;
+      height: 48px;
+      color: #fff;
+    }
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  h2 {
+    font-size: 1.4rem; // Fonte do nome maior
+    font-weight: 400; // Fonte mais leve (conforme imagem)
+    color: #333;
+    margin: 0;
+    line-height: 1.2;
+  }
+}
+
+// Formulário
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Espaço vertical entre os campos (Email, Telefone, etc.)
+
+  .form-row {
+    display: flex;
+    align-items: center; // Centraliza verticalmente Label e Input
+    gap: 20px;
+    
+    label {
+      width: 80px; // Largura fixa para alinhar todos os inputs
+      font-weight: 400;
+      color: #666;
+      font-size: 1rem;
+      flex-shrink: 0; // Garante que o label não quebre
+    }
+
+    mat-form-field {
+      flex: 1; // Ocupa o resto da linha
+      
+      // Ajuste para remover o espaço extra embaixo do input (onde fica o erro)
+      // Isso alinha o input visualmente com o label
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none; 
+      }
+    }
+  }
+}
+
+// Botão de Salvar
+.actions {
+  margin-top: 40px; // Espaço entre o último input e o botão
+  
+  .save-btn {
+    background-color: #2563eb; // Azul vibrante (igual da imagem)
+    color: white;
+    height: 48px; // Altura confortável
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #1d4ed8;
+    }
+  }
+}
+
+.loading-text {
+  text-align: center;
+  color: #666;
+  margin: 40px 0;
+}

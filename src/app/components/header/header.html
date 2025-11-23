@@ -42,6 +42,15 @@
       <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link">
         Dashboard
       </a>
+      } @else {
+      <a
+        (click)="abrirPerfil()"
+        class="header__item header__icon"
+        style="cursor: pointer; margin-right: 15px"
+      >
+        <mat-icon style="color: #005eb8">person</mat-icon>
+        <!-- Azul Senac -->
+      </a>
       }
 
       <!-- Botão SAIR (comum para todos logados) -->

@@ -1,0 +1,66 @@
+<div class="perfil-container">
+  <!-- Cabeçalho com Fechar -->
+  <div class="header-row">
+    <button mat-icon-button mat-dialog-close class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <p class="loading-text">Carregando informações...</p>
+  } @else {
+    
+    <!-- Foto e Nome -->
+    <div class="profile-header">
+      <div class="avatar-circle">
+        <mat-icon>person</mat-icon>
+        <!-- Se tiver foto real no futuro: <img [src]="usuario.foto" /> -->
+      </div>
+      <h2>{{ usuario.nome }}</h2>
+    </div>
+
+    <!-- Formulário -->
+    <form #perfilForm="ngForm" (ngSubmit)="onSubmit()" class="profile-form">
+      
+      <!-- Email (Geralmente Readonly) -->
+      <div class="form-row">
+        <label>Email</label>
+        <mat-form-field appearance="outline" class="custom-field">
+          <input matInput name="email" [(ngModel)]="usuario.email" class="readonly-input" />
+        </mat-form-field>
+      </div>
+
+      <!-- Telefone -->
+      <div class="form-row">
+        <label>Telefone</label>
+        <mat-form-field appearance="outline" class="custom-field">
+          <input matInput name="telefone" [(ngModel)]="usuario.telefone" required mask="(00) 00000-0000" />
+        </mat-form-field>
+      </div>
+
+      <!-- Senha (Opcional para alteração) -->
+      <div class="form-row">
+        <label>Senha</label>
+        <mat-form-field appearance="outline" class="custom-field">
+          <input 
+            matInput 
+            [type]="hidePassword ? 'password' : 'text'" 
+            name="novaSenha" 
+            [(ngModel)]="novaSenha" 
+          />
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- Botão Salvar -->
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" class="save-btn">
+          Salvar alterações
+        </button>
+      </div>
+
+    </form>
+  }
+</div>
