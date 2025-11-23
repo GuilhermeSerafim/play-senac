@@ -3,6 +3,15 @@
   <form class="cadastro-form" #cadastroForm="ngForm" (ngSubmit)="onSubmit(cadastroForm)">
     <h1>Criar uma conta</h1>
 
+    <!-- Mensagem de erro do servidor (ex: E-mail já cadastrado) -->
+    @if (errorMessage) {
+      <div class="error-banner">
+        <mat-icon>error</mat-icon>
+        {{ errorMessage }}
+      </div>
+    }
+
+    <!-- NOME -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Digite seu nome</mat-label>
       <input matInput type="text" name="nome" ngModel #nome="ngModel" required minlength="3" />
@@ -17,6 +26,8 @@
       </mat-error>
       }
     </mat-form-field>
+
+    <!-- TELEFONE -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Telefone</mat-label>
       <input
@@ -27,6 +38,7 @@
         #telefone="ngModel"
         required
         pattern="^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$"
+        placeholder="(11) 99999-9999"
       />
       <mat-icon matPrefix>phone</mat-icon>
       @if (telefone.invalid && (telefone.dirty || telefone.touched)) {
@@ -34,15 +46,17 @@
         @if (telefone.errors?.['required']) {
         <span>O telefone é obrigatório.</span>
         } @if (telefone.errors?.['pattern']) {
-        <span>O telefone deve estar no formato (XX) XXXXX-XXXX.</span>
+        <span>Formato inválido. Use (XX) XXXXX-XXXX.</span>
         }
       </mat-error>
       }
     </mat-form-field>
+
+    <!-- EMAIL -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
       <input
-        matInput=""
+        matInput
         type="email"
         name="email"
         ngModel
@@ -67,6 +81,8 @@
       </mat-error>
       }
     </mat-form-field>
+
+    <!-- SENHA -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Senha</mat-label>
       <input
@@ -92,12 +108,19 @@
       </mat-error>
       }
     </mat-form-field>
-    <button matButton="elevated" class="cadastro-button" type="submit">
-      Se torne um <span [style.color]="'#FFCE00'">Player</span>!
+
+    <button 
+      mat-raised-button 
+      class="cadastro-button" 
+      type="submit"
+      color="primary"
+      [disabled]="cadastroForm.invalid"
+    >
+      Se torne um <span [style.color]="'#FFCE00'" style="margin-left: 4px;">Player</span>!
     </button>
 
-    <p align="center">
-      Não tem Uma Conta?<span (click)="temConta()" class="tem-conta">Entre!</span>
+    <p align="center" style="margin-top: 20px;">
+      Já tem uma conta? <span (click)="temConta()" class="tem-conta" style="color: #005eb8; cursor: pointer; font-weight: bold;">Entre!</span>
     </p>
   </form>
 </div>
