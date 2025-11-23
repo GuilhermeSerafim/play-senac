@@ -35,10 +35,9 @@ export class AuthService {
   }
 
   // ... (Seus métodos loginSuccess e logout continuam iguais) ...
-  loginSuccess(token: string, role: string, userId: string) {
+  loginSuccess(token: string, role: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('userRole', role);
-    localStorage.setItem('userId', userId);
     this.isLoggedInSubject.next(true); 
   }
 

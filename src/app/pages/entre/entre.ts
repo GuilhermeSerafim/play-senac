@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment'; // <--- Importa
 import { ViewModeService } from '../../services/view-mode.service';
 import { ViewMode } from '../../enum/ViewMode';
 import { LoginResponse } from '../../interfaces/login-response.interface'; // Crie essa interface se não criou ainda
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-entre',
@@ -33,21 +34,21 @@ import { LoginResponse } from '../../interfaces/login-response.interface'; // Cr
   styleUrl: './entre.scss',
 })
 export class Entre {
-  // Injeção de dependências moderna
   private http = inject(HttpClient);
   private viewModeService = inject(ViewModeService);
-  
-  // Propriedade para mostrar erro na tela se a senha estiver errada
-  public loginError = ''; 
-  public hidePassword = true;
-  
-  // URL do endpoint de login (ajuste se for diferente no Java, ex: /auth/login)
-  private readonly API_URL = `${environment.apiUrl}/login`; 
+  private authService = inject(AuthService);
+  private router = inject(Router); // Usando inject para consistência
 
-  constructor(private readonly _el: ElementRef, private readonly _router: Router) {}
+  public loginError = '';
+  public hidePassword = true;
+
+  // URL do endpoint de login (ajuste se for diferente no Java, ex: /auth/login)
+  private readonly API_URL = `${environment.apiUrl}/login`;
+
+  constructor(private readonly _el: ElementRef) {}
 
   aoClicarEmCriarUmaConta() {
-    this._router.navigate(['/cadastro']);
+    this.router.navigate(['/cadastro']);
   }
 
   aoEsquecerASenha() {
@@ -64,21 +65,25 @@ export class Entre {
 
     const payload = {
       email: form.value.email,
-      senha: form.value.senha 
+      senha: form.value.senha,
     };
 
     this.http.post<LoginResponse>(this.API_URL, payload).subscribe({
       next: (response) => {
+        // 1. CHAME O AUTH SERVICE PARA AVISAR O SISTEMA INTEIRO
+        // (Ele vai salvar no localStorage e atualizar o Observable isLoggedIn$)
+        this.authService.loginSuccess(
+          response.token,
+          response.role,
+        );
 
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('userRole', response.role);
-
+        // 2. Lógica de redirecionamento baseada na Role
         if (response.role === 'ADMIN') {
           this.viewModeService.setViewMode(ViewMode.Admin);
-          this._router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard']);
         } else {
           this.viewModeService.setViewMode(ViewMode.User);
-          this._router.navigate(['/home']);
+          this.router.navigate(['/home']);
         }
       },
       error: (err) => {
@@ -88,7 +93,7 @@ export class Entre {
         } else {
           this.loginError = 'Erro no servidor. Tente novamente mais tarde.';
         }
-      }
+      },
     });
   }
 
