@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable, startWith, switchMap } from 'rxjs';
 import { CourtService } from '../../services/court.service';
 import { ReservaService } from '../../services/reserva.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -12,13 +12,16 @@ import { IReserva } from '../../interfaces/ireserva';
 
 @Component({
   selector: 'app-reservas-adm',
+  standalone: true,
   imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe],
   templateUrl: './reservas-adm.html',
   styleUrl: './reservas-adm.scss',
 })
 export class ReservasAdm implements OnInit {
-  courts: ICourt[] = [];
   reservasCombinadas$!: Observable<IReserva[]>;
+
+  // Subject para forçar recarregamento manual (refresh)
+  private refresh$ = new Observable<void>((observer) => observer.next());
 
   constructor(
     private readonly _courtService: CourtService,
@@ -26,53 +29,55 @@ export class ReservasAdm implements OnInit {
     private readonly _dialog: MatDialog
   ) {}
 
- ngOnInit(): void {
+  ngOnInit(): void {
+    // Usamos combineLatest para cruzar Quadras (para pegar imagens) e Reservas (todas)
     this.reservasCombinadas$ = combineLatest([
-      this._courtService.getCourts(),
-      this._reservaService.getReservas()
+      this._courtService.getCourts(), // Fluxo 1: Lista de Quadras
+      this._reservaService.getAllReservas(), // Fluxo 2: Lista de TODAS as Reservas (Endpoint Admin)
     ]).pipe(
       map(([listaQuadras, listaReservas]) => {
-        
-        return listaReservas.map((reserva) => {
-          // Acha a quadra completa
-          const infoDaQuadra = listaQuadras.find((q) => q.id === reserva.quadra.id);
+        return (
+          listaReservas
+            .map((reserva) => {
+              // Hidratação: Acha a quadra pelo ID para pegar nome e imagem
+              const infoDaQuadra = listaQuadras.find((q) => q.id === reserva.quadra.id);
 
-          // Retorna o objeto IReserva, mas agora "recheado" com os dados da quadra
-          return {
-            ...reserva, // Copia ID, datas, usuario, convidados...
-            
-            // Sobrescreve a quadra parcial pela quadra completa que achamos
-            quadra: { 
-              ...reserva.quadra, // Mantém ID
-              title: infoDaQuadra?.title || `Quadra #${reserva.quadra.id}`,
-              pathImg: infoDaQuadra?.pathImg || 'assets/default.png',
-              capacidade: infoDaQuadra?.capacidade || 0
-            }
-          } as IReserva;
-        })
-        .sort((a, b) => a.dataInicio.getTime() - b.dataInicio.getTime());
+              return {
+                ...reserva,
+                quadra: {
+                  ...reserva.quadra,
+                  title: infoDaQuadra?.title || `Quadra #${reserva.quadra.id}`,
+                  pathImg: infoDaQuadra?.pathImg || 'assets/img/default.png', // Caminho seguro
+                  capacidade: infoDaQuadra?.capacidade || 0,
+                  // Preenche campos obrigatórios da interface com valores seguros
+                  horarioAbertura: infoDaQuadra?.horarioAbertura || undefined,
+                  horarioFechamento: infoDaQuadra?.horarioFechamento || undefined,
+                  diasDisponiveis: infoDaQuadra?.diasDisponiveis || [],
+                  bloqueada: infoDaQuadra?.bloqueada || false,
+                },
+              } as IReserva;
+            })
+            // Ordena: Mais recentes primeiro
+            .sort((a, b) => b.dataInicio.getTime() - a.dataInicio.getTime())
+        );
       })
     );
-  }
-
-  /**
-   * Retorna uma nova data com uma hora a mais que a data fornecida.
-   * @param data A data inicial.
-   * @returns A nova data com +1 hora.
-   */
-  public getHorarioFinal(data: Date): Date {
-    const dataFinal = new Date(data);
-    dataFinal.setHours(dataFinal.getHours() + 1);
-    return dataFinal;
   }
 
   cancelarReserva(idReserva: number) {
     const dialogRef = this._dialog.open(CancelarReservaDialog, {
       width: '540px',
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((remove) => remove && this._reservaService.removeReserva(idReserva));
+
+    dialogRef.afterClosed().subscribe((confirmou) => {
+      if (confirmou) {
+        this._reservaService.removeReserva(idReserva).subscribe(() => {
+          // Truque simples para recarregar a página/lista após deletar
+          // Em produção idealmente usaríamos um BehaviorSubject para recarregar sem F5
+          window.location.reload();
+        });
+      }
+    });
   }
 
   alterarQuadra(reserva: IReserva) {
@@ -80,8 +85,13 @@ export class ReservasAdm implements OnInit {
       width: '540px',
       data: reserva,
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((result) => result && this._reservaService.updateReserva(result));
+
+    dialogRef.afterClosed().subscribe((reservaEditada) => {
+      if (reservaEditada) {
+        this._reservaService.updateReserva(reservaEditada).subscribe(() => {
+          window.location.reload(); // Recarrega para mostrar dados novos
+        });
+      }
+    });
   }
 }

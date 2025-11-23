@@ -28,7 +28,7 @@ export class ProximasReservas implements OnInit {
   ngOnInit(): void {
     this.reservasHidratadas$ = combineLatest([
       this._courtService.getCourts(),
-      this._reservaService.getReservas()
+      this._reservaService.getMinhasReservas(),
     ]).pipe(
       map(([listaQuadras, listaReservas]) => {
         return listaReservas
@@ -44,13 +44,14 @@ export class ProximasReservas implements OnInit {
                 horarioAbertura: infoDaQuadra?.horarioAbertura || undefined,
                 horarioFechamento: infoDaQuadra?.horarioFechamento || undefined,
                 diasDisponiveis: infoDaQuadra?.diasDisponiveis || [],
-                bloqueada: infoDaQuadra?.bloqueada || false
-              }
-            }
+                bloqueada: infoDaQuadra?.bloqueada || false,
+              },
+            };
             // Ordena da mais próximo ao mais distante
-          }).sort((a, b) => a.dataInicio.getTime() - b.dataInicio.getTime());
+          })
+          .sort((a, b) => a.dataInicio.getTime() - b.dataInicio.getTime());
       })
-    )
+    );
   }
 
   cancelarReserva(idReserva: number) {
