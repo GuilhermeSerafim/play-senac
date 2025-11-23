@@ -75,6 +75,8 @@ export class CourtService {
 
       horarioAbertura: this.formatTimeForJava(updatedCourt.horarioAbertura),
       horarioFechamento: this.formatTimeForJava(updatedCourt.horarioFechamento),
+      diasSemana: updatedCourt.diasDisponiveis,
+      bloqueada: updatedCourt.bloqueada,
     };
     this.http.put(`${this.API_URL}/${updatedCourt.id}`, payloadJava).subscribe({
       next: () => {
