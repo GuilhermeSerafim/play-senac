@@ -78,3 +78,11 @@ input:selecionadoeescrevendo {
   cursor: pointer;
     color: $color-primary-blue;
 }
+
+
+.backend-error-msg {
+  display: flex;;
+  align-items: center;
+  gap: 8px;
+  color: red;
+}

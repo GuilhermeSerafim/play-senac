@@ -1,0 +1,35 @@
+.bloqueio-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 10px;
+  min-width: 400px;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .horarios-row {
+    display: flex;
+    gap: 16px;
+    
+    mat-form-field {
+      flex: 1;
+    }
+  }
+
+  .error-msg {
+    color: #f44336;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -10px;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

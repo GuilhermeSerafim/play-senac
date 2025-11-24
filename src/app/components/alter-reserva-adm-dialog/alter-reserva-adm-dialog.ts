@@ -16,7 +16,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { IReservaDisplay } from '../../interfaces/ireserva-display';
 import { IConvidado } from '../../interfaces/iconvidado';
 import { ICourt } from '../../interfaces/icourt';
 import { IReserva } from '../../interfaces/ireserva';
@@ -43,32 +42,59 @@ import { ConvidadosDialog } from '../convidados-dialog/convidados-dialog';
 })
 export class AlterReservaAdmDialog implements OnInit {
   quadraSelecionada!: ICourt;
+
   dataSelecionada!: Date;
-  horarioSelecionado!: Date;
+  horarioInicioSelecionado!: Date;
+  horarioFimSelecionado!: Date;
+
   convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
 
   constructor(
     private readonly _dialogRef: MatDialogRef<AlterReservaAdmDialog>,
-    @Inject(MAT_DIALOG_DATA) public readonly _data: IReservaDisplay,
+    @Inject(MAT_DIALOG_DATA) public readonly _data: IReserva,
     private readonly _quadraService: CourtService,
     private readonly _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.dataSelecionada = this._data.data;
-    this.horarioSelecionado = this._data.horario;
+    // dataInicio serve tanto para a data quanto para a hora inicial
+    this.dataSelecionada = new Date(this._data.dataInicio);
+    this.horarioInicioSelecionado = new Date(this._data.dataInicio);
+    this.horarioFimSelecionado = new Date(this._data.dataFim);
+
     this.convidados = this._data.convidados ? [...this._data.convidados] : [];
 
-    this._quadraService.court$.subscribe((allCourts) => {
+    this._quadraService.getCourts().subscribe((allCourts) => {
       this.quadras = allCourts;
-
       if (this._data.quadra) {
-        // Encontra a quadra na lista do serviço pelo ID.
-        // Isso garante que a referência do objeto é a correta para o <mat-select>
         this.quadraSelecionada = this.quadras.find((q) => q.id === this._data.quadra.id)!;
       }
     });
+  }
+
+  /**
+   * Validação Lógica do Intervalo
+   * Retorna uma string com o erro ou null se estiver tudo certo.
+   */
+  get erroDeHorario(): string | null {
+    if (!this.horarioInicioSelecionado || !this.horarioFimSelecionado) return null;
+
+    const inicio = new Date(this.horarioInicioSelecionado);
+    const fim = new Date(this.horarioFimSelecionado);
+
+    // Normaliza a data base para garantir que estamos comparando apenas as horas
+    inicio.setFullYear(2000, 0, 1);
+    fim.setFullYear(2000, 0, 1);
+
+    const diferencaMs = fim.getTime() - inicio.getTime();
+    const diferencaMinutos = diferencaMs / (1000 * 60);
+
+    if (diferencaMinutos <= 0) return 'O fim deve ser após o início.';
+    if (diferencaMinutos < 30) return 'Mínimo de 30 minutos.';
+    if (diferencaMinutos > 120) return 'Máximo de 2 horas.';
+
+    return null;
   }
 
   abreDialogConvidado() {
@@ -88,13 +114,24 @@ export class AlterReservaAdmDialog implements OnInit {
   }
 
   onSubmit() {
+    if (this.erroDeHorario) return;
+
+    const dataInicioFinal = new Date(this.dataSelecionada);
+    const horaInicio = new Date(this.horarioInicioSelecionado);
+    dataInicioFinal.setHours(horaInicio.getHours(), horaInicio.getMinutes(), 0);
+
+    const dataFimFinal = new Date(this.dataSelecionada);
+    const horaFim = new Date(this.horarioFimSelecionado);
+    dataFimFinal.setHours(horaFim.getHours(), horaFim.getMinutes(), 0);
+
     const reservaAtualizada: IReserva = {
-      id: this._data.id,
+      ...this._data,
       quadra: this.quadraSelecionada,
       convidados: this.convidados,
-      data: this.dataSelecionada,
-      horario: this.horarioSelecionado,
+      dataInicio: dataInicioFinal,
+      dataFim: dataFimFinal,
     };
+
     this._dialogRef.close(reservaAtualizada);
   }
 }

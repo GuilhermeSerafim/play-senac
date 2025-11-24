@@ -1,43 +1,65 @@
 @use '../../../styles/index' as *;
+
 .container-cadastro {
-  margin: 100px 0 220px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 160px); // Ajuste conforme altura do header/footer
+  padding: 40px 20px;
 }
 
 .cadastro-form {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 450px;
   display: flex;
-  margin: 0 auto;
-  width: 540px;
-  padding: 48px 72px;
   flex-direction: column;
-  justify-content: center;
-  align-items: left;
-  gap: 32px;
-  border-radius: 20px;
-  background: $color-base-white;
-  box-shadow: 40px 40px 60px 0 rgba(228, 230, 234, 0.74);
-}
+  gap: 10px;
 
-.mat-mdc-raised-button.cadastro-button {
-  display: flex;
-  justify-content: center;
-  font-size: $font-title-md-size;
-  font-weight: $font-title-sm-weight;
-  align-items: center;
-  height: 52px;
-  padding: 16px;
-  gap: 5px;
-  background-color: #2967f4; /* Cor do Figma */
-  border-radius: 8px;
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
 
-  /* Ajustes adicionais */
-  width: 100%; /* Para replicar o 'align-self: stretch' */
-  border: none; /* Remove a borda padrão */
-  color: white; /* Cor do texto principal */
-  font-size: 1em; /* Tamanho de fonte legível */
+  .full-width {
+    width: 100%;
+  }
+
+  .cadastro-button {
+    height: 48px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+
+  // Estilo do erro global
+  .error-banner {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
 }
 
 .tem-conta {
-  margin-left: 8px;
-  cursor: pointer;
-  color: $color-primary-blue;
+  transition: color 0.2s;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Ajuste mobile
+@media (max-width: 600px) {
+  .cadastro-form {
+    padding: 20px;
+  }
 }

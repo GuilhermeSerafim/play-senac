@@ -4,12 +4,11 @@ import { Entre } from './pages/entre/entre';
 import { Cadastro } from './pages/cadastro/cadastro';
 import { Reservas } from './pages/reservas/reservas';
 import { Dashboard } from './pages/dashboard/dashboard';
-import { ViewSwitcher } from './components/view-switcher/view-switcher';
 import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'escolher-perfil', pathMatch: 'full' },
-  { path: 'escolher-perfil', component: ViewSwitcher },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  // { path: 'escolher-perfil', component: ViewSwitcher },
   { path: 'home', component: Home },
   { path: 'entre', component: Entre },
   { path: 'cadastro', component: Cadastro },

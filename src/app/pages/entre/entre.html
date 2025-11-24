@@ -6,19 +6,9 @@
     <!-- Campo de E-mail com Validação -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
-      <input
-        matInput=""
-        type="email"
-        name="email"
-        ngModel
-        #email="ngModel"
-        required
-        email
-        pattern="^[a-zA-Z0-9._%+-]+@senacsp\.edu\.br$"
-      />
+      <input matInput="" type="email" name="email" ngModel #email="ngModel" required email />
+      <!-- pattern="^[a-zA-Z0-9._%+-]+@senacsp\.edu\.br$" -->
       <mat-icon matPrefix>email</mat-icon>
-
-      <mat-hint>aluno@senacsp.edu.br</mat-hint>
 
       <!-- Mensagens de Erro com Control Flow -->
       @if (email.invalid && (email.dirty || email.touched)) {
@@ -44,6 +34,7 @@
         ngModel
         #senha="ngModel"
         required
+        [pattern]="passwordPattern"
       />
       <mat-icon matPrefix>lock</mat-icon>
       <mat-hint align="end">
@@ -58,11 +49,20 @@
       <mat-error>
         @if (senha.errors?.['required']) {
         <span>A senha é obrigatória.</span>
+        } @else if (senha.errors?.['pattern']) {
+        <span>
+          A senha está fraca
+        </span>
         }
       </mat-error>
       }
     </mat-form-field>
-
+    @if (loginError) {
+    <div class="backend-error-msg">
+      <mat-icon>error</mat-icon>
+      {{ loginError }}
+    </div>
+    }
     <!-- Botão de Submit (desabilitado se o formulário for inválido) -->
     <button matButton="elevated" class="login-button" type="submit">
       Aperte o <span [style.color]="'#FFCE00'">Play</span>!

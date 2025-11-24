@@ -50,11 +50,12 @@ select {
 }
 
 /* Garante imagens fluidas */
+/* Garante imagens fluidas, MAS ignora componentes do Material que usam SVG internamente */
 img,
 picture,
 video,
 canvas,
-svg {
+svg:not(.mat-mdc-progress-spinner svg) {
   display: block;
   max-width: 100%;
 }

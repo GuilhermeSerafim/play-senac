@@ -5,20 +5,21 @@ import { CourtService } from '../../services/court.service';
 import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { ReservaService } from '../../services/reserva.service';
-import { IReservaDisplay } from '../../interfaces/ireserva-display';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reserva-dialog';
-import { map, Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-proximas-reservas',
-  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe],
+  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinner, MatButtonModule],
   templateUrl: './proximas-reservas.html',
   styleUrl: './proximas-reservas.scss',
 })
 export class ProximasReservas implements OnInit {
   courts: ICourt[] = [];
-  reservasCombinadas$!: Observable<IReservaDisplay[]>;
+  reservasHidratadas$!: Observable<IReserva[]>;
 
   constructor(
     private readonly _courtService: CourtService,
@@ -27,37 +28,32 @@ export class ProximasReservas implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._courtService.getCourts().subscribe((courts) => (this.courts = courts));
-
-    this.reservasCombinadas$ = this._reservaService.reservas$.pipe(
-      map((reservasRecebidas) => {
-        return reservasRecebidas
+    this.reservasHidratadas$ = combineLatest([
+      this._courtService.getCourts(),
+      this._reservaService.getMinhasReservas(),
+    ]).pipe(
+      map(([listaQuadras, listaReservas]) => {
+        return listaReservas
           .map((reserva) => {
-            const courtInfo = this.courts.find((court) => court.title === reserva.quadra.title);
+            const infoDaQuadra = listaQuadras.find((q) => q.id === reserva.quadra.id);
             return {
-              id: reserva.id,
-              quadra: reserva.quadra,
-              horario: reserva.horario,
-              convidados: reserva.convidados,
-              data: reserva.data,
-              pathImg: courtInfo?.pathImg || 'images/default.png',
-              capacidade: courtInfo?.capacidade || 0,
+              ...reserva,
+              quadra: {
+                ...reserva.quadra,
+                title: infoDaQuadra?.title || `Quadra #${reserva.quadra.id}`,
+                pathImg: infoDaQuadra?.pathImg || 'assets/default.png',
+                capacidade: infoDaQuadra?.capacidade || 0,
+                horarioAbertura: infoDaQuadra?.horarioAbertura || undefined,
+                horarioFechamento: infoDaQuadra?.horarioFechamento || undefined,
+                diasDisponiveis: infoDaQuadra?.diasDisponiveis || [],
+                bloqueada: infoDaQuadra?.bloqueada || false,
+              },
             };
+            // Ordena da mais próximo ao mais distante
           })
-          .sort((a, b) => a.data.getTime() - b.data.getTime());
+          .sort((a, b) => a.dataInicio.getTime() - b.dataInicio.getTime());
       })
     );
-  }
-
-  /**
-   * Retorna uma nova data com uma hora a mais que a data fornecida.
-   * @param data A data inicial.
-   * @returns A nova data com +1 hora.
-   */
-  public getHorarioFinal(data: Date): Date {
-    const dataFinal = new Date(data);
-    dataFinal.setHours(dataFinal.getHours() + 1);
-    return dataFinal;
   }
 
   cancelarReserva(idReserva: number) {

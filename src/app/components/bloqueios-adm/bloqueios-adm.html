@@ -1,0 +1,50 @@
+@let bloqueios = bloqueios$ | async; @if(!bloqueios) {
+<div class="loading-container">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+} @else if(bloqueios.length === 0) {
+<div class="empty-state">
+  <mat-icon>event_available</mat-icon>
+  <p>Nenhum bloqueio ativo no momento.</p>
+</div>
+} @else {
+<div class="bloqueios-list">
+  @for (bloqueio of bloqueios; track bloqueio.id) {
+  <div class="card">
+    <div class="card__left">
+      <!-- Imagem da Quadra -->
+      <img [src]="bloqueio.imgQuadra" [alt]="bloqueio.nomeQuadra" />
+
+      <div class="info-wrapper">
+        <h2>{{ bloqueio.nomeQuadra }}</h2>
+
+        <!-- Datas e Horas -->
+        <p class="time-range">
+          <mat-icon>schedule</mat-icon>
+          <span>
+            {{ bloqueio.dataHoraInicio | date : 'dd/MM HH:mm' }} -
+            {{ bloqueio.dataHoraFim | date : 'HH:mm' }}
+          </span>
+        </p>
+
+        <!-- Motivo do Bloqueio -->
+        <p class="motivo"><strong>Motivo:</strong> {{ bloqueio.motivo }}</p>
+      </div>
+    </div>
+
+    <div class="card__right">
+      <!-- Botão de Excluir Bloqueio -->
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="removerBloqueio(bloqueio.id)"
+        matTooltip="Remover Bloqueio"
+      >
+        <mat-icon>delete_forever</mat-icon>
+        <!-- Ou use 'delete' se esse falhar -->
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

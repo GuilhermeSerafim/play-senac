@@ -22,7 +22,7 @@ import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-faca-sua-reserva',
-  standalone: true, // <-- É uma boa prática declarar explicitamente
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -45,13 +45,16 @@ import { MatInput } from '@angular/material/input';
 export class FacaSuaReserva implements OnInit {
   quadraSelecionada!: ICourt;
   dataSelecionada!: Date;
-  horarioSelecionado!: Date;
-  convidados: IConvidado[] = [];
 
+  // Variáveis separadas para horário
+  horarioInicioSelecionado!: Date;
+  horarioFimSelecionado!: Date;
+
+  convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
 
-  // Vamos usar isso apenas para o pai saber que deve ir para os próximos reservas, pois ele que orquestra isso
   @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
+  errorMessage = '';
 
   constructor(
     private readonly _dialog: MatDialog,
@@ -63,18 +66,69 @@ export class FacaSuaReserva implements OnInit {
     this._courtService.getCourts().subscribe((q) => (this.quadras = q));
   }
 
-  onSubmit(f: NgForm) {
-    if (f.invalid) return;
+  /**
+   * Validação Lógica do Intervalo
+   */
+  get erroDeHorario(): string | null {
+    if (!this.horarioInicioSelecionado || !this.horarioFimSelecionado) return null;
 
-    const reserva: ICreateReserva = {
-      quadra: this.quadraSelecionada,
-      data: this.dataSelecionada,
-      horario: this.horarioSelecionado,
-      convidados: this.convidados,
+    const inicio = new Date(this.horarioInicioSelecionado);
+    const fim = new Date(this.horarioFimSelecionado);
+
+    inicio.setFullYear(2000, 0, 1);
+    fim.setFullYear(2000, 0, 1);
+
+    const diferencaMs = fim.getTime() - inicio.getTime();
+    const diferencaMinutos = diferencaMs / (1000 * 60);
+
+    if (diferencaMinutos <= 0) return 'O fim deve ser após o início.';
+    if (diferencaMinutos < 30) return 'Mínimo de 30 minutos.';
+    if (diferencaMinutos > 120) return 'Máximo de 2 horas.';
+
+    return null;
+  }
+
+  onSubmit(f: NgForm) {
+    if (f.invalid || this.erroDeHorario) return;
+
+    this.errorMessage = '';
+
+    // 1. Monta Data INICIO
+    const dataInicioFinal = new Date(this.dataSelecionada);
+    const horaInicio = new Date(this.horarioInicioSelecionado);
+    dataInicioFinal.setHours(horaInicio.getHours(), horaInicio.getMinutes(), 0);
+
+    // 2. Monta Data FIM
+    const dataFimFinal = new Date(this.dataSelecionada);
+    const horaFim = new Date(this.horarioFimSelecionado);
+    dataFimFinal.setHours(horaFim.getHours(), horaFim.getMinutes(), 0);
+
+    // 3. Cria o Payload
+    const usuarioIdLogado = Number(localStorage.getItem('userId'));
+    const novaReserva: ICreateReserva = {
+      quadraId: this.quadraSelecionada.id,
+      dataInicio: dataInicioFinal,
+      dataFim: dataFimFinal,
+      // Cria uma copia do arr
+      convidados: [...this.convidados],
     };
 
-    this._reservaService.addReserva(reserva);
-    this.aoCriarReservaEmmit.emit();
+    this._reservaService.addReserva(novaReserva).subscribe({
+      next: () => {
+        f.resetForm();  
+        this.onQuadraChange();
+        this.aoCriarReservaEmmit.emit();
+      },
+      error: (err) => {
+        console.error('Erro ao criar:', err);
+
+        if (err.status === 409 || err.status === 400) {
+          this.errorMessage = err.error || 'Dados inválidos';
+        } else {
+          this.errorMessage = 'Erro ao conectar com o servidor. Tente novamente mais tarde.';
+        }
+      },
+    });
   }
 
   abreDialogConvidado() {
@@ -88,22 +142,12 @@ export class FacaSuaReserva implements OnInit {
     this.convidados = this.convidados.filter((convidado) => convidado !== c);
   }
 
-  /**
-   * Desabilita:
-   * 1. Todas as datas passadas.
-   * 2. Todas as datas que não pertencem ao ano atual.
-   * * 3. Todos os dias da semana em que a quadra selecionada não funciona.
-   * @param d A data que o calendário está tentando renderizar. Pode ser nula.
-   * @returns {boolean} Retorna 'true' se a data for válida, e 'false' caso contrário.
-   */
   filtroDeData = (d: Date | null): boolean => {
-    if (!d) {
-      return true;
-    }
+    if (!d) return true;
 
     const hoje = new Date();
     const anoAtual = hoje.getFullYear();
-    hoje.setHours(0, 0, 0, 0); // Zera o tempo para comparação
+    hoje.setHours(0, 0, 0, 0);
 
     const ehHojeOuFuturo = d.getTime() >= hoje.getTime();
     const ehDoAnoAtual = d.getFullYear() === anoAtual;
@@ -113,21 +157,15 @@ export class FacaSuaReserva implements OnInit {
     }
 
     const diaDaSemana = d.getDay();
-
-    // Verifica se o dia da semana da data 'd' está incluído no array de dias da quadra
     const ehDiaDisponivel = this.quadraSelecionada.diasDisponiveis.includes(diaDaSemana);
 
-    // Retorna true APENAS se todas as condições passarem
     return ehHojeOuFuturo && ehDoAnoAtual && ehDiaDisponivel;
   };
 
-  /**
-   * Chamado quando o usuário troca a quadra.
-   * Limpa as seleções dependentes para evitar dados inválidos.
-   */
   onQuadraChange() {
     this.dataSelecionada = undefined!;
-    this.horarioSelecionado = undefined!;
+    this.horarioInicioSelecionado = undefined!;
+    this.horarioFimSelecionado = undefined!;
     this.convidados = [];
   }
 }

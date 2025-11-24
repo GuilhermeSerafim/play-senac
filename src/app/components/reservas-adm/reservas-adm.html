@@ -1,36 +1,64 @@
-@for (reserva of reservasCombinadas$ | async; track reserva.id) {
-<div class="card">
-  <div class="card__left">
-    <img [src]="reserva.pathImg" alt="Imagem da quadra {{ reserva.quadra.title }}" />
+@let reservas = reservasCombinadas$ | async; @if (!reservas) {
+<div class="loading-container">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+} @else if (reservas.length === 0) {
+<div class="empty-state">
+  <mat-icon>event_busy</mat-icon>
+  <p>Nenhuma reserva encontrada no sistema.</p>
+</div>
+} @else {
 
-    <div class="info-wrapper">
-      <h2>{{ reserva.quadra.title }}</h2>
-         <p>
-        Horário: {{ reserva.horario | date : 'HH:mm' }} -
-        {{ getHorarioFinal(reserva.horario) | date : 'HH:mm' }}
-      </p>
-      <p>Capacidade: {{ reserva.capacidade }} pessoas</p>
-      <p>
-        Data: {{ (reserva.data | date : 'EEEE')?.replace('-feira', '') | titlecase }},
-        {{ reserva.data | date : 'dd/MM' }}
-      </p>
-      @if(reserva.convidados.length > 0) {
-      <p>
-        Convidados: @for (item of reserva.convidados; track $index; let isLast = $last) {
-        {{ item.nome }}{{ !isLast ? ', ' : '' }}
+<!-- Envolvemos em um container se precisar de estilos específicos -->
+<div class="adm-reservas-list">
+  @for (reserva of reservas; track reserva.id) {
+  <div class="card">
+    <div class="card__left">
+      <!-- Imagem hidratada da quadra -->
+      <img [src]="reserva.quadra.pathImg" alt="Imagem da quadra {{ reserva.quadra.title }}" />
+
+      <div class="info-wrapper">
+        <h2>{{ reserva.quadra.title }}</h2>
+
+        <p>
+          Horário: {{ reserva.dataInicio | date : 'HH:mm' }} -
+          {{ reserva.dataFim | date : 'HH:mm' }}
+        </p>
+
+        <p>Capacidade: {{ reserva.quadra.capacidade }} pessoas</p>
+
+        <p>
+          Data: {{ (reserva.dataInicio | date : 'EEEE')?.replace('-feira', '') | titlecase }},
+          {{ reserva.dataInicio | date : 'dd/MM' }}
+        </p>
+
+        <!-- Exibe nome do Usuário (Exclusivo do Admin) -->
+        <p style="color: #2c3e50; font-weight: 500">ID do usuário: {{ reserva.usuario.id }}</p>
+
+        @if(reserva.convidados && reserva.convidados.length > 0) {
+        <p>
+          Convidados: @for (item of reserva.convidados; track $index; let isLast = $last) {
+          {{ item.nome }}{{ !isLast ? ', ' : '' }}
+          }
+        </p>
         }
-      </p>
-      }
+      </div>
+    </div>
+
+    <div class="card__right">
+      <button (click)="alterarQuadra(reserva)" mat-icon-button>
+        <mat-icon class="card__right__edit-icon">edit</mat-icon>
+      </button>
+      <button (click)="cancelarReserva(reserva.id)" mat-icon-button>
+        <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
+      </button>
     </div>
   </div>
-
-  <div class="card__right">
-    <button (click)="alterarQuadra(reserva)">
-      <mat-icon class="card__right__edit-icon">edit</mat-icon>
-    </button>
-    <button (click)="cancelarReserva(reserva.id)">
-      <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
-    </button>
+  } @empty {
+  <div class="empty-state">
+    <mat-icon>event_busy</mat-icon>
+    <p>Nenhuma reserva encontrada no sistema.</p>
   </div>
+  }
 </div>
 }

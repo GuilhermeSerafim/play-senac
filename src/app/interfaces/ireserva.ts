@@ -1,13 +1,19 @@
 import { IConvidado } from './iconvidado';
 import { ICourt } from './icourt';
+import { IUsuario } from './iusuario';
 
 export interface IReserva {
-  id: number; // Ou string
+  id: number;
   quadra: ICourt;
-  data: Date;
-  horario: Date;
+  usuario: IUsuario;
+  dataInicio: Date;
+  dataFim: Date;
   convidados: IConvidado[];
 }
 
-// Este novo tipo é exatamente IReserva, mas sem o campo 'id'.
-export type ICreateReserva = Omit<IReserva, 'id'>;
+export interface ICreateReserva {
+  quadraId: number;
+  dataInicio: Date;
+  dataFim: Date;
+  convidados: IConvidado[];
+}

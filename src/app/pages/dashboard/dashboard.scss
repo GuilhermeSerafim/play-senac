@@ -3,6 +3,7 @@
 .dashboard {
   margin: 0 auto;
   padding: 20px;
+  min-height: 100vh;
   max-width: 941px;
   height: 120%;
   h1 {
@@ -43,7 +44,7 @@
       }
     }
   }
-  
+
   &__criar-quadra.mat-mdc-raised-button {
     margin-bottom: 20px;
     font-size: $font-title-md-size;
