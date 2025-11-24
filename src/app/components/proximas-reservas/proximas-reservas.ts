@@ -9,10 +9,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reserva-dialog';
 import { combineLatest, map, Observable } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-proximas-reservas',
-  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinner],
+  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinner, MatButtonModule],
   templateUrl: './proximas-reservas.html',
   styleUrl: './proximas-reservas.scss',
 })

@@ -1,6 +1,6 @@
 @let reservas = reservasHidratadas$ | async; @if (!reservas) {
 <div class="loading-container">
-  <mat-spinner diameter="50"></mat-spinner>
+  <mat-spinner [diameter]="50"></mat-spinner>
 </div>
 }@else if(reservas.length === 0){
 <div class="empty-state">
