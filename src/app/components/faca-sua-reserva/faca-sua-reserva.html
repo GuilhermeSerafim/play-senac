@@ -3,6 +3,12 @@
   #facaSuaReservaFormControl="ngForm"
   (ngSubmit)="onSubmit(facaSuaReservaFormControl)"
 >
+  @if (errorMessage) {
+  <div class="error-banner">
+    <mat-icon>error</mat-icon>
+    {{ errorMessage }}
+  </div>
+  }
   <!-- QUADRA -->
   <mat-form-field appearance="outline" class="full-width form-container__item">
     <mat-label>Selecione a quadra</mat-label>
@@ -51,7 +57,7 @@
 
   <!-- HORÁRIOS (Lado a Lado) -->
   <div class="horarios">
-    <mat-form-field appearance="outline" >
+    <mat-form-field appearance="outline">
       <mat-label>Início</mat-label>
       <input
         required
@@ -67,7 +73,7 @@
       <mat-timepicker #pickerInicio />
       <mat-timepicker-toggle [for]="pickerInicio" matSuffix />
       @if (inicioControl.hasError('required')) {
-        <mat-error>Obrigatório</mat-error>
+      <mat-error>Obrigatório</mat-error>
       }
     </mat-form-field>
 
@@ -87,17 +93,27 @@
       <mat-timepicker #pickerFim />
       <mat-timepicker-toggle [for]="pickerFim" matSuffix />
       @if (fimControl.hasError('required')) {
-        <mat-error>Obrigatório</mat-error>
+      <mat-error>Obrigatório</mat-error>
       }
     </mat-form-field>
   </div>
 
   <!-- Erro de Intervalo -->
   @if (erroDeHorario && horarioInicioSelecionado && horarioFimSelecionado) {
-    <div style="color: #f44336; font-size: 12px; margin-top: -15px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px;">
-      <mat-icon style="font-size: 16px; height: 16px; width: 16px;">error</mat-icon>
-      <span>{{ erroDeHorario }}</span>
-    </div>
+  <div
+    style="
+      color: #f44336;
+      font-size: 12px;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    "
+  >
+    <mat-icon style="font-size: 16px; height: 16px; width: 16px">error</mat-icon>
+    <span>{{ erroDeHorario }}</span>
+  </div>
   }
 
   <br />
@@ -121,7 +137,10 @@
       type="button"
       (click)="abreDialogConvidado()"
       mat-icon-button
-      [disabled]="!quadraSelecionada || (quadraSelecionada.capacidade && convidados.length >= quadraSelecionada.capacidade - 1)"
+      [disabled]="
+        !quadraSelecionada ||
+        (quadraSelecionada.capacidade && convidados.length >= quadraSelecionada.capacidade - 1)
+      "
       aria-label="Adicionar convidado"
       class="btn-person__add"
     >
@@ -136,7 +155,7 @@
       type="submit"
       [disabled]="facaSuaReservaFormControl.invalid || erroDeHorario"
       [ngStyle]="
-        (facaSuaReservaFormControl.invalid || erroDeHorario)
+        facaSuaReservaFormControl.invalid || erroDeHorario
           ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' }
           : {}
       "

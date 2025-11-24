@@ -45,15 +45,16 @@ import { MatInput } from '@angular/material/input';
 export class FacaSuaReserva implements OnInit {
   quadraSelecionada!: ICourt;
   dataSelecionada!: Date;
-  
+
   // Variáveis separadas para horário
   horarioInicioSelecionado!: Date;
   horarioFimSelecionado!: Date;
-  
+
   convidados: IConvidado[] = [];
   quadras: ICourt[] = [];
 
   @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
+  errorMessage = '';
 
   constructor(
     private readonly _dialog: MatDialog,
@@ -90,6 +91,8 @@ export class FacaSuaReserva implements OnInit {
   onSubmit(f: NgForm) {
     if (f.invalid || this.erroDeHorario) return;
 
+    this.errorMessage = '';
+
     // 1. Monta Data INICIO
     const dataInicioFinal = new Date(this.dataSelecionada);
     const horaInicio = new Date(this.horarioInicioSelecionado);
@@ -112,11 +115,19 @@ export class FacaSuaReserva implements OnInit {
 
     this._reservaService.addReserva(novaReserva).subscribe({
       next: () => {
-        f.resetForm(); // Para limpar os validadores tb
+        f.resetForm();  
         this.onQuadraChange();
         this.aoCriarReservaEmmit.emit();
       },
-      error: (err) => console.error('Erro ao criar:', err)
+      error: (err) => {
+        console.error('Erro ao criar:', err);
+
+        if (err.status === 409 || err.status === 400) {
+          this.errorMessage = err.error || 'Dados inválidos';
+        } else {
+          this.errorMessage = 'Erro ao conectar com o servidor. Tente novamente mais tarde.';
+        }
+      },
     });
   }
 
