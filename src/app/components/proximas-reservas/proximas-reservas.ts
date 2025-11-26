@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ICourt } from '../../interfaces/icourt';
 import { IReserva } from '../../interfaces/ireserva';
 import { CourtService } from '../../services/court.service';
@@ -10,16 +10,26 @@ import { CancelarReservaDialog } from '../cancelar-reserva-dialog/cancelar-reser
 import { combineLatest, map, Observable } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-proximas-reservas',
-  imports: [DatePipe, MatIcon, TitleCasePipe, MatDialogModule, AsyncPipe, MatProgressSpinner, MatButtonModule],
+  imports: [
+    DatePipe,
+    MatIcon,
+    TitleCasePipe,
+    MatDialogModule,
+    AsyncPipe,
+    MatProgressSpinner,
+    MatButtonModule,
+  ],
   templateUrl: './proximas-reservas.html',
   styleUrl: './proximas-reservas.scss',
 })
 export class ProximasReservas implements OnInit {
   courts: ICourt[] = [];
   reservasHidratadas$!: Observable<IReserva[]>;
+  private snackBar = inject(MatSnackBar);
 
   constructor(
     private readonly _courtService: CourtService,
@@ -60,8 +70,21 @@ export class ProximasReservas implements OnInit {
     const dialogRef = this._dialog.open(CancelarReservaDialog, {
       width: '540px',
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((remove) => remove && this._reservaService.removeReserva(idReserva));
+
+    dialogRef.afterClosed().subscribe((remove) => {
+      if (remove) {
+        this._reservaService.removeReserva(idReserva).subscribe({
+          next: () => {
+            this.snackBar.open('Reserva excluida com sucesso!', 'OK', {
+              duration: 3000,
+              panelClass: ['success-snackbar'],
+            });
+          },
+          error: (err) => {
+            console.error('Erro ao excluir', err);
+          },
+        });
+      }
+    });
   }
 }
