@@ -38,9 +38,10 @@ export class ProximasReservas implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this._reservaService.getMinhasReservas().subscribe();
     this.reservasHidratadas$ = combineLatest([
       this._courtService.getCourts(),
-      this._reservaService.getMinhasReservas(),
+      this._reservaService.reservas$,
     ]).pipe(
       map(([listaQuadras, listaReservas]) => {
         return listaReservas
@@ -81,6 +82,10 @@ export class ProximasReservas implements OnInit {
             });
           },
           error: (err) => {
+             this.snackBar.open(err.message ?? "Erro ao criar reserva", 'OK', {
+              duration: 3000,
+              panelClass: ['success-snackbar'],
+            });
             console.error('Erro ao excluir', err);
           },
         });
