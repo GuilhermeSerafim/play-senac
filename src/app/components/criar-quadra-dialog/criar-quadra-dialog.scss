@@ -36,3 +36,21 @@ mat-dialog-content {
     background-color: #1e52c7; // tom mais escuro e consistente no hover
   }
 }
+
+
+// ... seus estilos anteriores ...
+
+.mat-mdc-raised-button.btn-confirmar {
+  color: white;
+  background-color: #2967f4; 
+  font-size: 1em;
+  
+  // Centraliza o spinner
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover:not(:disabled) {
+    background-color: #1e52c7;
+  }
+}

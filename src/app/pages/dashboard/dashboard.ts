@@ -10,7 +10,7 @@ import { CourtService } from '../../services/court.service';
 import { ReservasAdm } from '../../components/reservas-adm/reservas-adm';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { BloqueiosAdm } from "../../components/bloqueios-adm/bloqueios-adm";
+import { BloqueiosAdm } from '../../components/bloqueios-adm/bloqueios-adm';
 // Import do Spinner
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -18,15 +18,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    FormsModule, 
-    CommonModule, 
-    Quadras, 
-    MatButton, 
-    ReservasAdm, 
-    Footer, 
-    Header, 
-    BloqueiosAdm, 
-    MatProgressSpinnerModule
+    FormsModule,
+    CommonModule,
+    Quadras,
+    MatButton,
+    ReservasAdm,
+    Footer,
+    Header,
+    BloqueiosAdm,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -34,7 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class Dashboard implements OnInit {
   abaAtiva: string = 'quadras';
   quadras: ICourt[] = [];
-  
+
   // 1. Controle de Loading
   isLoading = true;
 
@@ -53,7 +53,7 @@ export class Dashboard implements OnInit {
       error: (err) => {
         console.error('Erro ao buscar quadras', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -67,6 +67,8 @@ export class Dashboard implements OnInit {
     });
     // O service já atualiza a lista automaticamente via ReplaySubject,
     // então não precisamos mexer no isLoading aqui, a atualização visual é instantânea.
-    dialogRef.afterClosed().subscribe((q) => q && this._courtService.addCourt(q));
+    dialogRef.afterClosed().subscribe(() => {
+      // Apenas fecha, o reload é automático pelo ReplaySubject do service
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICourt, ICreateCourt } from '../interfaces/icourt';
-import {  map, Observable, ReplaySubject } from 'rxjs';
+import { map, Observable, ReplaySubject, tap } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { CourtResponse } from '../interfaces/court-response.interface';
@@ -51,7 +51,7 @@ export class CourtService {
     });
   }
 
-  addCourt(quadra: ICreateCourt): void {
+  addCourt(quadra: ICreateCourt): Observable<any> {
     const payloadJava = {
       nome: quadra.title,
       limiteJogadores: quadra.capacidade,
@@ -63,14 +63,7 @@ export class CourtService {
       bloqueada: quadra.bloqueada,
     };
 
-    this.http.post(this.API_URL, payloadJava).subscribe({
-      next: () => {
-        this.loadCourts();
-      },
-      error: (err) => {
-        console.error('Erro ao adicionar quadra:', err);
-      },
-    });
+    return this.http.post(this.API_URL, payloadJava).pipe(tap(() => this.loadCourts()));
   }
 
   updateCourt(updatedCourt: ICourt): void {
