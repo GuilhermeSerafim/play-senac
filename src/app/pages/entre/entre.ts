@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject } from '@angular/core'; // Adicionei inject
+import { Component, ElementRef, inject } from '@angular/core';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -9,16 +9,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http'; // <--- Importante
-import { environment } from '../../../environments/environment'; // <--- Importante
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { ViewModeService } from '../../services/view-mode.service';
 import { ViewMode } from '../../enum/ViewMode';
-import { LoginResponse } from '../../interfaces/login-response.interface'; // Crie essa interface se não criou ainda
+import { LoginResponse } from '../../interfaces/login-response.interface';
 import { AuthService } from '../../services/auth.service';
+// 1. IMPORTANTE: Importar o módulo do Spinner
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-entre',
-  standalone: true, // Confirmei que é standalone
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -29,6 +31,7 @@ import { AuthService } from '../../services/auth.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule, // 2. Adicionar aos imports
   ],
   templateUrl: './entre.html',
   styleUrl: './entre.scss',
@@ -37,12 +40,14 @@ export class Entre {
   private http = inject(HttpClient);
   private viewModeService = inject(ViewModeService);
   private authService = inject(AuthService);
-  private router = inject(Router); // Usando inject para consistência
+  private router = inject(Router);
 
   public loginError = '';
   public hidePassword = true;
+  
+  // 3. Variável de controle de carregamento
+  public isLoading = false;
 
-  // URL do endpoint de login (ajuste se for diferente no Java, ex: /auth/login)
   private readonly API_URL = `${environment.apiUrl}/login`;
 
   passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$';
@@ -64,6 +69,8 @@ export class Entre {
     }
 
     this.loginError = '';
+    // 4. Ativa o loading
+    this.isLoading = true;
 
     const payload = {
       email: form.value.email,
@@ -72,11 +79,12 @@ export class Entre {
 
     this.http.post<LoginResponse>(this.API_URL, payload).subscribe({
       next: (response) => {
-        // 1. CHAME O AUTH SERVICE PARA AVISAR O SISTEMA INTEIRO
-        // (Ele vai salvar no localStorage e atualizar o Observable isLoggedIn$)
+        // Opcional: Se o redirect for muito rápido, nem precisa setar false, 
+        // mas é boa prática caso o roteamento demore.
+        this.isLoading = false; 
+
         this.authService.loginSuccess(response.token, response.role);
 
-        // 2. Lógica de redirecionamento baseada na Role
         if (response.role === 'ADMIN') {
           this.viewModeService.setViewMode(ViewMode.Admin);
           this.router.navigate(['/dashboard']);
@@ -86,6 +94,9 @@ export class Entre {
         }
       },
       error: (err) => {
+        // 5. Desativa o loading em caso de erro para o usuário tentar de novo
+        this.isLoading = false; 
+        
         console.error('Erro no login', err);
         if (err.status === 401 || err.status === 403) {
           this.loginError = 'E-mail ou senha inválidos.';
