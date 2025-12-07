@@ -1,30 +1,48 @@
 <h2>Escolha a quadra</h2>
-<div class="courts__container">
-  @for (court of courts$ | async; track $index) {
-  <div class="court-card">
-    <div class="court-card__image-wrapper">
-      <img [src]="court.pathImg" alt="Foto da quadaa {{ court.title }}" />
 
-      <div class="court-card__status" [class.available]="isCourtAvailable(court)">
-        @if (isCourtAvailable(court)) {
-        <span>Disponível</span>
-        } @else {
-        <span>Fechada</span>
-        }
-      </div>
-    </div>
-
-    <div class="court-card__info">
-      <h3>{{ court.title }}</h3>
-      @if (court.diasDisponiveis && court.diasDisponiveis.length > 0) {
-      <div class="court-card__days">
-        <span
-          >Dias disponiveis: @for (dia of court.diasDisponiveis; track dia; let isLast = $last) {
-          {{ diaDaSemanaEnum[dia] }}{{ !isLast ? ', ' : '' }} }</span
-        >
-      </div>
-      }
-    </div>
+@if (isLoading) {
+  <div class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando quadras...</p>
   </div>
-  }
-</div>
+} 
+@else {
+  <div class="courts__container">
+    
+    @for (court of courts; track $index) {
+      <div class="court-card">
+        <div class="court-card__image-wrapper">
+          <img [src]="court.pathImg || 'assets/default.png'" alt="Foto da quadra {{ court.title }}" />
+
+          <div class="court-card__status" [class.available]="isCourtAvailable(court)">
+            @if (isCourtAvailable(court)) {
+              <span>Disponível</span>
+            } @else {
+              <span>Fechada</span>
+            }
+          </div>
+        </div>
+
+        <div class="court-card__info">
+          <h3>{{ court.title }}</h3>
+          
+          @if (court.diasDisponiveis && court.diasDisponiveis.length > 0) {
+            <div class="court-card__days">
+              <span>
+                Dias disponíveis: 
+                @for (dia of court.diasDisponiveis; track dia; let isLast = $last) {
+                  {{ diaDaSemanaEnum[dia] }}{{ !isLast ? ', ' : '' }} 
+                }
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>sports_tennis</mat-icon>
+        <p>Nenhuma quadra cadastrada.</p>
+      </div>
+    }
+  </div>
+}

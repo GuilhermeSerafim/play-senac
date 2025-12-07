@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 160px); // Ajuste conforme altura do header/footer
+  min-height: calc(100vh - 160px); 
   padding: 40px 20px;
 }
 
@@ -34,9 +34,13 @@
     font-size: 1.1rem;
     margin-top: 10px;
     border-radius: 8px;
+    
+    // Garante que o spinner fique centralizado
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  // Estilo do erro global
   .error-banner {
     background-color: #ffebee;
     color: #d32f2f;
@@ -55,9 +59,15 @@
   &:hover {
     text-decoration: underline;
   }
+  
+  // Classe para desativar o link visualmente
+  &.disabled-link {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 }
 
-// Ajuste mobile
 @media (max-width: 600px) {
   .cadastro-form {
     padding: 20px;

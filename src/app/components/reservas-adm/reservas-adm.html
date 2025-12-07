@@ -1,6 +1,7 @@
 @let reservas = reservasCombinadas$ | async; @if (!reservas) {
 <div class="loading-container">
   <mat-spinner diameter="50"></mat-spinner>
+  <p>Carregando reservas...</p>
 </div>
 } @else if (reservas.length === 0) {
 <div class="empty-state">

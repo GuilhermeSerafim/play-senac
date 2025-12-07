@@ -2,23 +2,39 @@
 <div class="dashboard">
   <h1>Dashboard</h1>
   <div class="dashboard__menu">
+    <p [ngClass]="abaAtiva === 'quadras' ? 'active' : ''" (click)="ativarAba('quadras')">
+      Quadras
+    </p>
     <p [ngClass]="abaAtiva === 'bloqueio' ? 'active' : ''" (click)="ativarAba('bloqueio')">
       Bloqueios
     </p>
     <p [ngClass]="abaAtiva === 'reservas' ? 'active' : ''" (click)="ativarAba('reservas')">
       Reservas
     </p>
-    <p [ngClass]="abaAtiva === 'quadras' ? 'active' : ''" (click)="ativarAba('quadras')">Quadras</p>
   </div>
+
   @if(abaAtiva === 'quadras') {
-  <button matButton="elevated" class="dashboard__criar-quadra" (click)="criarQuadra()">
-    Criar quadra
-  </button>
-  <app-quadras [courts]="quadras"></app-quadras>
-  } @else if(abaAtiva === "reservas"){
-  <app-reservas-adm />
-  }@else {
-  <app-bloqueios-adm />
+    
+    @if(isLoading) {
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Carregando quadras...</p>
+      </div>
+    } 
+    @else {
+      <button matButton="elevated" class="dashboard__criar-quadra" (click)="criarQuadra()">
+        Criar quadra
+      </button>
+      
+      <app-quadras [courts]="quadras"></app-quadras>
+    }
+
+  } 
+  @else if(abaAtiva === "reservas"){
+    <app-reservas-adm />
+  }
+  @else {
+    <app-bloqueios-adm />
   }
 </div>
 <app-footer />

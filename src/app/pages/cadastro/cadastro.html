@@ -3,7 +3,6 @@
   <form class="cadastro-form" #cadastroForm="ngForm" (ngSubmit)="onSubmit(cadastroForm)">
     <h1>Criar uma conta</h1>
 
-    <!-- Mensagem de erro do servidor (ex: E-mail já cadastrado) -->
     @if (errorMessage) {
     <div class="error-banner">
       <mat-icon>error</mat-icon>
@@ -11,10 +10,9 @@
     </div>
     }
 
-    <!-- NOME -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Digite seu nome</mat-label>
-      <input matInput type="text" name="nome" ngModel #nome="ngModel" required minlength="3" />
+      <input matInput type="text" name="nome" ngModel #nome="ngModel" required minlength="3" [disabled]="isLoading" />
       <mat-icon matPrefix>person</mat-icon>
       @if (nome.invalid && (nome.dirty || nome.touched)) {
       <mat-error>
@@ -27,7 +25,6 @@
       }
     </mat-form-field>
 
-    <!-- TELEFONE -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Telefone</mat-label>
       <input
@@ -39,6 +36,7 @@
         required
         pattern="^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$"
         placeholder="(11) 99999-9999"
+        [disabled]="isLoading"
       />
       <mat-icon matPrefix>phone</mat-icon>
       @if (telefone.invalid && (telefone.dirty || telefone.touched)) {
@@ -52,7 +50,6 @@
       }
     </mat-form-field>
 
-    <!-- EMAIL -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
       <input
@@ -64,6 +61,7 @@
         required
         email
         pattern="^[a-zA-Z0-9._%+-]+@senacsp\.edu\.br$"
+        [disabled]="isLoading"
       />
       <mat-icon matPrefix>email</mat-icon>
 
@@ -82,7 +80,6 @@
       }
     </mat-form-field>
 
-    <!-- SENHA -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Senha</mat-label>
       <input
@@ -94,9 +91,10 @@
         required
         minlength="6"
         [pattern]="passwordPattern"
+        [disabled]="isLoading"
       />
       <mat-icon matPrefix>lock</mat-icon>
-      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" [disabled]="isLoading">
         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
       @if (senha.invalid && (senha.dirty || senha.touched)) {
@@ -106,9 +104,7 @@
         } @else if (senha.errors?.['minlength']) {
         <span>A senha deve ter no mínimo 6 caracteres.</span>
         } @else if (senha.errors?.['pattern']) {
-        <span>
-          A senha está fraca
-        </span>
+        <span>A senha está fraca</span>
         }
       </mat-error>
       }
@@ -119,19 +115,25 @@
       class="cadastro-button"
       type="submit"
       color="primary"
-      [disabled]="cadastroForm.invalid"
+      [disabled]="cadastroForm.invalid || isLoading"
     >
-      Se torne um <span [style.color]="'#FFCE00'" style="margin-left: 4px">Player</span>!
+      @if (isLoading) {
+        <mat-spinner diameter="24" color="accent"></mat-spinner>
+      } @else {
+        Se torne um <span [style.color]="'#FFCE00'" style="margin-left: 4px">Player</span>!
+      }
     </button>
 
     <p align="center" style="margin-top: 20px">
       Já tem uma conta?
       <span
-        (click)="temConta()"
+        (click)="!isLoading && temConta()"
         class="tem-conta"
+        [class.disabled-link]="isLoading"
         style="color: #005eb8; cursor: pointer; font-weight: bold"
-        >Entre!</span
       >
+        Entre!
+      </span>
     </p>
   </form>
 </div>

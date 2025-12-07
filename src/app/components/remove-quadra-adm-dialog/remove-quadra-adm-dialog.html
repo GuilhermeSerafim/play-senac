@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Remover quadra</h2>
+
+<mat-dialog-content>
+  Tem certeza que quer remover a quadra <strong>{{ data.nome }}</strong>?
+  <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+    Essa ação não poderá ser desfeita.
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button 
+    mat-button 
+    mat-dialog-close 
+    color="basic" 
+    [disabled]="isLoading"
+  >
+    Não
+  </button>
+
+  <button 
+    mat-flat-button 
+    color="warn" 
+    (click)="confirmarExclusao()" 
+    [disabled]="isLoading"
+    style="min-width: 80px; display: flex; justify-content: center; align-items: center;"
+  >
+    @if (isLoading) {
+      <mat-spinner diameter="20" color="accent" style="stroke: white"></mat-spinner>
+    } @else {
+      Sim, remover
+    }
+  </button>
+</mat-dialog-actions>
