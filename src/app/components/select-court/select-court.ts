@@ -1,25 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICourt } from '../../interfaces/icourt';
 import { CourtService } from '../../services/court.service';
-import { Observable } from 'rxjs';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'; // AsyncPipe não é mais necessário aqui
 import { DiaDaSemana } from '../../enum/DiaDaSemana';
+// 1. Importar o Módulo do Spinner
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-select-court',
-  imports: [MatIconModule, CommonModule, AsyncPipe],
+  standalone: true,
+  imports: [
+    MatIconModule, 
+    CommonModule, 
+    MatProgressSpinnerModule // Adicionado
+  ], 
   templateUrl: './select-court.html',
   styleUrl: './select-court.scss',
 })
-export class SelectCourt {
-  courts$!: Observable<ICourt[]>;
+export class SelectCourt implements OnInit {
+  // 2. Mudamos de Observable para Array para controlar o loading manualmente
+  courts: ICourt[] = [];
+  
+  // 3. Variável de controle
+  isLoading = true;
+  
   public diaDaSemanaEnum = DiaDaSemana;
 
   constructor(private readonly _courtService: CourtService) {}
 
   ngOnInit(): void {
-    this.courts$ = this._courtService.getCourts();
+    // 4. Dispara a busca e controla o spinner
+    this.isLoading = true;
+    
+    this._courtService.getCourts().subscribe({
+      next: (data) => {
+        this.courts = data;
+        this.isLoading = false; // Desliga ao receber dados
+      },
+      error: (err) => {
+        console.error(err);
+        this.isLoading = false; // Desliga mesmo se der erro
+      }
+    });
   }
 
   /**
@@ -33,7 +56,7 @@ export class SelectCourt {
     }
 
     const now = new Date();
-    const diaHoje = now.getDay(); // Retorna um NÚMERO (0 para Domingo, 1 para Segunda, etc.)
+    const diaHoje = now.getDay(); 
 
     const hojeEDiaDisponivel = court.diasDisponiveis.includes(diaHoje);
 
@@ -43,16 +66,16 @@ export class SelectCourt {
 
     const horarioAberturaHoje = new Date(now);
     horarioAberturaHoje.setHours(
-      court.horarioAbertura.getHours(),
-      court.horarioAbertura.getMinutes(),
+      new Date(court.horarioAbertura).getHours(), // Garante conversão se vier string
+      new Date(court.horarioAbertura).getMinutes(),
       0,
-      0 // Zera segundos e milissegundos para uma comparação precisa
+      0 
     );
 
     const horarioFechamentoHoje = new Date(now);
     horarioFechamentoHoje.setHours(
-      court.horarioFechamento.getHours(),
-      court.horarioFechamento.getMinutes(),
+      new Date(court.horarioFechamento).getHours(),
+      new Date(court.horarioFechamento).getMinutes(),
       0,
       0
     );

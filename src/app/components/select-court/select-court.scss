@@ -3,23 +3,26 @@
 // Cores para fácil manutenção
 $color-available: #16a34a; // Um verde mais moderno
 $color-unavailable: #dc2626; // Um vermelho mais forte
+$text-secondary: #6b7280; // Cinza para textos secundários
 $card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 $card-shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
 h2 {
-  
   // O espaçamento lateral agora é controlado pelo padding do container
   margin-bottom: 32px;
   margin-left: 20px;
 }
 
+// --- CONTAINER PRINCIPAL DO GRID ---
 .courts__container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px; // Espaçamento perfeito entre todos os cards
   padding: 0 20px; // Adiciona um respiro nas laterais do container
+  padding-bottom: 40px; // Espaço extra no final da página
 }
 
+// --- ESTILO DOS CARDS ---
 .court-card {
   background-color: #ffffff;
   border-radius: 12px;
@@ -38,6 +41,7 @@ h2 {
     
     img {
       display: block;
+      width: 100%; // Garante que a imagem ocupe a largura
       aspect-ratio: 16 / 10;
       object-fit: cover;
     }
@@ -70,12 +74,12 @@ h2 {
       color: #1f2937;
     }
 
-    &__days {
+    .court-card__days { // Ajustei para usar a classe correta
       display: flex;
       align-items: center;
       gap: 8px;
       margin-top: 12px;
-      color: #6b7280;
+      color: $text-secondary;
 
       mat-icon {
         font-size: 16px;
@@ -88,5 +92,51 @@ h2 {
         font-weight: 500;
       }
     }
+  }
+}
+
+// --- ESTILOS DO LOADING (NOVO) ---
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh; // Garante uma altura mínima para centralizar na tela
+  width: 100%;
+  gap: 16px;
+  color: $text-secondary;
+
+  p {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+// --- ESTILOS DO EMPTY STATE (NOVO) ---
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  width: 100%;
+  color: #9ca3af; // Cinza mais claro para indicar vazio
+  text-align: center;
+  padding: 20px;
+
+  mat-icon {
+    font-size: 64px;
+    height: 64px;
+    width: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
   }
 }

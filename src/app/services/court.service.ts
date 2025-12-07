@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICourt, ICreateCourt } from '../interfaces/icourt';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import {  map, Observable, ReplaySubject } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { CourtResponse } from '../interfaces/court-response.interface';
@@ -11,7 +11,9 @@ import { CourtResponse } from '../interfaces/court-response.interface';
 export class CourtService {
   private readonly API_URL = `${environment.apiUrl}/quadras`;
 
-  private courtSubject = new BehaviorSubject<ICourt[]>([]);
+  // ReplaySubject(1) guarda o último valor emitido, mas NÃO começa com valor.
+  // Assim, o componente fica esperando (loading) até a API responder a primeira vez.
+  private courtSubject = new ReplaySubject<ICourt[]>(1);
   public court$: Observable<ICourt[]> = this.courtSubject.asObservable();
 
   constructor(private readonly http: HttpClient) {
@@ -28,6 +30,8 @@ export class CourtService {
         },
         error: (err) => {
           console.error('Erro ao carregar quadras:', err);
+          // Opcional: Emite um erro ou array vazio para destravar o spinner em caso de falha
+          this.courtSubject.error(err);
         },
       });
   }
