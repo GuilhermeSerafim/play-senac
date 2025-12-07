@@ -1,8 +1,8 @@
-@let reservas = reservasHidratadas$ | async; @if (!reservas) {
+@let reservas = reservasHidratadas$ | async; @if (isLoading) {
 <div class="loading-container">
   <mat-spinner [diameter]="50"></mat-spinner>
 </div>
-}@else if(reservas.length === 0){
+}@else if(!reservas || reservas.length === 0){
 <div class="empty-state">
   <mat-icon>event_busy</mat-icon>
   <p>Nenhuma reserva encontrada no sistema.</p>
@@ -23,8 +23,6 @@
           Horário: {{ reserva.dataInicio | date : 'HH:mm' }} -
           {{ reserva.dataFim | date : 'HH:mm' }}
         </p>
-
-        <p>Capacidade: {{ reserva.quadra.capacidade }} pessoas</p>
 
         <p>
           Data: {{ (reserva.dataInicio | date : 'EEEE')?.replace('-feira', '') | titlecase }},

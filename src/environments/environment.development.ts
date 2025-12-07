@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://play-senac-api.onrender.com/'
+    apiUrl: 'http://localhost:8080'
 };

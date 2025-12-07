@@ -75,8 +75,12 @@ export class ReservaService {
     return this.http.put(`${this.API_URL}/${reserva.id}`, payloadJava);
   }
 
-  removeReserva(idReserva: number): Observable<any> {
-    return this.http.delete(`${this.API_URL}/${idReserva}`);
+removeReserva(idReserva: number): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${idReserva}`).pipe(
+      tap(() => {
+        this.getMinhasReservas().subscribe(); 
+      })
+    );
   }
 
   // --- ADAPTER E HELPERS ---
