@@ -59,7 +59,7 @@ export class CourtService {
     return this.http.post(this.API_URL, payloadJava).pipe(tap(() => this.loadCourts()));
   }
 
-  updateCourt(updatedCourt: ICourt): void {
+  updateCourt(updatedCourt: ICourt): Observable<any> {
     const payloadJava = {
       nome: updatedCourt.title,
       limiteJogadores: updatedCourt.capacidade,
@@ -70,14 +70,9 @@ export class CourtService {
       diasSemana: updatedCourt.diasDisponiveis,
       bloqueada: updatedCourt.bloqueada,
     };
-    this.http.put(`${this.API_URL}/${updatedCourt.id}`, payloadJava).subscribe({
-      next: () => {
-        this.loadCourts();
-      },
-      error: (err) => {
-        console.error('Erro ao atualizar quadra:', err);
-      },
-    });
+    return this.http
+      .put(`${this.API_URL}/${updatedCourt.id}`, payloadJava)
+      .pipe(tap(() => this.loadCourts()));
   }
 
   private adapter(backendData: CourtResponse): ICourt {

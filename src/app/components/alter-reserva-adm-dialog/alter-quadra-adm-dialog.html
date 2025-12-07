@@ -10,6 +10,7 @@
         [(ngModel)]="nomeQuadra"
         required
         matInput
+        [disabled]="isLoading"
       />
       <mat-icon matSuffix>sports</mat-icon>
       @if (nomeQuadraControl.invalid && nomeQuadraControl.touched) {
@@ -28,8 +29,9 @@
           name="horaInicio"
           #horaInicioControl="ngModel"
           readonly
+          [disabled]="isLoading"
         />
-        <mat-timepicker-toggle [for]="timepickerInicio" matSuffix></mat-timepicker-toggle>
+        <mat-timepicker-toggle [for]="timepickerInicio" matSuffix [disabled]="isLoading"></mat-timepicker-toggle>
         <mat-timepicker #timepickerInicio></mat-timepicker>
         @if (horaInicioControl.invalid && horaInicioControl.touched) {
         <mat-error>O horário de abertura é obrigatório.</mat-error>
@@ -46,10 +48,10 @@
           name="horaFim"
           #horaFimControl="ngModel"
           readonly
-          [disabled]="!horaInicio"
+          [disabled]="!horaInicio || isLoading"
           [matTimepickerMin]="horaInicio"
         />
-        <mat-timepicker-toggle [for]="timepickerFim" matSuffix></mat-timepicker-toggle>
+        <mat-timepicker-toggle [for]="timepickerFim" matSuffix [disabled]="isLoading"></mat-timepicker-toggle>
         <mat-timepicker #timepickerFim></mat-timepicker>
         @if (horaFimControl.invalid && horaFimControl.touched &&
         horaFimControl.hasError('required')) {
@@ -71,6 +73,7 @@
         name="capacidade"
         #capacidadeControl="ngModel"
         min="1"
+        [disabled]="isLoading"
       />
       <mat-icon matSuffix>groups</mat-icon>
       @if (capacidadeControl.invalid && capacidadeControl.touched) {
@@ -92,6 +95,7 @@
         [(ngModel)]="imagemUrl"
         #imageUrlControl="ngModel"
         placeholder="https://exemplo.com/imagem.png"
+        [disabled]="isLoading"
       />
       <mat-icon matSuffix>link</mat-icon>
       <mat-hint>Por favor, insira uma URL válida (ex: https://...).</mat-hint>
@@ -105,6 +109,7 @@
         #diasControl="ngModel"
         required
         multiple
+        [disabled]="isLoading"
       >
         @for (dia of diasDaSemanaOptions; track dia.key) {
         <mat-option [value]="dia.key">
@@ -120,9 +125,22 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button type="button" mat-raised-button mat-dialog-close color="warn">Cancelar</button>
-    <button mat-raised-button color="primary" [disabled]="alterarQuadraForm.invalid">
-      Confirmar
+    <button type="button" mat-raised-button mat-dialog-close color="warn" [disabled]="isLoading" class="btn-cancelar">
+      Cancelar
+    </button>
+    
+    <button 
+      mat-raised-button 
+      color="primary" 
+      [disabled]="alterarQuadraForm.invalid || isLoading"
+      class="btn-confirmar"
+      [ngStyle]="alterarQuadraForm.invalid ? { backgroundColor: '#9e9e9e', cursor: 'not-allowed', color: '#ffffff' } : {}"
+    >
+      @if (isLoading) {
+        <mat-spinner diameter="24" color="accent"></mat-spinner>
+      } @else {
+        Confirmar
+      }
     </button>
   </mat-dialog-actions>
 </form>
