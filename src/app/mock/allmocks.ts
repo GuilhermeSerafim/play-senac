@@ -1,64 +1,64 @@
-import { ICourt } from '../interfaces/icourt';
-import { DiaDaSemana } from '../enum/DiaDaSemana'; // 1. Importando o Enum
+// import { ICourt } from '../interfaces/icourt';
+// import { DiaDaSemana } from '../enum/DiaDaSemana'; // 1. Importando o Enum
 
-/**
- * Helper para criar um objeto Date focado apenas no horário.
- * Isso evita o uso de datas arbitrárias (como 2025, 9, 10) no mock.
- * @param hour A hora (0-23)
- * @param minute O minuto (0-59)
- * @returns Um objeto Date com a data de hoje, mas com o horário especificado.
- */
-const createTime = (hour: number, minute: number = 0): Date => {
-  const date = new Date();
-  date.setHours(hour, minute, 0, 0);
-  return date;
-};
+// /**
+//  * Helper para criar um objeto Date focado apenas no horário.
+//  * Isso evita o uso de datas arbitrárias (como 2025, 9, 10) no mock.
+//  * @param hour A hora (0-23)
+//  * @param minute O minuto (0-59)
+//  * @returns Um objeto Date com a data de hoje, mas com o horário especificado.
+//  */
+// const createTime = (hour: number, minute: number = 0): Date => {
+//   const date = new Date();
+//   date.setHours(hour, minute, 0, 0);
+//   return date;
+// };
 
-// --- Mocks de Quadras ---
+// // --- Mocks de Quadras ---
 
-export const mockQuadraTenis: ICourt = {
-  id: 1,
-  pathImg: 'images/tenis.jpg',
-  title: 'Tênis',
-  capacidade: 2,
-  horarioAbertura: createTime(8), // 3. Usando o helper de horário
-  horarioFechamento: createTime(22),
-  diasDisponiveis: [
-    // 2. Usando o Enum para clareza
-    DiaDaSemana.Domingo,
-    DiaDaSemana.Sabado,
-  ],
-};
+// export const mockQuadraTenis: ICourt = {
+//   id: 1,
+//   pathImg: 'images/tenis.jpg',
+//   title: 'Tênis',
+//   capacidade: 2,
+//   horarioAbertura: createTime(8), // 3. Usando o helper de horário
+//   horarioFechamento: createTime(22),
+//   diasDisponiveis: [
+//     // 2. Usando o Enum para clareza
+//     DiaDaSemana.Domingo,
+//     DiaDaSemana.Sabado,
+//   ],
+// };
 
-export const mockQuadraSociety: ICourt = {
-  id: 2,
-  pathImg: 'images/society.jpg',
-  title: 'Society',
-  capacidade: 16,
-  horarioAbertura: createTime(8),
-  horarioFechamento: createTime(22),
-  diasDisponiveis: [
-    DiaDaSemana.Segunda,
-    DiaDaSemana.Terca,
-    DiaDaSemana.Quarta,
-    DiaDaSemana.Quinta,
-    DiaDaSemana.Sexta,
-  ],
-};
+// export const mockQuadraSociety: ICourt = {
+//   id: 2,
+//   pathImg: 'images/society.jpg',
+//   title: 'Society',
+//   capacidade: 16,
+//   horarioAbertura: createTime(8),
+//   horarioFechamento: createTime(22),
+//   diasDisponiveis: [
+//     DiaDaSemana.Segunda,
+//     DiaDaSemana.Terca,
+//     DiaDaSemana.Quarta,
+//     DiaDaSemana.Quinta,
+//     DiaDaSemana.Sexta,
+//   ],
+// };
 
-export const mockQuadraPoliExterna: ICourt = {
-  id: 3,
-  pathImg: 'images/poliesportiva-externa.jpg',
-  title: 'Poliesportiva externa',
-  capacidade: 10,
-  horarioAbertura: createTime(8),
-  horarioFechamento: createTime(22),
-  diasDisponiveis: [DiaDaSemana.Terca, DiaDaSemana.Quarta],
-};
+// export const mockQuadraPoliExterna: ICourt = {
+//   id: 3,
+//   pathImg: 'images/poliesportiva-externa.jpg',
+//   title: 'Poliesportiva externa',
+//   capacidade: 10,
+//   horarioAbertura: createTime(8),
+//   horarioFechamento: createTime(22),
+//   diasDisponiveis: [DiaDaSemana.Terca, DiaDaSemana.Quarta],
+// };
 
-// Lista consolidada para facilitar a importação em outros lugares
-export const mockListaDeQuadras: ICourt[] = [
-  mockQuadraTenis,
-  mockQuadraSociety,
-  mockQuadraPoliExterna,
-];
+// // Lista consolidada para facilitar a importação em outros lugares
+// export const mockListaDeQuadras: ICourt[] = [
+//   mockQuadraTenis,
+//   mockQuadraSociety,
+//   mockQuadraPoliExterna,
+// ];
