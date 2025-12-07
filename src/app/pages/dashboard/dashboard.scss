@@ -5,36 +5,39 @@
   padding: 20px;
   min-height: 100vh;
   max-width: 941px;
-  height: 120%;
+  // height: 120%; // <-- Cuidado com height fixo maior que 100%, pode quebrar scroll. Remova se possível.
+
   h1 {
-    font-size: 32px; // Tamanho de exemplo
+    font-size: 32px;
     font-weight: 700;
   }
+
+  // ... (seus estilos de menu continuam iguais) ...
   &__menu {
     margin: 38px 0;
     display: flex;
-    gap: 88px; // Mais moderno que usar margin no filho
+    gap: 88px;
     font-size: 16px;
     font-weight: 500;
-    border-bottom: 1px solid #eee; // Linha de fundo para as abas
+    border-bottom: 1px solid #eee;
+
     p {
       cursor: pointer;
       position: relative;
-      padding-bottom: 12px; // Espaçamento para a linha inferior
+      padding-bottom: 12px;
       transition: color 0.3s ease;
 
       &::after {
         content: '';
         position: absolute;
-        bottom: -1px; // Alinha com a borda do pai
+        bottom: -1px;
         left: 0;
         width: 0;
         height: 2px;
-        background-color: $color-primary-yellow; // Cor para aba ativa
+        background-color: $color-primary-yellow;
         transition: width 0.3s ease;
       }
 
-      // Estilo da aba ativa
       &.active,
       &:hover {
         color: $color-primary-blue;
@@ -47,17 +50,27 @@
 
   &__criar-quadra.mat-mdc-raised-button {
     margin-bottom: 20px;
-    font-size: $font-title-md-size;
-    font-weight: $font-title-sm-weight;
-    align-items: center;
-    height: 42px;
-    padding: 16px;
-    gap: 5px;
+    // ... seus estilos de botão ...
     background-color: $color-support-blue-light;
     border-radius: 8px;
     width: 147px;
     border: none;
     color: white;
-    font-size: 1em;
+  }
+}
+
+// NOVO: Estilo do Spinner no Dashboard
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0; // Espaço vertical
+  color: #666;
+  gap: 16px;
+
+  p {
+    font-size: 1rem;
+    font-weight: 500;
   }
 }

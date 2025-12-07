@@ -1,6 +1,7 @@
 @let bloqueios = bloqueios$ | async; @if(!bloqueios) {
 <div class="loading-container">
   <mat-spinner diameter="50"></mat-spinner>
+  <p>Carregando bloqueios...</p>
 </div>
 } @else if(bloqueios.length === 0) {
 <div class="empty-state">

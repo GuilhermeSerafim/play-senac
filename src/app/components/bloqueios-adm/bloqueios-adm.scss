@@ -133,10 +133,17 @@
 
 .loading-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 300px; // Altura reservada para o loading não "pular" a tela
-  width: 100%;
+  justify-content: center;
+  padding: 60px 0; // Espaço vertical
+  color: #666;
+  gap: 16px;
+
+  p {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
 // Responsividade
 @media (max-width: 768px) {
