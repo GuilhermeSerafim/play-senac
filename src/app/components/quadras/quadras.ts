@@ -11,6 +11,7 @@ import { BloqueioDialog } from '../bloqueio-dialog/bloqueio-dialog';
 import { ICreateBloqueio } from '../../interfaces/ibloqueio';
 import { BloqueioService } from '../../services/bloqueio.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RemoveQuadraAdmDialog } from '../remove-quadra-adm-dialog/remove-quadra-adm-dialog';
 
 @Component({
   selector: 'app-quadras',
@@ -26,13 +27,12 @@ export class Quadras {
 
   constructor(private readonly _courtService: CourtService, private readonly _dialog: MatDialog) {}
 
-  removeQuadra(idCourt: number) {
-    const dialogRef = this._dialog.open(CancelarReservaAdmDialog, {
+  removeQuadra(quadra: ICourt) {
+    const dialogRef = this._dialog.open(RemoveQuadraAdmDialog, {
       width: '540px',
+      data: { id: quadra.id, nome: quadra.title },
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((remove) => remove && this._courtService.removeCourt(idCourt));
+    dialogRef.afterClosed().subscribe();
   }
 
   alterarQuadra(quadra: ICourt) {

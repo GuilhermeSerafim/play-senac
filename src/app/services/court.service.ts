@@ -40,15 +40,8 @@ export class CourtService {
     return this.court$;
   }
 
-  removeCourt(idCourt: number): void {
-    this.http.delete(`${this.API_URL}/${idCourt}`).subscribe({
-      next: () => {
-        this.loadCourts();
-      },
-      error: (err) => {
-        console.error('Erro ao remover quadra:', err);
-      },
-    });
+  removeCourt(idCourt: number): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${idCourt}`).pipe(tap(() => this.loadCourts()));
   }
 
   addCourt(quadra: ICreateCourt): Observable<any> {
