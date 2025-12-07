@@ -10,6 +10,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UsuarioService, UsuarioDados } from '../../services/usuario.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+// 1. IMPORT DO SPINNER
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-perfil-dialog',
@@ -23,6 +25,7 @@ import { AuthService } from '../../services/auth.service';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule // 2. ADICIONAR AO ARRAY
   ],
   templateUrl: './perfil-dialog.html',
   styleUrl: './perfil-dialog.scss',
@@ -33,18 +36,21 @@ export class PerfilDialog implements OnInit {
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   private authService = inject(AuthService);
+  passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$';
 
-  // Dados do formulário
   usuario: UsuarioDados = {
     nome: '',
     email: '',
     telefone: '',
   };
 
-  // Controle de senha (só envia se o usuário digitar algo novo)
   novaSenha = '';
   hidePassword = true;
-  isLoading = true;
+
+  // 3. ESTADOS DE CARREGAMENTO SEPARADOS
+  isLoading = true;   // Carregamento inicial da tela
+  isSaving = false;   // Spinner do botão Salvar
+  isDeleting = false; // Spinner do botão Excluir
 
   ngOnInit(): void {
     this.carregarDados();
@@ -66,19 +72,22 @@ export class PerfilDialog implements OnInit {
   }
 
   onDeleteUser() {
+    // 4. Ativa o loading de deletar
+    this.isDeleting = true;
+
     this.usuarioService.deletarUsuario().subscribe({
       next: () => {
         this.snackBar.open('User deletado com sucesso!', 'OK', {
           duration: 3000,
           panelClass: ['success-snackbar'],
         });
-
-        // DESLOGA AQUI
         this.authService.logout();
-
         this.dialogRef.close(true);
       },
       error: (err) => {
+        // Para loading
+        this.isDeleting = false;
+        
         console.error('Erro ao deletar user', err);
         this.snackBar.open('Erro ao deletar usuário.', 'Fechar', { duration: 3000 });
         this.router.navigate(['/home']);
@@ -87,10 +96,11 @@ export class PerfilDialog implements OnInit {
   }
 
   onSubmit() {
-    // Monta o objeto de atualização
+    // 5. Ativa o loading de salvar
+    this.isSaving = true;
+
     const payload: UsuarioDados = {
       ...this.usuario,
-      // Se digitou senha nova, envia. Se não, envia undefined (ou trata no back)
       senha: this.novaSenha ? this.novaSenha : undefined,
     };
 
@@ -100,9 +110,12 @@ export class PerfilDialog implements OnInit {
           duration: 3000,
           panelClass: ['success-snackbar'],
         });
-        this.dialogRef.close(true); // Fecha e avisa que salvou
+        this.dialogRef.close(true);
       },
       error: (err) => {
+        // Para loading
+        this.isSaving = false;
+        
         console.error('Erro ao atualizar', err);
         this.snackBar.open('Erro ao salvar alterações.', 'Fechar', { duration: 3000 });
       },

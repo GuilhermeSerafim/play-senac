@@ -1,18 +1,33 @@
 @use '../../../styles/index' as *;
 
-// Remove margens padrão do host do dialog para controlar tudo no container
 :host {
   display: block;
 }
 
 .perfil-container {
-  padding: 24px 32px; // Mais espaço interno
+  padding: 24px 32px;
   position: relative;
-  min-width: 450px; // Largura um pouco maior para acomodar label + input
+  min-width: 450px;
   background-color: #fff;
+  min-height: 400px; // Garante altura mínima para não pular no loading
 }
 
-// Botão de fechar (X)
+// NOVO: Estilo para centralizar o loading inicial
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+  
+  .loading-text {
+    margin-top: 20px;
+    color: #666;
+    font-size: 1rem;
+  }
+}
+
 .header-row {
   display: flex;
   justify-content: flex-end;
@@ -20,79 +35,65 @@
   
   .close-btn {
     color: #666;
-    margin-right: -10px; // Compensa o padding do botão para alinhar à direita visualmente
+    margin-right: -10px;
     margin-top: -10px;
   }
 }
 
-// Cabeçalho (Foto e Nome)
 .profile-header {
   display: flex;
   align-items: center;
-  gap: 24px; // Espaço generoso entre foto e nome
-  margin-bottom: 40px; // Afasta do formulário
+  gap: 24px; 
+  margin-bottom: 40px; 
 
   .avatar-circle {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: #e0e0e0; // Cinza do placeholder
+    background-color: #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    flex-shrink: 0; // Impede a foto de amassar
+    flex-shrink: 0; 
 
     mat-icon {
-      font-size: 48px; // Ícone maior
+      font-size: 48px;
       width: 48px;
       height: 48px;
       color: #fff;
     }
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
   }
 
   h2 {
-    font-size: 1.4rem; // Fonte do nome maior
-    font-weight: 400; // Fonte mais leve (conforme imagem)
+    font-size: 1.4rem;
+    font-weight: 400; 
     color: #333;
     margin: 0;
     line-height: 1.2;
   }
 }
 
-// Formulário
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 20px; // Espaço vertical entre os campos (Email, Telefone, etc.)
+  gap: 20px; 
 
   .form-row {
     display: flex;
-    align-items: center; // Centraliza verticalmente Label e Input
+    align-items: center;
     gap: 20px;
     
     label {
-      width: 80px; // Largura fixa para alinhar todos os inputs
+      width: 80px; 
       font-weight: 400;
       color: #666;
       font-size: 1rem;
-      flex-shrink: 0; // Garante que o label não quebre
+      flex-shrink: 0;
     }
 
     mat-form-field {
-      flex: 1; // Ocupa o resto da linha
-      
-      // Ajuste para remover o espaço extra embaixo do input (onde fica o erro)
-      // Isso alinha o input visualmente com o label
-      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-        display: none; 
-      }
+      flex: 1; 
     }
   }
 }
@@ -104,50 +105,54 @@
   justify-content: space-between;
 
   button {
-    flex: 1; // deixa os dois botões com o mesmo tamanho
+    flex: 1; 
     height: 48px;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
+    
+    // IMPORTANTE para centralizar o spinner
     display: flex;
     align-items: center;
     justify-content: center;
+    
     gap: 8px;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    
+    // Quando desabilitado pelo loading, mantém opacidade visual razoável
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.7; 
+    }
   }
 
-  /* Botão salvar */
   .save-btn {
-    background-color: #2563eb; // azul padrão que você já usa
+    background-color: #2563eb; 
     color: white;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: #1d4ed8;
     }
   }
 
-  /* Botão excluir */
   .delete-btn {
-    background-color: #dc2626; // vermelho elegante
+    background-color: #dc2626; 
     color: #fff;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: #b91c1c;
     }
 
     mat-icon {
       font-size: 20px;
-      margin-top: -2px;
+      // margin-top removido pois flexbox já centraliza
+    }
+    
+    // Ajuste para o spinner branco dentro do botão vermelho
+    ::ng-deep .mat-mdc-progress-spinner circle, .mat-spinner circle { 
+        stroke: white !important;
     }
   }
-}
-
-
-
-.loading-text {
-  text-align: center;
-  color: #666;
-  margin: 40px 0;
 }
