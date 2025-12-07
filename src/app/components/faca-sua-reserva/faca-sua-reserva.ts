@@ -19,6 +19,8 @@ import { ICourt } from '../../interfaces/icourt';
 import { ReservaService } from '../../services/reserva.service';
 import { ICreateReserva } from '../../interfaces/ireserva';
 import { MatInput } from '@angular/material/input';
+// 1. Import do Spinner
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-faca-sua-reserva',
@@ -38,6 +40,7 @@ import { MatInput } from '@angular/material/input';
     MatDialogModule,
     MatChipsModule,
     MatInput,
+    MatProgressSpinnerModule, // 2. Adicionar aos imports
   ],
   templateUrl: './faca-sua-reserva.html',
   styleUrl: './faca-sua-reserva.scss',
@@ -46,7 +49,6 @@ export class FacaSuaReserva implements OnInit {
   quadraSelecionada!: ICourt;
   dataSelecionada!: Date;
 
-  // Variáveis separadas para horário
   horarioInicioSelecionado!: Date;
   horarioFimSelecionado!: Date;
 
@@ -55,6 +57,9 @@ export class FacaSuaReserva implements OnInit {
 
   @Output('aoCriarReserva') aoCriarReservaEmmit = new EventEmitter<void>();
   errorMessage = '';
+
+  // 3. Controle de Loading
+  isLoading = false;
 
   constructor(
     private readonly _dialog: MatDialog,
@@ -66,9 +71,6 @@ export class FacaSuaReserva implements OnInit {
     this._courtService.getCourts().subscribe((q) => (this.quadras = q));
   }
 
-  /**
-   * Validação Lógica do Intervalo
-   */
   get erroDeHorario(): string | null {
     if (!this.horarioInicioSelecionado || !this.horarioFimSelecionado) return null;
 
@@ -92,6 +94,8 @@ export class FacaSuaReserva implements OnInit {
     if (f.invalid || this.erroDeHorario) return;
 
     this.errorMessage = '';
+    // 4. Inicia Loading
+    this.isLoading = true;
 
     // 1. Monta Data INICIO
     const dataInicioFinal = new Date(this.dataSelecionada);
@@ -103,23 +107,26 @@ export class FacaSuaReserva implements OnInit {
     const horaFim = new Date(this.horarioFimSelecionado);
     dataFimFinal.setHours(horaFim.getHours(), horaFim.getMinutes(), 0);
 
-    // 3. Cria o Payload
-    const usuarioIdLogado = Number(localStorage.getItem('userId'));
     const novaReserva: ICreateReserva = {
       quadraId: this.quadraSelecionada.id,
       dataInicio: dataInicioFinal,
       dataFim: dataFimFinal,
-      // Cria uma copia do arr
       convidados: [...this.convidados],
     };
 
     this._reservaService.addReserva(novaReserva).subscribe({
       next: () => {
-        f.resetForm();  
+        // 5. Para Loading e limpa
+        this.isLoading = false;
+
+        f.resetForm();
         this.onQuadraChange();
         this.aoCriarReservaEmmit.emit();
       },
       error: (err) => {
+        // 6. Para Loading no erro
+        this.isLoading = false;
+
         console.error('Erro ao criar:', err);
 
         if (err.status === 409 || err.status === 400) {
@@ -139,6 +146,8 @@ export class FacaSuaReserva implements OnInit {
   }
 
   removeConvidado(c: IConvidado) {
+    // Bloqueia remoção durante envio (opcional)
+    if (this.isLoading) return;
     this.convidados = this.convidados.filter((convidado) => convidado !== c);
   }
 

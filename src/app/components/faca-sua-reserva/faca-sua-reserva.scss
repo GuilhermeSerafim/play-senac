@@ -40,7 +40,12 @@
     margin-left: 141px;
     font-size: $font-title-md-size;
     font-weight: $font-title-sm-weight;
+    
+    // Adicionado para centralizar o Spinner
+    display: flex;
+    justify-content: center;
     align-items: center;
+    
     height: 42px;
     padding: 16px;
     gap: 5px;
@@ -68,4 +73,15 @@
   gap: 8px;
   font-size: 0.9rem;
   margin-bottom: 20px;
+}
+
+// Estilo extraído do inline
+.error-intervalo-container {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: -15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
