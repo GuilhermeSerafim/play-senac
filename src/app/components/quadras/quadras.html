@@ -10,21 +10,23 @@
       </p>
       <p>Capacidade: {{ court.capacidade }}</p>
       <p>
-       Dias disponiveis: @for (dia of court.diasDisponiveis; track dia; let
-          isLast = $last) { {{ diaDaSemanaEnum[dia]  }}{{ !isLast ? ', ' : '' }} }
+        Dias disponiveis: @for (dia of court.diasDisponiveis; track dia; let isLast = $last) {
+        {{ diaDaSemanaEnum[dia] }}{{ !isLast ? ', ' : '' }} }
       </p>
     </div>
   </div>
   <div class="card__right">
-    <button (click)="alterarQuadra(court)">
-      <mat-icon class="card__right__edit-icon">edit</mat-icon>
+    <button (click)="alterarQuadra(court)" title="Editar Quadra">
+        <mat-icon class="card__right__edit-icon">edit</mat-icon>
     </button>
-    <button (click)="removeQuadra(court)">
-      <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
+    
+    <button (click)="removeQuadra(court)" title="Remover Quadra">
+        <mat-icon class="card__right__cancel-icon">cancel</mat-icon>
     </button>
-    <button (click)="bloquearQuadra(court)">
-  <mat-icon class="card__right__block-icon">block</mat-icon>
-</button>
-  </div>
+    
+    <button (click)="bloquearQuadra(court)" title="Bloquear Quadra">
+        <mat-icon class="card__right__block-icon">block</mat-icon>
+    </button>
+</div>
 </div>
 }
