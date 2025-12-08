@@ -1,84 +1,114 @@
 @use '../../../styles/index' as *;
 
+// Container principal para dar espaçamento nas laterais em mobile
+.adm-reservas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .card {
-  display: flex; // ✨ Coloca left e right lado a lado
-  justify-content: space-between; // ✨ Empurra para as extremidades
-  align-items: center; // ✨ Alinha verticalmente ao centro
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 16px;
-  border-radius: 5px;
+  border-radius: 8px;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra sutil
-  margin-bottom: 20px; // Espaçamento entre os cards
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
 
+  // RESPONSIVIDADE: Vira coluna no mobile/tablet
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  // LADO ESQUERDO (Imagem + Texto)
   &__left {
-    display: flex; // ✨ Coloca a imagem ao lado do texto
-    align-items: center; // ✨ Alinha a imagem e o texto verticalmente
-    gap: 20px; // Espaçamento entre a imagem e o texto
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%; // Importante para empurrar conteúdo
+
+    // No celular, a imagem fica em cima do texto
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
 
     img {
       width: 200px;
-      height: 116px;
+      height: 120px;
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: 6px;
+      flex-shrink: 0;
+
+      // Imagem estilo "Hero" no mobile
+      @media (max-width: 600px) {
+        width: 100%;
+        height: 180px;
+      }
     }
 
     .info-wrapper {
       h2 {
-        font-size: 18px;
+        font-size: 1.2rem;
         font-weight: 600;
         margin: 0 0 8px 0;
+        color: $color-base-gray-dark;
       }
       p {
-        font-size: 14px;
-        color: #666;
+        font-size: 0.9rem;
+        color: #555;
         margin: 4px 0;
+        line-height: 1.4;
       }
     }
   }
 
+  // LADO DIREITO (Botões)
   &__right {
-    .material-symbols-outlined {
-      cursor: pointer;
-      color: #333;
-    }
-  }
-  &__right__cancel-icon {
-    color: $color-support-orange-warn;
-    font-size: 32px;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-    &:hover {
-      transform: scale(1.1);
-      opacity: 0.8;
+    // No mobile, joga os botões para a direita com uma linha divisória
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: flex-end;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 12px;
     }
-  }
-  &__right__edit-icon {
-    color: $color-primary-blue;
-    font-size: 32px;
-    margin-right: 26px;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
 
-    &:hover {
-      transform: scale(1.1);
-      opacity: 0.8;
+    // Estilo dos ícones dentro dos botões
+    &__edit-icon {
+      color: $color-primary-blue;
+    }
+
+    &__cancel-icon {
+      color: $color-support-orange-warn;
+    }
+
+    // Ajuste fino para os botões do Material ficarem alinhados
+    button {
+       // Garante que o hover do Material Design não fique deslocado
+       display: flex;
+       align-items: center;
+       justify-content: center;
     }
   }
 }
 
-// Empty State (estilizado conforme conversamos antes)
+// EMPTY STATE (Mantive seu estilo, só ajustei espaçamento)
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   margin-top: 20px;
   background-color: #fafafa;
   border: 2px dashed #e0e0e0;
@@ -87,27 +117,27 @@
   color: #757575;
 
   mat-icon {
-    font-size: 64px;
-    height: 64px;
-    width: 64px;
-    color: #e0e0e0;
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    color: #bdbdbd;
     margin-bottom: 16px;
   }
 
   p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     margin: 0;
   }
 }
 
-
+// LOADING
 .loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 0; // Espaço vertical
+  padding: 60px 0;
   color: #666;
   gap: 16px;
 

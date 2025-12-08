@@ -45,8 +45,10 @@ export class Quadras {
 
   bloquearQuadra(quadra: ICourt) {
     const dialogRef = this._dialog.open(BloqueioDialog, {
-      width: '450px',
-      data: { quadra: quadra }, // Passa a quadra para o título do modal
+      width: '100%',
+      maxWidth: '450px',
+      data: { quadra: quadra },
+      panelClass: 'responsive-dialog-container',
     });
 
     dialogRef.afterClosed().subscribe((novoBloqueio: ICreateBloqueio) => {
