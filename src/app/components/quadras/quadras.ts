@@ -37,7 +37,8 @@ export class Quadras {
 
   alterarQuadra(quadra: ICourt) {
     const dialogRef = this._dialog.open(AlterQuadraAdmDialog, {
-      width: '540px',
+      width: '100%',
+      maxWidth: '540px',
       data: quadra,
     });
     dialogRef.afterClosed().subscribe((result) => result && this._courtService.updateCourt(result));
