@@ -12,7 +12,7 @@ import { PerfilDialog } from '../perfil-dialog/perfil-dialog';
 // Material Imports
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';   // Novo
+import { MatMenuModule } from '@angular/material/menu'; // Novo
 import { MatButtonModule } from '@angular/material/button'; // Novo
 import { MatDivider } from '@angular/material/divider';
 
@@ -20,13 +20,13 @@ import { MatDivider } from '@angular/material/divider';
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
-    AsyncPipe, 
-    MatIconModule, 
-    MatMenuModule, 
+    CommonModule,
+    RouterModule,
+    AsyncPipe,
+    MatIconModule,
+    MatMenuModule,
     MatButtonModule,
-    MatDivider
+    MatDivider,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -38,18 +38,14 @@ export class Header {
   private breakpointObserver = inject(BreakpointObserver); // Injeção do CDK
 
   // Detecta se é celular (Handset)
-  isMobile$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay() // Boa prática: evita recalcular para cada async pipe no HTML
-    );
+  isMobile$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map((result) => result.matches),
+    shareReplay() // Boa prática: evita recalcular para cada async pipe no HTML
+  );
 
   isLoggedIn$ = this.authService.isLoggedIn$;
 
-  isAdmin$ = this.viewModeService.viewMode$.pipe(
-    map(mode => mode === ViewMode.Admin)
-  );
+  isAdmin$ = this.viewModeService.viewMode$.pipe(map((mode) => mode === ViewMode.Admin));
 
   sair() {
     this.authService.logout();
@@ -57,8 +53,9 @@ export class Header {
 
   abrirPerfil() {
     this.dialog.open(PerfilDialog, {
-      width: '450px',
-      panelClass: 'custom-dialog-container'
+      width: '95%',
+      maxWidth: '450px',
+      panelClass: 'responsive-dialog-container',
     });
   }
 }
