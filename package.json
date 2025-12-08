@@ -22,7 +22,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "^20.2.4",
+    "@angular/cdk": "^20.2.14",
     "@angular/common": "^20.2.0",
     "@angular/compiler": "^20.2.0",
     "@angular/core": "^20.2.0",
@@ -38,7 +38,6 @@
     "@angular/build": "^20.2.0",
     "@angular/cli": "^20.2.0",
     "@angular/compiler-cli": "^20.2.0",
-    "@esbuild/linux-x64": "^0.27.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
