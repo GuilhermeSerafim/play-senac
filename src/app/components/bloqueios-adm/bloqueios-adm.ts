@@ -10,8 +10,11 @@ import { CourtService } from '../../services/court.service';
 import { IBloqueio } from '../../interfaces/ibloqueio';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-// Interface interna para exibição "Hidratada" (com dados visuais da quadra)
+// Import do Dialog recém-criado
+import { RemoverBloqueioDialog } from '../remover-bloqueio-dialog/remover-bloqueio-dialog';
+
 interface IBloqueioDisplay extends IBloqueio {
   nomeQuadra: string;
   imgQuadra: string;
@@ -28,7 +31,7 @@ interface IBloqueioDisplay extends IBloqueio {
     DatePipe,
     MatSnackBarModule,
     MatProgressSpinner,
-    MatIconModule
+    MatDialogModule // Adicionado
   ],
   templateUrl: './bloqueios-adm.html',
   styleUrl: './bloqueios-adm.scss'
@@ -37,6 +40,7 @@ export class BloqueiosAdm implements OnInit {
   private bloqueioService = inject(BloqueioService);
   private courtService = inject(CourtService);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog); // Injeção do Dialog
 
   bloqueios$!: Observable<IBloqueioDisplay[]>;
 
@@ -45,45 +49,55 @@ export class BloqueiosAdm implements OnInit {
   }
 
   carregarBloqueios() {
-    // Combina Bloqueios e Quadras para mostrar o nome da quadra no card
     this.bloqueios$ = combineLatest([
       this.bloqueioService.getAll(),
       this.courtService.getCourts()
     ]).pipe(
       map(([bloqueios, quadras]) => {
         return bloqueios.map(bloqueio => {
-          // Encontra a quadra correspondente para pegar nome e imagem
           const quadra = quadras.find(q => q.id === bloqueio.idQuadra);
           
           return {
             ...bloqueio,
-            // Hidratação dos dados visuais
             nomeQuadra: quadra?.title || `Quadra #${bloqueio.idQuadra}`,
             imgQuadra: quadra?.pathImg || 'images/Complexo Esportivo no Parque Urbano.png',
-            
-            // Garante que as datas sejam objetos Date (caso venham como string do JSON)
             dataHoraInicio: new Date(bloqueio.dataHoraInicio),
             dataHoraFim: new Date(bloqueio.dataHoraFim)
           };
         })
-        // Ordena: Mais recentes primeiro (ou mais próximos)
         .sort((a, b) => a.dataHoraInicio.getTime() - b.dataHoraInicio.getTime());
       })
     );
   }
 
   removerBloqueio(id: number) {
-    if(confirm('Tem certeza que deseja desbloquear este horário?')) {
-      this.bloqueioService.delete(id).subscribe({
-        next: () => {
-          this.snackBar.open('Bloqueio removido com sucesso!', 'OK', { duration: 3000 });
-          this.carregarBloqueios(); // Recarrega a lista para atualizar a tela
-        },
-        error: (err) => {
-          console.error(err);
-          this.snackBar.open('Erro ao remover bloqueio.', 'Fechar', { duration: 3000 });
-        }
-      });
-    }
+    // Abre o Dialog de confirmação
+    const dialogRef = this.dialog.open(RemoverBloqueioDialog, {
+      width: '100%',
+      maxWidth: '400px' // Tamanho confortável para alertas
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Se result for true, o usuário clicou em "Desbloquear"
+      if (result === true) {
+        this.bloqueioService.delete(id).subscribe({
+          next: () => {
+            // Exibe o SnackBar
+            this.snackBar.open('Bloqueio removido com sucesso!', 'OK', { 
+              duration: 3000,
+              panelClass: ['success-snackbar'] // Opcional: estilizar se quiser
+            });
+            this.carregarBloqueios();
+          },
+          error: (err) => {
+            console.error(err);
+            this.snackBar.open('Erro ao remover bloqueio. Tente novamente.', 'Fechar', { 
+              duration: 3000,
+              panelClass: ['error-snackbar']
+            });
+          }
+        });
+      }
+    });
   }
 }

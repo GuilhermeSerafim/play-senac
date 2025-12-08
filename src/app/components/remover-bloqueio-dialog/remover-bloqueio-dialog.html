@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Desbloquear Horário</h2>
+<mat-dialog-content>
+  <p>Tem certeza que deseja remover este bloqueio?</p>
+  <p class="warning-text">O horário ficará disponível para novas reservas imediatamente.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">
+    Desbloquear
+  </button>
+</mat-dialog-actions>
