@@ -1,88 +1,136 @@
 @use '../../../styles/index' as *;
+
 .container__entre {
-  margin: 100px 0 414px 0;
+  // Centraliza verticalmente e horizontalmente na tela
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  // Use padding em vez de margin fixo para melhor responsividade
+  padding: 100px 20px 140px; 
+  min-height: calc(100vh - 140px); // Tenta ocupar a tela descontando header/footer
+
+  @media (max-width: 600px) {
+    padding: 60px 16px 80px; // Menos espaço no mobile
+  }
 }
+
 .entre-form {
   display: flex;
-  margin: 0 auto;
-  width: 540px;
-  padding: 48px 72px;
   flex-direction: column;
   justify-content: center;
-  align-items: left;
   gap: 32px;
+  
+  // LARGURA RESPONSIVA
+  width: 100%;       // Tenta ocupar tudo
+  max-width: 540px;  // Mas para em 540px no desktop
+  
+  padding: 48px 72px;
   border-radius: 20px;
   background: $color-base-white;
   box-shadow: 40px 40px 60px 0 rgba(228, 230, 234, 0.74);
+
+  // Ajustes para mobile
+  @media (max-width: 600px) {
+    padding: 32px 24px; // Reduz padding interno
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); // Sombra mais leve
+    gap: 24px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: $color-base-gray-dark;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    
+    @media (max-width: 600px) {
+      font-size: 1.5rem;
+    }
+  }
 }
 
 .label-container {
   display: flex;
-  justify-content: space-between; /* Mágica acontece aqui! */
-  align-items: baseline; /* Alinha o texto na base */
-  width: 100%; /* Garante que o container ocupe todo o espaço */
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
 }
 
-.link-esqueceu {
-  font-size: 0.9em;
-  color: #1570ef; /* Ou a cor primária do seu tema */
-  cursor: pointer;
-  text-decoration: none; /* Opcional */
-}
-
-.link-esqueceu:hover {
-  text-decoration: underline;
-}
-
-input:selecionadoeescrevendo {
-  border: 3px solid var(--outline-primary, #d1e9ff);
-}
-.email {
-  display: flex;
-  padding: 12px 16px;
-  align-items: center;
-  gap: 5px;
-  flex: 1 0 0;
-  align-self: stretch;
-  border-radius: 8px;
-}
-
+// Botão de Login
 .mat-mdc-raised-button.login-button {
   display: flex;
   justify-content: center;
-  font-size: $font-title-md-size;
-  font-weight: $font-title-sm-weight;
   align-items: center;
   height: 52px;
   padding: 16px;
-  gap: 5px;
-  background-color: #2967f4; /* Cor do Figma */
+  gap: 8px; // Espaço entre spinner e texto
+  background-color: #2967f4;
   border-radius: 8px;
+  width: 100%;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  
+  &:hover:not(:disabled) {
+    background-color: darken(#2967f4, 10%);
+  }
 
-  /* Ajustes adicionais */
-  width: 100%; /* Para replicar o 'align-self: stretch' */
-  border: none; /* Remove a borda padrão */
-  color: white; /* Cor do texto principal */
-  font-size: 1em; /* Tamanho de fonte legível */
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 }
 
+// Links (Esqueceu senha / Crie conta)
 .esqueceu-sua-senha {
+  font-size: 0.85rem;
   cursor: pointer;
+  color: #666;
+  text-decoration: none;
+  
   &:hover {
     color: $color-primary-blue;
+    text-decoration: underline;
   }
 }
 
 .crie-uma-conta {
-  margin-left: 8px;
+  margin-left: 5px;
   cursor: pointer;
-    color: $color-primary-blue;
+  font-weight: 600;
+  color: $color-primary-blue;
+  
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-
+// Mensagem de erro do backend
 .backend-error-msg {
-  display: flex;;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  color: red;
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Utilitários para loading
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.full-width {
+  width: 100%;
 }
