@@ -4,18 +4,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  // No mobile, o formulário ocupa quase tudo. No desktop, mantém 50%
+  width: 100%;
+  
   &__item {
     margin: 0 auto;
+    // Largura responsiva dos inputs
     width: 50%;
+    
+    @media (max-width: 768px) {
+      width: 100%; // Ocupa largura total no mobile
+    }
   }
 
+  // Container dos botões (Adicionar Convidado + Enviar)
   &__bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 50%;
+    margin-top: 20px;
+
+    @media (max-width: 768px) {
+      width: 100%; // Ocupa largura total
+      gap: 16px; // Espaço entre os botões
+    }
   }
 
+  // Ícone de adicionar convidado
   .btn-person__add {
     transition: transform 0.3s ease, opacity 0.3s ease;
 
@@ -36,33 +53,58 @@
     }
   }
 
+  // Botão Confirmar/Enviar
   .mat-mdc-raised-button.enviar-button {
-    margin-left: 141px;
-    font-size: $font-title-md-size;
-    font-weight: $font-title-sm-weight;
+    // Remove margem fixa que quebrava o layout
+    margin-left: auto; 
     
-    // Adicionado para centralizar o Spinner
+    font-size: 1rem;
+    font-weight: 500;
+    
     display: flex;
     justify-content: center;
     align-items: center;
     
-    height: 42px;
-    padding: 16px;
-    gap: 5px;
+    height: 48px; // Altura boa para toque
+    padding: 0 24px;
+    gap: 8px;
     background-color: $color-support-blue-light;
     border-radius: 8px;
-    width: 147px;
     border: none;
     color: white;
-    font-size: 1em;
+    min-width: 147px; // Garante tamanho mínimo
+
+    &:hover:not(:disabled) {
+      background-color: darken($color-support-blue-light, 10%);
+    }
+
+    @media (max-width: 480px) {
+      flex: 1; // Divide espaço com o botão de add pessoa se necessário
+    }
   }
 }
 
+// Container dos Horários
 .horarios {
   display: flex;
   gap: 20px;
+  width: 50%; // Segue a largura do form
+  margin: 0 auto; // Centraliza
+
+  // Mobile: Empilha e ocupa 100%
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+    gap: 0; // O mat-form-field já tem margem
+  }
+
+  mat-form-field {
+    flex: 1;
+    width: 100%;
+  }
 }
 
+// Mensagens de Erro
 .error-banner {
   background-color: #ffebee;
   color: #d32f2f;
@@ -73,15 +115,28 @@
   gap: 8px;
   font-size: 0.9rem;
   margin-bottom: 20px;
+  width: 50%; // Alinha com o form
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
-// Estilo extraído do inline
 .error-intervalo-container {
-  color: #f44336;
+  color: $color-support-orange-warn; // Usa variável se tiver, ou #f44336
   font-size: 12px;
   margin-top: -15px;
   margin-bottom: 15px;
   display: flex;
   align-items: center;
   gap: 5px;
+  justify-content: center; // Centraliza a mensagem
+}
+
+// Ajuste para chips de convidados ocuparem largura correta
+mat-chip-listbox.form-container__item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
 }

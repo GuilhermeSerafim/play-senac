@@ -1,61 +1,98 @@
 <header class="header">
   <div class="header__container">
-    <!-- NAV (Links de Navegação) -->
-    <nav class="header__nav">
-      <a
-        routerLink="/home"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="header__item header__link"
-      >
-        Home
-      </a>
 
-    
-      @if ((isAdmin$ | async) === false && !((isLoggedIn$ | async) === false)) {
-      <a routerLink="/reservas" routerLinkActive="active" class="header__item header__link">
-        Reservas
-      </a>
-      }
-    </nav>
+    @if ((isMobile$ | async) === false) {
+      <nav class="header__nav">
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="header__item header__link">
+          Home
+        </a>
+        
+        @if ((isAdmin$ | async) === false && !((isLoggedIn$ | async) === false)) {
+          <a routerLink="/reservas" routerLinkActive="active" class="header__item header__link">
+            Reservas
+          </a>
+        }
+      </nav>
+    }
 
-    <!-- LOGO -->
     <div class="header__logo">
       <a routerLink="/home" aria-label="Ir para a página inicial">
-        <img src="images/logo.png" class="header__img" alt="Logo PlaySenac" />
+      <img src="images/logo.png" class="header__img" alt="Logo PlaySenac" />
       </a>
     </div>
 
-    <!-- AÇÕES (Direita) -->
-    <div class="header__actions">
-      <!-- CASO 1: Usuário NÃO LOGADO -->
-      @if ((isLoggedIn$ | async) === false) {
-      <a routerLink="/entre" class="header__item header__login">Entre</a>
-      <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
-      }
+    @if ((isMobile$ | async) === false) {
+      <div class="header__actions">
+        @if ((isLoggedIn$ | async) === false) {
+          <a routerLink="/entre" class="header__item header__login">Entre</a>
+          <a routerLink="/cadastro" class="header__item header__signup">Cadastre-se</a>
+        }
+        @else {
+          @if (isAdmin$ | async) {
+            <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link">
+              Dashboard
+            </a>
+          } @else {
+            <a (click)="abrirPerfil()" class="header__item header__icon" style="cursor: pointer; margin-right: 15px">
+              <mat-icon style="color: #005eb8">person</mat-icon>
+            </a>
+          }
+          <a (click)="sair()" class="header__item header__login" style="cursor: pointer"> Sair </a>
+        }
+      </div>
+    }
 
-      <!-- CASO 2: Usuário LOGADO -->
-      @else {
+    @if (isMobile$ | async) {
+      <button mat-icon-button [matMenuTriggerFor]="mobileMenu" aria-label="Abrir menu">
+        <mat-icon>menu</mat-icon>
+      </button>
 
-      <!-- Se for ADMIN, mostra link pro Dashboard -->
-      @if (isAdmin$ | async) {
-      <a routerLink="/dashboard" routerLinkActive="active" class="header__item header__link">
-        Dashboard
-      </a>
-      } @else {
-      <a
-        (click)="abrirPerfil()"
-        class="header__item header__icon"
-        style="cursor: pointer; margin-right: 15px"
-      >
-        <mat-icon style="color: #005eb8">person</mat-icon>
-        <!-- Azul Senac -->
-      </a>
-      }
+      <mat-menu #mobileMenu="matMenu">
+        
+        <button mat-menu-item routerLink="/home">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
 
-      <!-- Botão SAIR (comum para todos logados) -->
-      <a (click)="sair()" class="header__item header__login" style="cursor: pointer"> Sair </a>
-      }
-    </div>
+        @if ((isAdmin$ | async) === false && !((isLoggedIn$ | async) === false)) {
+          <button mat-menu-item routerLink="/reservas">
+            <mat-icon>calendar_today</mat-icon>
+            <span>Reservas</span>
+          </button>
+        }
+
+        <mat-divider></mat-divider>
+
+        @if ((isLoggedIn$ | async) === false) {
+          <button mat-menu-item routerLink="/entre">
+            <mat-icon>login</mat-icon>
+            <span>Entre</span>
+          </button>
+          <button mat-menu-item routerLink="/cadastro">
+            <mat-icon>person_add</mat-icon>
+            <span>Cadastre-se</span>
+          </button>
+        } 
+        @else {
+          @if (isAdmin$ | async) {
+            <button mat-menu-item routerLink="/dashboard">
+              <mat-icon>dashboard</mat-icon>
+              <span>Dashboard</span>
+            </button>
+          } @else {
+            <button mat-menu-item (click)="abrirPerfil()">
+              <mat-icon style="color: #005eb8">person</mat-icon>
+              <span>Meu Perfil</span>
+            </button>
+          }
+          
+          <button mat-menu-item (click)="sair()">
+            <mat-icon color="warn">logout</mat-icon>
+            <span>Sair</span>
+          </button>
+        }
+      </mat-menu>
+    }
+
   </div>
 </header>

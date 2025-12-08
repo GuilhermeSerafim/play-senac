@@ -3,50 +3,77 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 90vh;
-  background: url('/images/bg_hero.png') no-repeat center center/cover;
+  // Altura dinâmica para mobile (evita problemas com barra de endereço do navegador)
+  min-height: 90vh; 
+  background: url('/images/bg_hero.png') no-repeat center center/cover; // Ajustei o path para assets (padrão angular)
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: left;
+  
+  // Responsividade: Margem inferior menor no mobile
   margin-bottom: 155px;
-
-  &__title {
-    font-size: $font-title-lg-size;
-    font-weight: $font-title-lg-weight;
-    color: $color-base-white;
-  }
-
-  // Adicione esta nova classe
-  &__typing-wrapper {
-    display: inline-block; // Permite definir largura/altura mas mantendo o fluxo do texto
-    min-width: 28.5ch; // Reserva espaço para ~28.5 caracteres. Ajuste fino se necessário.
-    white-space: nowrap; // Garante que o texto não quebre a linha durante a digitação
-    text-align: left; // Mantém o alinhamento do texto à esquerda dentro do wrapper
-      line-height: 80px;
+  @media (max-width: 768px) {
+    margin-bottom: 60px;
+    background-position: center top; // Foca no topo da imagem em telas verticais
+    text-align: center; // Centraliza tudo no mobile
   }
 
   &__overlay {
     padding: 2rem;
     border-radius: 8px;
+    width: 100%;
+    max-width: 1200px; // Limite para telas ultrawide
   }
 
   &__title {
     font-size: $font-title-lg-size;
     font-weight: $font-title-lg-weight;
     color: $color-base-white;
+    line-height: 1.2;
+
+    // Responsividade: Fonte menor e quebra de layout
+    @media (max-width: 768px) {
+      font-size: 2rem; // Tamanho mais seguro para mobile
+      display: flex;
+      flex-direction: column; // Empilha "PlaySenac" e o texto digitado
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  &__typing-wrapper {
+    display: inline-block;
+    min-width: 28.5ch;
+    white-space: nowrap;
+    text-align: left;
+    // O line-height fixo de 80px pode causar problemas se a fonte diminuir
+    line-height: 1.2; 
+
+    // Responsividade: Ajuste do wrapper
+    @media (max-width: 768px) {
+      min-width: unset; // Remove a largura fixa para não gerar scroll horizontal
+      white-space: normal; // Permite quebra de linha se a tela for MUITO pequena (iPhone SE)
+      text-align: center;
+    }
   }
 
   &__subtitle {
     margin-top: 1rem;
-    font-size: $font-text-md-line-height;
+    font-size: $font-text-md-size; // Ajuste para usar sua variável correta
+    line-height: $font-text-md-line-height;
     color: $color-base-white;
+    
+    @media (max-width: 768px) {
+      font-size: 1rem;
+      padding: 0 1rem; // Evita que o texto toque as bordas da tela
+    }
   }
 
   &__cursor {
     display: inline-block;
     width: 3px;
-    height: 1.2em;
+    height: 1.2em; // Altura relativa à fonte atual
     background: $color-primary-yellow;
     margin-left: 2px;
     animation: blink 0.8s infinite;
@@ -54,13 +81,7 @@
   }
 
   @keyframes blink {
-    0%,
-    50% {
-      opacity: 1;
-    }
-    50.01%,
-    100% {
-      opacity: 0;
-    }
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
   }
 }

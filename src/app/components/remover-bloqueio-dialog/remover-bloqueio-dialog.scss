@@ -1,0 +1,32 @@
+@use '../../../styles/index' as *;
+
+// Segue o mesmo padrão responsivo que criamos para os outros dialogs
+p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.warning-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .mat-mdc-dialog-title {
+    padding: 24px 24px 0 24px !important;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-content {
+    padding: 16px 24px 24px 24px !important;
+  }
+
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 0 24px 24px 24px !important;
+    gap: 12px;
+    
+    button {
+      flex: 1; // Botões grandes no mobile
+    }
+  }
+}

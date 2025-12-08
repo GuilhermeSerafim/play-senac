@@ -33,3 +33,50 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  // 1. TÍTULO: Alinhado e com tamanho seguro
+  ::ng-deep .mat-mdc-dialog-title {
+    padding: 24px 24px 0 24px !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 0 !important; // Garante que não tenha margem extra empurrando para baixo
+  }
+
+  // 2. CONTEÚDO (Container cinza do scroll)
+  ::ng-deep .mat-mdc-dialog-content {
+    // Reduzi o padding-top de 20px para 16px para aproximar do título
+    padding: 16px 24px 24px 24px !important;
+    max-height: 80vh;
+  }
+
+  // 3. AÇÕES (Botões Cancelar/Bloquear)
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 0 24px 24px 24px !important;
+    gap: 12px;
+  }
+
+  // 4. FORMULÁRIO (Correções Críticas)
+  .bloqueio-form {
+    // [IMPORTANTE] Remove a trava de 400px do PC para caber no celular
+    min-width: unset !important;
+    width: 100% !important; 
+    
+    // Remove o padding interno extra, pois o dialog-content já tem padding
+    padding-top: 0 !important; 
+    
+    gap: 24px;
+
+    .horarios-row {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .error-msg {
+      margin-top: -16px;
+    }
+
+    textarea.mat-mdc-input-element {
+      min-height: 80px;
+    }
+  }
+}

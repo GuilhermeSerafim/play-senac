@@ -37,7 +37,8 @@ export class Quadras {
 
   alterarQuadra(quadra: ICourt) {
     const dialogRef = this._dialog.open(AlterQuadraAdmDialog, {
-      width: '540px',
+      width: '100%',
+      maxWidth: '540px',
       data: quadra,
     });
     dialogRef.afterClosed().subscribe((result) => result && this._courtService.updateCourt(result));
@@ -45,8 +46,10 @@ export class Quadras {
 
   bloquearQuadra(quadra: ICourt) {
     const dialogRef = this._dialog.open(BloqueioDialog, {
-      width: '450px',
-      data: { quadra: quadra }, // Passa a quadra para o título do modal
+      width: '100%',
+      maxWidth: '450px',
+      data: { quadra: quadra },
+      panelClass: 'responsive-dialog-container',
     });
 
     dialogRef.afterClosed().subscribe((novoBloqueio: ICreateBloqueio) => {

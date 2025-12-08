@@ -1,21 +1,28 @@
+@use '../../../styles/index' as *;
+
+// =========================================================
+// 1. ESTILOS DESKTOP (Padrão)
+// =========================================================
+
 mat-dialog-content {
   display: flex;
   flex-direction: column;
-  gap: 16px; // Adiciona espaçamento entre os campos de formulário
+  gap: 16px; 
+  padding-top: 10px !important; // Pequeno ajuste inicial
+  
+  // Container dos horários (Lado a lado no Desktop)
   .horarios {
     display: flex;
-    gap: 20px;
+    gap: 16px;
+    width: 100%;
+
+    mat-form-field {
+      flex: 1; // Garante que ocupem tamanhos iguais
+    }
   }
 }
 
-
-.timepicker .mdc-text-field--outlined {
-   display: none;
-   color: red;
-   background-color: red;
-}
-
-
+// Estilos dos Botões
 .mat-mdc-raised-button.btn-cancelar {
   color: #fff;
   background-color: #d32f2f;
@@ -23,25 +30,16 @@ mat-dialog-content {
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #b71c1c; // tom mais escuro no hover
+    background-color: #b71c1c; 
   }
 }
 
 .mat-mdc-raised-button.btn-confirmar {
   color: white;
-  background-color: #2967f4; /* Cor do Figma */
-  font-size: 1em;
-
-  &:hover {
-    background-color: #1e52c7; // tom mais escuro e consistente no hover
-  }
-}
-.mat-mdc-raised-button.btn-confirmar {
-  color: white;
-  background-color: #2967f4;
+  background-color: #2967f4; 
   font-size: 1em;
   
-  // Centraliza o spinner
+  // Centraliza o spinner e texto
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,5 +47,56 @@ mat-dialog-content {
 
   &:hover:not(:disabled) {
     background-color: #1e52c7; 
+  }
+
+  // Estilo visual para desabilitado
+  &:disabled {
+    background-color: #9e9e9e;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// Hack para timepicker (mantido do seu código original)
+.timepicker .mdc-text-field--outlined {
+   display: none;
+}
+
+// =========================================================
+// 2. ESTILOS MOBILE (Max-width: 480px)
+// =========================================================
+
+@media (max-width: 480px) {
+  
+  // A. Ajuste do TÍTULO
+  ::ng-deep .mat-mdc-dialog-title {
+    padding: 24px 24px 0 24px !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  // B. Ajuste do CONTEÚDO
+  ::ng-deep .mat-mdc-dialog-content {
+    padding: 16px 24px 24px 24px !important;
+    max-height: 80vh; 
+    
+    // Aumenta o espaçamento vertical entre os campos no mobile
+    gap: 20px; 
+
+    // 🔥 Empilha os horários (Início em cima, Fim embaixo)
+    .horarios {
+      flex-direction: column;
+      gap: 20px; 
+    }
+  }
+
+  // C. Ajuste das AÇÕES (Botões)
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 0 24px 24px 24px !important;
+    gap: 12px;
+    
+    // Opcional: Botões ocupando largura total no mobile (facilita o toque)
+    button {
+      flex: 1; 
+    }
   }
 }

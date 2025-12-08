@@ -1,18 +1,36 @@
 @use '../../../styles/index' as *;
 
+// Configuração base do componente
 :host {
   display: block;
 }
 
+// CONTAINER PRINCIPAL
 .perfil-container {
   padding: 24px 32px;
   position: relative;
-  min-width: 450px;
+
+  // 🔥 MUDANÇA 1: Largura responsiva
+  width: 100%;
+  min-width: unset; // Remove a trava de 450px para mobile
+
+  // No desktop, tenta ter 450px. No mobile, ocupa tudo.
+  @media (min-width: 481px) {
+    min-width: 450px;
+  }
+
   background-color: #fff;
-  min-height: 400px; // Garante altura mínima para não pular no loading
+  min-height: 400px;
+  box-sizing: border-box;
+
+  // Ajuste de padding para mobile
+  @media (max-width: 480px) {
+    padding: 20px 24px 24px 24px;
+    min-height: auto; // Altura automática no mobile
+  }
 }
 
-// NOVO: Estilo para centralizar o loading inicial
+// LOADING INICIAL
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -20,7 +38,7 @@
   align-items: center;
   height: 300px;
   width: 100%;
-  
+
   .loading-text {
     margin-top: 20px;
     color: #666;
@@ -28,11 +46,12 @@
   }
 }
 
+// BOTÃO FECHAR (X)
 .header-row {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
-  
+
   .close-btn {
     color: #666;
     margin-right: -10px;
@@ -40,11 +59,20 @@
   }
 }
 
+// CABEÇALHO (Avatar + Nome)
 .profile-header {
   display: flex;
   align-items: center;
-  gap: 24px; 
-  margin-bottom: 40px; 
+  gap: 24px;
+  margin-bottom: 40px;
+
+  // Mobile: Empilha Avatar e Nome
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
 
   .avatar-circle {
     width: 80px;
@@ -55,7 +83,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 
     mat-icon {
       font-size: 48px;
@@ -67,42 +95,69 @@
 
   h2 {
     font-size: 1.4rem;
-    font-weight: 400; 
+    font-weight: 400;
     color: #333;
     margin: 0;
     line-height: 1.2;
+
+    // Mobile: Fonte levemente menor
+    @media (max-width: 480px) {
+      font-size: 1.2rem;
+    }
   }
 }
 
+// FORMULÁRIO
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 20px; 
+  gap: 20px;
 
   .form-row {
     display: flex;
     align-items: center;
     gap: 20px;
-    
+
+    // 🔥 MUDANÇA 2: Mobile vira coluna (Label em cima do Input)
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px; // Label cola no input
+    }
+
     label {
-      width: 80px; 
+      width: 80px;
       font-weight: 400;
       color: #666;
       font-size: 1rem;
       flex-shrink: 0;
+
+      // Mobile: Label ocupa largura total
+      @media (max-width: 480px) {
+        width: 100%;
+        font-size: 0.9rem;
+      }
     }
 
     mat-form-field {
-      flex: 1; 
+      flex: 1;
+      width: 100%; // Garante largura total no mobile
     }
   }
 }
 
+// BOTÕES (Salvar / Excluir)
 .actions-row {
   margin-top: 40px;
   display: flex;
   gap: 16px;
   justify-content: space-between;
+
+  // Mobile: Empilha os botões (Salvar em cima, Excluir embaixo)
+  @media (max-width: 480px) {
+    gap: 12px;
+    margin-top: 30px;
+  }
 
   button {
     flex: 1; 
@@ -111,23 +166,23 @@
     font-size: 1rem;
     font-weight: 500;
     
-    // IMPORTANTE para centralizar o spinner
+    // Centraliza conteúdo (texto + spinner)
     display: flex;
     align-items: center;
     justify-content: center;
-    
     gap: 8px;
+    
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease;
     
-    // Quando desabilitado pelo loading, mantém opacidade visual razoável
     &:disabled {
       cursor: not-allowed;
       opacity: 0.7; 
     }
   }
 
+  // BOTÃO SALVAR (Azul)
   .save-btn {
     background-color: #2563eb; 
     color: white;
@@ -137,20 +192,16 @@
     }
   }
 
+  // 🔥 BOTÃO EXCLUIR (Vermelho)
   .delete-btn {
-    background-color: #dc2626; 
+    background-color: #dc2626; // Vermelho forte
     color: #fff;
 
     &:hover:not(:disabled) {
-      background-color: #b91c1c;
+      background-color: #b91c1c; // Vermelho mais escuro no hover
     }
 
-    mat-icon {
-      font-size: 20px;
-      // margin-top removido pois flexbox já centraliza
-    }
-    
-    // Ajuste para o spinner branco dentro do botão vermelho
+    // Garante que o spinner fique branco dentro do botão vermelho
     ::ng-deep .mat-mdc-progress-spinner circle, .mat-spinner circle { 
         stroke: white !important;
     }

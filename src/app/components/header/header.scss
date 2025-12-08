@@ -1,21 +1,41 @@
 @use '../../../styles/index' as *;
 
 .header {
+  // Adicionei background e sombra para destacar o header do resto da página
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  width: 100%;
+  position: sticky; // Opcional: mantém o header fixo no topo
+  top: 0;
+  z-index: 1000;
+
   &__container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 64px;
     flex-shrink: 0;
     font-size: $font-text-md-size;
-    align-items: center;
+    
+    // IMPORTANTE PARA MOBILE:
+    // Adiciona uma "margem" interna para que o logo e o botão não colem na borda da tela
+    padding: 0 16px; 
+    
+    // Limita a largura em telas muito grandes para não ficar muito espalhado
+    max-width: 1280px; 
+    margin: 0 auto;
   }
 
   &__item {
-    margin: auto 25px;
+    // Reduzi a margem lateral para tablets não quebrarem o layout antes da hora
+    margin: auto 15px; 
+    
     position: relative;
     font-weight: 500;
     color: $color-base-gray-dark;
     transition: color 0.3s ease;
+    text-decoration: none; // Garante que não tenha sublinhado padrão do link
+    cursor: pointer;
 
     &:hover {
       color: $color-primary-blue;
@@ -37,12 +57,35 @@
     }
   }
 
+  // Classe para o item ativo (routerLinkActive)
+  // Certifique-se de que essa classe está sendo aplicada no HTML
+  .active {
+    color: $color-primary-blue;
+    font-weight: 700;
+    
+    &::after {
+      width: 100%; // Mantém o sublinhado amarelo fixo na página ativa
+    }
+  }
+
   &__img {
     width: 80px;
+    // Garante que a imagem não distorça
+    display: block; 
   }
 
   &__actions {
     display: flex;
     align-items: center;
+    gap: 10px; // Espaçamento entre os botões de ação (Login/Cadastro)
   }
+}
+
+// Ajuste específico para o botão do Material Design não ficar desalinhado
+::ng-deep .mat-mdc-icon-button {
+    color: $color-base-gray-dark;
+    
+    &:hover {
+        color: $color-primary-blue;
+    }
 }

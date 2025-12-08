@@ -2,46 +2,71 @@
 
 .container-reservas {
   padding: 20px;
-  max-width: 941px; // Adicionado para centralizar e limitar a largura
+  max-width: 941px;
   margin: 0 auto;
-  height: 100%;
-  min-height: 100vh;
+  
+  // Dica: Usar calc() desconta a altura aproximada do header/footer
+  // para tentar manter o footer lá embaixo sem scroll desnecessário
+  min-height: calc(100vh - 140px); 
 
   h1 {
-    font-size: 32px; // Tamanho de exemplo
+    font-size: 32px;
     font-weight: 700;
+    color: $color-base-gray-dark; // Garante contraste
+    
+    // Responsividade: Título menor e centralizado no mobile
+    @media (max-width: 600px) {
+      font-size: 24px;
+      text-align: center;
+      margin-top: 10px;
+    }
   }
 
   // --- MENU DE ABAS ---
   &__menu-reservas {
     margin: 38px 0;
     display: flex;
-    gap: 88px; // Mais moderno que usar margin no filho
+    align-items: center;
+    
+    // Desktop: Mantém seu gap original
+    gap: 88px; 
+    
     font-size: 16px;
     font-weight: 500;
-    border-bottom: 1px solid #eee; // Linha de fundo para as abas
+    border-bottom: 1px solid #eee;
+
+    // Mobile: Distribui o espaço
+    @media (max-width: 600px) {
+      gap: 0; // Remove o gap fixo gigante
+      justify-content: space-between; // Espalha as duas abas nas pontas
+      margin: 20px 0; // Reduz margem vertical
+      font-size: 14px; // Fonte levemente menor
+    }
 
     p {
       cursor: pointer;
       position: relative;
-      padding-bottom: 12px; // Espaçamento para a linha inferior
+      padding-bottom: 12px;
       transition: color 0.3s ease;
+      color: #666; // Cor padrão inativo
+      white-space: nowrap; // Garante que o texto da aba não quebre linha
 
       &::after {
         content: '';
         position: absolute;
-        bottom: -1px; // Alinha com a borda do pai
+        bottom: -1px;
         left: 0;
         width: 0;
         height: 2px;
-        background-color: $color-primary-yellow; // Cor para aba ativa
+        background-color: $color-primary-yellow;
         transition: width 0.3s ease;
       }
 
-      // Estilo da aba ativa
+      // Estilo da aba ativa e hover
       &.active,
       &:hover {
         color: $color-primary-blue;
+        font-weight: 700; // Bold para destacar a aba ativa
         &::after {
           width: 100%;
         }
