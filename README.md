@@ -1,4 +1,4 @@
-# Play Senac - [Demo aqui!](https://play-senac.vercel.app/)
+# Play Senac - [Acesse aqui!](https://play-senac.vercel.app/)
 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Raleway&weight=600&size=22&duration=2000&pause=1000&color=FFCE00&width=435&lines=Reserve+seu+hor%C3%A1rio+em+segundos.;Sua+quadra+a+um+clique+de+dist%C3%A2ncia.;Gest%C3%A3o+de+quadras%2C+agora+digital." alt="Typing SVG" /></a>
 
