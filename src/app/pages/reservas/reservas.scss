@@ -74,3 +74,22 @@
     }
   }
 }
+
+// ... seus estilos existentes
+
+.adm-reservas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// Estilização do Paginador
+mat-paginator {
+  background: transparent; // ou #fff se preferir card
+  margin-top: 10px;
+  border-radius: 8px;
+  
+  // Centraliza o paginador em telas grandes se quiser
+  // display: flex; 
+  // justify-content: center;
+}
